@@ -2,11 +2,14 @@
 buildscript {
     repositories {
         jcenter()
+        //maven { url "https://plugins.gradle.org/m2/" }
         maven { url "https://jitpack.io" }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:1.5.0'
+        classpath 'com.android.tools.build:gradle:2.3.1'
         classpath 'io.freefair:gradle-plugins:2.0.0-beta5'
+        //classpath "io.freefair.gradle:android-gradle-plugins:2.3.0.8"
+        //classpath "io.freefair.gradle:gradle-plugins:0.10.0"
     }
 }
 
@@ -15,7 +18,7 @@ allprojects {
         jcenter()
         maven { url "https://jitpack.io" }
     }
-
+    /*
     println "TAG LIST START"
     println 'git --version'.execute([], project.rootDir).text
     println 'git tag --list'.execute([], project.rootDir).text
@@ -31,5 +34,5 @@ allprojects {
 
     apply plugin: 'io.freefair.git-version'
     gitTagPrefix = 'v'
-
+    */
 }
