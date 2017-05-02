@@ -30,6 +30,8 @@ import io.freefair.android.util.logging.Logger;
 
 public class AppAIMSICD extends InjectionApplication {
 
+    private final String TAG = "AIMSICD";
+
     private static WeakReference<AppAIMSICD> instance;
 
     public static AppAIMSICD getInstance() {

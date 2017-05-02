@@ -27,6 +27,7 @@ import au.com.bytecode.opencsv.CSVReader;
 import au.com.bytecode.opencsv.CSVWriter;
 import io.freefair.android.util.logging.AndroidLogger;
 import io.freefair.android.util.logging.Logger;
+
 import zz.aimsicd.lite.constants.DBTableColumnIds;
 import zz.aimsicd.lite.enums.Status;
 import zz.aimsicd.lite.service.CellTracker;
@@ -1095,7 +1096,7 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
      *                  CID = Long CID mod 65536 (modulo operation)
      *
      *
-     *  2017-04-21  E:V:A   Tese VVVV are probably outdated. Trying to repair this file!!
+     *  2017-04-21  E:V:A   These VVVV are probably outdated. Trying to repair this file!!
      *
      *  TODO:   (1) Implement some kind of counter, to count how many cells was removed.
      *  TODO:   (2) Better description of what was removed.

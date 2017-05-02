@@ -17,6 +17,8 @@ import java.io.IOException;
  */
 public class GetProp extends ActivityInstrumentationTestCase2<DebugLogs> {
 
+    private final String TAG = "AIMSICD";
+
     public GetProp() {
         super(DebugLogs.class);
     }
@@ -26,9 +28,10 @@ public class GetProp extends ActivityInstrumentationTestCase2<DebugLogs> {
         try {
             Thread.sleep(1000);
         } catch (Exception e) {
+            Log.e(TAG, "Exception in test: getprop: " + e);
         }
         String props = activity.getProp();
-        Log.d("getprop", props);
+        Log.i(TAG, "getprop: " + props);
         assertTrue(props.trim().length() > 0);
     }
 }
