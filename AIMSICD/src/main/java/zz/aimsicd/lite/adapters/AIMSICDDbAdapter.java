@@ -140,7 +140,7 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
         mPreferences = PreferenceManager.getDefaultSharedPreferences(mContext);
         mDatabasePath = mContext.getDatabasePath(DB_NAME).getAbsolutePath();
         mExternalFilesDirPath = mContext.getExternalFilesDir(null) + File.separator;
-        //e.g. /storage/emulated/0/Android/data/com.SecUpwN.AIMSICD/
+        //e.g. /storage/emulated/0/Android/data/zz.aimsicd.lite/
 
         // Create a new blank DB then write pre-compiled DB in assets folder to blank DB.
         // This will throw error on first create because there is no DB to open and this is normal.
@@ -315,13 +315,13 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
 
 
     /**
-     * <p>Returns Cell Information (DBi_bts) database contents this returns BTSs that we logged and is
-     * called from MapFragment.java to display cells on map</p>
+     * Returns Cell Information (DBi_bts) database contents this returns BTSs that we logged and is
+     * called from MapFragment.java to display cells on map<
      *
-     * <p>Because RAT is stored in measurement table. JOIN the two table together for a complete
-     * picture.</p>
+     * Because RAT is stored in measurement table. JOIN the two table together for a complete
+     * picture.
      *
-     * <p>TODO: 2016-02-28 Consider if this is the best way to get the info. Database schema refactor?</p>
+     * TODO: 2016-02-28 Consider if this is the best way to get the info. Database schema refactor?</p>
      *
      * @see #returnDBiBtsWithRAT()
      */

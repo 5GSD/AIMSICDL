@@ -160,7 +160,7 @@ public class MainActivity extends BaseActivity implements AsyncResponse {
                             prefsEditor = prefs.edit();
                             prefsEditor.putBoolean(mDisclaimerAccepted, false);
                             prefsEditor.apply();
-                            Uri packageUri = Uri.parse("package:com.SecUpwN.AIMSICD");
+                            Uri packageUri = Uri.parse("package:zz.aimsicd.lite");
                             Intent uninstallIntent =
                                     new Intent(Intent.ACTION_DELETE, packageUri);
                             startActivity(uninstallIntent);

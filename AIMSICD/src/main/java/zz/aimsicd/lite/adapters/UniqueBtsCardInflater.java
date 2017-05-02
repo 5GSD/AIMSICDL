@@ -90,16 +90,15 @@ public class UniqueBtsCardInflater implements IAdapterViewInflater<UniqueBtsItem
 
         private final TextView RecordId;
 
-
         // These are the names of the "@+id/xxxx" items in the XML layout file
         ViewHolder(View rootView) {
             mRootView = rootView;
 
-            LAC = (TextView) mRootView.findViewById(R.id.tv_uniquebts_lac);
-            CID = (TextView) mRootView.findViewById(R.id.tv_uniquebts_cid);
-            MCC = (TextView) mRootView.findViewById(R.id.tv_uniquebts_mcc);
-            MNC = (TextView) mRootView.findViewById(R.id.tv_uniquebts_mnc);
-            PSC = (TextView) mRootView.findViewById(R.id.tv_uniquebts_psc);
+            LAC =       (TextView) mRootView.findViewById(R.id.tv_uniquebts_lac);
+            CID =       (TextView) mRootView.findViewById(R.id.tv_uniquebts_cid);
+            MCC =       (TextView) mRootView.findViewById(R.id.tv_uniquebts_mcc);
+            MNC =       (TextView) mRootView.findViewById(R.id.tv_uniquebts_mnc);
+            PSC =       (TextView) mRootView.findViewById(R.id.tv_uniquebts_psc);
             T3212 =     (TextView) mRootView.findViewById(R.id.tv_uniquebts_t3212);
             A5X =       (TextView) mRootView.findViewById(R.id.tv_uniquebts_a5x);
             ST_ID =     (TextView) mRootView.findViewById(R.id.tv_uniquebts_st_id);
@@ -108,7 +107,7 @@ public class UniqueBtsCardInflater implements IAdapterViewInflater<UniqueBtsItem
             LAT =       (TextView) mRootView.findViewById(R.id.tv_uniquebts_lat);
             LON =       (TextView) mRootView.findViewById(R.id.tv_uniquebts_lon);
 
-            RecordId = (TextView) mRootView.findViewById(R.id.record_id);
+            RecordId =  (TextView) mRootView.findViewById(R.id.record_id);
             rootView.setTag(this);
         }
 

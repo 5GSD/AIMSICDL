@@ -66,7 +66,7 @@ public class AimsicdService extends InjectionService {
     private Logger log;
 
     // /data/data/com.SecUpwN.AIMSICD/shared_prefs/com.SecUpwN.AIMSICD_preferences.xml
-    public static final String SHARED_PREFERENCES_BASENAME = "com.SecUpwN.AIMSICD_preferences";
+    public static final String SHARED_PREFERENCES_BASENAME = "zz.aimsicd.lite_preferences";
     public static final String UPDATE_DISPLAY = "UPDATE_DISPLAY";
 
     /*

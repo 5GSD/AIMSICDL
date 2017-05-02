@@ -11,13 +11,13 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import zz.aimsicd.lite.R;
+import static java.lang.String.valueOf;
+
 /**
- *
  * Inflater class used in DB viewer (for Measured cell strength measurements)
  *
  * Template:    SilentSmsCardInflater.java
  *
- * @author Tor Henning Ueland
  */
 public class MeasuredCellStrengthCardInflater implements IAdapterViewInflater<MeasuredCellStrengthCardData> {
 
@@ -59,8 +59,8 @@ public class MeasuredCellStrengthCardInflater implements IAdapterViewInflater<Me
         }
 
         public void updateDisplay(MeasuredCellStrengthCardData item) {
-            cid.setText(item.getCellID());
-            rss.setText(item.getSignal());
+            cid.setText(valueOf(item.getCellID()));
+            rss.setText(valueOf(item.getSignal()));
             time.setText(item.getTimestamp());
         }
     }

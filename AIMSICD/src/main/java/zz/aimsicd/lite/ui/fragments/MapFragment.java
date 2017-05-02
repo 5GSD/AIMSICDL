@@ -19,7 +19,10 @@ import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.IBinder;
+
 import android.support.v4.content.LocalBroadcastManager;
+import android.support.v4.content.res.ResourcesCompat;
+
 import android.telephony.CellInfo;
 import android.telephony.PhoneStateListener;
 import android.telephony.ServiceState;
@@ -67,25 +70,25 @@ import io.freefair.android.util.logging.Logger;
 
 /**
  * Description:    TODO: add details
- * <p/>
+ *
  * Variables:      TODO: add a list of variables that can be tuned (Max/MinZoom factors etc)
- * <p/>
+ *
  * Current Issues:
- * <p/>
- * [x] Map is not immediately updated with the BTS info. It take a "long" time ( >10 seconds)
- * before map is updated. Any way to shorten this?
- * [ ] See: #272 #250 #228
- * [ ] Some pins remain clustered even on the greatest zoom, this is probably
- * due to over sized icons, or too low zoom level.
- * [x] pin icons are too big. We need to reduce pin dot diameter by ~50%
- * [ ] Need a manual way to add GPS coordinates of current location (see code comments below)
- * [ ]
- * <p/>
+ *
+ *      [x] Map is not immediately updated with the BTS info. It take a "long" time ( >10 seconds)
+ *          before map is updated. Any way to shorten this?
+ *      [ ] See: #272 #250 #228
+ *      [ ] Some pins remain clustered even on the greatest zoom, this is probably
+ *          due to over sized icons, or too low zoom level.
+ *      [x] pin icons are too big. We need to reduce pin dot diameter by ~50%
+ *      [ ] Need a manual way to add GPS coordinates of current location (see code comments below)
+ *      [ ]
+ *
  * Notes:
- * a) Latest OSM version can use MaxZoomLevel of 21, please see:
- * https://github.com/osmdroid/osmdroid/issues/49
- * https://github.com/osmdroid/osmdroid/issues/81
- * https://code.google.com/p/osmbonuspack/issues/detail?id=102
+ *  a) Latest OSM version can use MaxZoomLevel of 21, please see:
+ *      https://github.com/osmdroid/osmdroid/issues/49
+ *      https://github.com/osmdroid/osmdroid/issues/81
+ *      https://code.google.com/p/osmbonuspack/issues/detail?id=102
  */
 @XmlLayout(R.layout.activity_map_viewer)
 public final class MapFragment extends InjectionFragment implements OnSharedPreferenceChangeListener {
@@ -439,7 +442,8 @@ public final class MapFragment extends InjectionFragment implements OnSharedPref
                                             "", false)
                             );
                             // The pin of our current position
-                            ovm.setIcon(getResources().getDrawable(R.drawable.ic_map_pin_blue));
+                            //ovm.setIcon(getResources().getDrawable(R.drawable.ic_map_pin_blue)); // EVA 20170502
+                            ovm.setIcon(ResourcesCompat.getDrawable(getResources(), R.drawable.ic_map_pin_blue, null));
 
                             items.add(ovm);
                         }
