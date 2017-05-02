@@ -61,8 +61,8 @@ android {
         //--- lint (self) ---------------------------------------------------------------
 //        warning 'MissingTranslation', 'InvalidPackage', 'MissingRegistered'
         abortOnError false              // true by default
-        htmlReport true                 // !isCi
-        textReport true                 // isCi
+        htmlReport true                 // !isCi    // We do want the lint report in HTML
+        textReport false                // isCi     // We don't want text reports on CLI
         xmlReport false                 //
         textOutput 'stdout'             //
         //checkAllWarnings false        //
@@ -78,7 +78,7 @@ android {
         disable 'MissingTranslation'    // Strings declared in one language should also be translated in all other languages
         //disable 'ExtraTranslation'    // Make sure all labelled strings appear in all locales
 //        disable 'ValidFragment'       //
-//        disable 'CommitPrefEdits'     // ToDo: Consider using apply() instead;
+//        disable 'CommitPrefEdits'     // We want out preferences to be stored immediately! Contrary to apply().
         //disable 'SdCardPath'          // Use non-specific API independent external sdcard paths
         disable 'Typos'                 //
         disable 'HardwareIds'           // Using getSubscriberId to get device identifiers (IMSI) is not recommended
