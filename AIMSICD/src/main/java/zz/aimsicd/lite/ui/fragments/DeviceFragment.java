@@ -3,7 +3,7 @@
  * LICENSE:  http://git.io/vki47 | TERMS:  http://git.io/vki4o
  * -----------------------------------------------------------
  */
-package zz.aimsicd.lite.fragments;
+package zz.aimsicd.lite.ui.fragments;
 
 import android.content.ComponentName;
 import android.content.Context;
@@ -25,7 +25,7 @@ import zz.aimsicd.lite.service.CellTracker;
 import zz.aimsicd.lite.utils.Cell;
 import zz.aimsicd.lite.utils.Device;
 import zz.aimsicd.lite.utils.Helpers;
-import zz.aimsicd.lite.widget.HighlightTextView;
+import zz.aimsicd.lite.ui.widget.HighlightTextView;
 import com.kaichunlin.transition.animation.AnimationManager;
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.OkHttpClient;

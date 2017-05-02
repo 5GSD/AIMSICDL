@@ -1,4 +1,4 @@
-package zz.aimsicd.lite.widget;
+package zz.aimsicd.lite.ui.widget;
 
 import android.content.Context;
 import android.util.AttributeSet;

@@ -1,4 +1,4 @@
-package zz.aimsicd.lite.fragments;
+package zz.aimsicd.lite.ui.fragments;
 
 import android.app.Activity;
 import android.database.Cursor;

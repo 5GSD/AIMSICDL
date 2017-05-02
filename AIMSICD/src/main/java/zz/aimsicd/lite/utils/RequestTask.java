@@ -14,7 +14,7 @@ import android.support.v4.content.LocalBroadcastManager;
 
 import zz.aimsicd.lite.BuildConfig;
 import zz.aimsicd.lite.R;
-import zz.aimsicd.lite.fragments.MapFragment;
+import zz.aimsicd.lite.ui.fragments.MapFragment;
 import zz.aimsicd.lite.adapters.AIMSICDDbAdapter;
 import zz.aimsicd.lite.constants.DrawerMenu;
 import zz.aimsicd.lite.constants.TinyDbKeys;

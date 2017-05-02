@@ -8,7 +8,7 @@ package zz.aimsicd.lite.test;
 import android.test.ActivityInstrumentationTestCase2;
 import android.util.Log;
 
-import zz.aimsicd.lite.activities.DebugLogs;
+import zz.aimsicd.lite.ui.activities.DebugLogs;
 
 import java.io.IOException;
 

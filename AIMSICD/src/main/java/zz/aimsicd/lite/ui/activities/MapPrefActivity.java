@@ -3,28 +3,24 @@
  * LICENSE:  http://git.io/vki47 | TERMS:  http://git.io/vki4o
  * -----------------------------------------------------------
  */
-package zz.aimsicd.lite.activities;
+package zz.aimsicd.lite.ui.activities;
 
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
 
-import zz.aimsicd.lite.fragments.PrefFragment;
+import zz.aimsicd.lite.ui.fragments.MapPrefFragment;
 
-
-public class PrefActivity extends BaseActivity {
+public class MapPrefActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        loadFragment();
-    }
-
-    private void loadFragment() {
-        PrefFragment settingsFragment = new PrefFragment();
+        MapPrefFragment settingsFragment = new MapPrefFragment();
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(android.R.id.content, settingsFragment);
         fragmentTransaction.commit();
     }
+
 }

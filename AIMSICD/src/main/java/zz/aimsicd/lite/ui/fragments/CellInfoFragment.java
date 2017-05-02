@@ -16,7 +16,7 @@
  * ""
  */
 
-package zz.aimsicd.lite.fragments;
+package zz.aimsicd.lite.ui.fragments;
 
 import android.content.ComponentName;
 import android.content.Context;

@@ -18,9 +18,9 @@ import android.widget.TextView;
 
 import zz.aimsicd.lite.R;
 import zz.aimsicd.lite.constants.DrawerMenu;
-import zz.aimsicd.lite.drawer.DrawerMenuItem;
-import zz.aimsicd.lite.drawer.DrawerMenuSection;
-import zz.aimsicd.lite.drawer.NavDrawerItem;
+import zz.aimsicd.lite.ui.drawer.DrawerMenuItem;
+import zz.aimsicd.lite.ui.drawer.DrawerMenuSection;
+import zz.aimsicd.lite.ui.drawer.NavDrawerItem;
 import zz.aimsicd.lite.utils.Helpers;
 
 import java.util.List;

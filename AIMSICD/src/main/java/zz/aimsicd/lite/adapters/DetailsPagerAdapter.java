@@ -11,9 +11,9 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import zz.aimsicd.lite.R;
-import zz.aimsicd.lite.fragments.CellInfoFragment;
-import zz.aimsicd.lite.fragments.DbViewerFragment;
-import zz.aimsicd.lite.fragments.DeviceFragment;
+import zz.aimsicd.lite.ui.fragments.CellInfoFragment;
+import zz.aimsicd.lite.ui.fragments.DbViewerFragment;
+import zz.aimsicd.lite.ui.fragments.DeviceFragment;
 
 /**
  * Adapter to allow swiping between various detail fragments

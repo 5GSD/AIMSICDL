@@ -5,7 +5,7 @@
  */
 package zz.aimsicd.lite.constants;
 
-import zz.aimsicd.lite.drawer.NavDrawerItem;
+import zz.aimsicd.lite.ui.drawer.NavDrawerItem;
 
 /**
  * Constants for Menu

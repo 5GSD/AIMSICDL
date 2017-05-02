@@ -3,13 +3,13 @@
  * LICENSE:  http://git.io/vki47 | TERMS:  http://git.io/vki4o
  * -----------------------------------------------------------
  */
-package zz.aimsicd.lite.activities;
+package zz.aimsicd.lite.ui.activities;
 
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
 
-import zz.aimsicd.lite.fragments.SettingsFragment;
+import zz.aimsicd.lite.ui.fragments.SettingsFragment;
 
 
 public class SettingsActivity extends BaseActivity {

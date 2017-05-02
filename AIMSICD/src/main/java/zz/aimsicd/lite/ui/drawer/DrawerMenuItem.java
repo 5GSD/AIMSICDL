@@ -3,7 +3,7 @@
  * LICENSE:  http://git.io/vki47 | TERMS:  http://git.io/vki4o
  * -----------------------------------------------------------
  */
-package zz.aimsicd.lite.drawer;
+package zz.aimsicd.lite.ui.drawer;
 
 import zz.aimsicd.lite.R;
 import zz.aimsicd.lite.constants.DrawerMenu.ID.APPLICATION;
