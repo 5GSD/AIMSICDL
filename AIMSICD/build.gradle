@@ -17,11 +17,11 @@ android {
     buildToolsVersion '25.0.2'
 
     defaultConfig {
-        applicationId "com.SecUpwN.AIMSICD"
+        applicationId "zz.aimsicd.lite"             // com.SecUpwN.AIMSICD
         minSdkVersion 18
         targetSdkVersion 19 // Do not change: Working Icons on Android 5+
         versionCode 41
-        testApplicationId "com.SecUpwN.AIMSICD.test"
+        testApplicationId "zz.aimsicd.lite.test"    // com.SecUpwN.AIMSICD.test
 
         buildConfigField 'String', 'BUILD_NUMBER', (getBuildNumber() == null ? 'null' : "\"${buildNumber}\"")
         buildConfigField 'String', 'GIT_SHA', (gitSha == null ? 'null' : "\"${gitSha}\"")
