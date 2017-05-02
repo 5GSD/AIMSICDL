@@ -19,7 +19,7 @@
         android:layout_alignParentRight="true"
         android:linksClickable="true"
         android:longClickable="false"
-        android:singleLine="true"
+        android:maxLines="1"
         android:text="@string/osm_contributors"
         android:textColor="#ff454545"
         android:textStyle="normal"/>

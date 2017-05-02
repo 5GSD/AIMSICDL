@@ -33,7 +33,7 @@ import java.io.IOException;
 import io.freefair.android.util.logging.AndroidLogger;
 import io.freefair.android.util.logging.Logger;
 
-@SuppressWarnings("AccessOfSystemProperties")
+//@SuppressWarnings("AccessOfSystemProperties")
 public class CommandResult implements Parcelable {
 
     private final Logger log = AndroidLogger.forClass(CommandResult.class);
@@ -43,8 +43,7 @@ public class CommandResult implements Parcelable {
     private String mStderr;
     private long mEndTime;
 
-    public CommandResult(long startTime, int exitValue,
-                         String stdout, String stderr, long endTime) {
+    public CommandResult(long startTime, int exitValue, String stdout, String stderr, long endTime) {
         this.mStartTime = startTime;
         this.mExitValue = exitValue;
         this.mStdout = stdout;
@@ -58,7 +57,7 @@ public class CommandResult implements Parcelable {
 
     // pretty much just forward the constructor from parcelable to our main
     // loading constructor
-    @SuppressWarnings("CastToConcreteClass")
+    //@SuppressWarnings("CastToConcreteClass")
     public CommandResult(Parcel inParcel) {
         this(inParcel.readLong(), inParcel.readInt(), inParcel.readString(),
                 inParcel.readString(), inParcel.readLong());
@@ -80,7 +79,7 @@ public class CommandResult implements Parcelable {
         return mExitValue;
     }
 
-    @SuppressWarnings("UnnecessaryExplicitNumericCast")
+    //@SuppressWarnings("UnnecessaryExplicitNumericCast")
     private void checkForErrors() {
         if (mExitValue != 0 || !mStderr.trim().isEmpty()) {
             // don't log the commands that failed

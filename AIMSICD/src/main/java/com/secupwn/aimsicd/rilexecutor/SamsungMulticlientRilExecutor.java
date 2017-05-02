@@ -26,6 +26,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.lang.reflect.Method;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -401,7 +402,7 @@ public class SamsungMulticlientRilExecutor implements OemRilExecutor {
                 int err = p.readInt();
 
                 if (DBG) {
-                    log.verbose(String.format(": processSolicited() token: 0x%X err: %d", token, err));
+                    log.verbose(String.format(Locale.US, ": processSolicited() token: 0x%X err: %d", token, err));
                 }
 
                 if (err != RIL_CLIENT_ERR_SUCCESS) {
