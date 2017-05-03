@@ -18,15 +18,12 @@ import io.freefair.android.util.function.Function;
  * Class that holds and returns the correct icon based on requested icon format and
  * current system status.
  *
- * @author Tor Henning Ueland
  */
 public class Icon {
 
     public enum Type {
 
-        /**
-         * FLAT Icon-Style
-         */
+        // FLAT Icon-Style
         FLAT(
                 new Function<Status, Integer>() {
                     @NonNull
@@ -51,9 +48,8 @@ public class Icon {
                     }
                 }
         ),
-        /**
-         * SENSE Icon-Style
-         */
+
+         // SENSE Icon-Style
         SENSE(
                 new Function<Status, Integer>() {
                     @NonNull
@@ -78,9 +74,8 @@ public class Icon {
                     }
                 }
         ),
-        /**
-         * WHITE Icon-Style
-         */
+
+        // WHITE Icon-Style
         WHITE(
                 new Function<Status, Integer>() {
                     @NonNull
@@ -117,7 +112,6 @@ public class Icon {
      * Returns a icon of the Type $t, what kind of icon is returned is decided
      * from what the current status is.
      */
-    @SuppressWarnings("ConstantConditions")
     @DrawableRes
     public static int getIcon(Type type, Status status) {
         return type.iconMapper.apply(status);
