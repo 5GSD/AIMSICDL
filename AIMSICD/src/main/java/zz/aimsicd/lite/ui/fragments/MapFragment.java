@@ -19,35 +19,17 @@ import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.IBinder;
-
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.content.res.ResourcesCompat;
-
 import android.telephony.CellInfo;
 import android.telephony.PhoneStateListener;
 import android.telephony.ServiceState;
 import android.telephony.TelephonyManager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-
-import zz.aimsicd.lite.AppAIMSICD;
-import zz.aimsicd.lite.BuildConfig;
-import zz.aimsicd.lite.R;
-import zz.aimsicd.lite.ui.activities.MapPrefActivity;
-import zz.aimsicd.lite.adapters.AIMSICDDbAdapter;
-import zz.aimsicd.lite.constants.DBTableColumnIds;
-import zz.aimsicd.lite.constants.TinyDbKeys;
-import zz.aimsicd.lite.map.CellTowerGridMarkerClusterer;
-import zz.aimsicd.lite.map.CellTowerMarker;
-import zz.aimsicd.lite.map.MarkerData;
-import zz.aimsicd.lite.service.AimsicdService;
-import zz.aimsicd.lite.utils.Cell;
-import zz.aimsicd.lite.utils.GeoLocation;
-import zz.aimsicd.lite.utils.Helpers;
-import zz.aimsicd.lite.utils.RequestTask;
-import zz.aimsicd.lite.utils.TinyDB;
 
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.util.GeoPoint;
@@ -61,12 +43,27 @@ import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay;
 import java.util.LinkedList;
 import java.util.List;
 
-import io.freefair.android.injection.annotation.Inject;
 import io.freefair.android.injection.annotation.InjectView;
 import io.freefair.android.injection.annotation.XmlLayout;
 import io.freefair.android.injection.app.InjectionAppCompatActivity;
 import io.freefair.android.injection.app.InjectionFragment;
-import io.freefair.android.util.logging.Logger;
+import zz.aimsicd.lite.AppAIMSICD;
+import zz.aimsicd.lite.BuildConfig;
+import zz.aimsicd.lite.R;
+import zz.aimsicd.lite.adapters.AIMSICDDbAdapter;
+import zz.aimsicd.lite.constants.DBTableColumnIds;
+import zz.aimsicd.lite.constants.TinyDbKeys;
+import zz.aimsicd.lite.map.CellTowerGridMarkerClusterer;
+import zz.aimsicd.lite.map.CellTowerMarker;
+import zz.aimsicd.lite.map.MarkerData;
+import zz.aimsicd.lite.service.AimsicdService;
+import zz.aimsicd.lite.ui.activities.MapPrefActivity;
+import zz.aimsicd.lite.utils.Cell;
+import zz.aimsicd.lite.utils.GeoLocation;
+import zz.aimsicd.lite.utils.Helpers;
+import zz.aimsicd.lite.utils.RequestTask;
+import zz.aimsicd.lite.utils.TinyDB;
+
 
 /**
  * Description:    TODO: add details
@@ -93,8 +90,9 @@ import io.freefair.android.util.logging.Logger;
 @XmlLayout(R.layout.activity_map_viewer)
 public final class MapFragment extends InjectionFragment implements OnSharedPreferenceChangeListener {
 
-    @Inject
-    private Logger log;
+    public static final String TAG = "AICDL";
+    public static final String mTAG = "MapFragment";
+    
     public static final String updateOpenCellIDMarkers = "update_open_cell_markers";
 
     @InjectView(R.id.mapview)
@@ -127,7 +125,7 @@ public final class MapFragment extends InjectionFragment implements OnSharedPref
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        log.info("Starting MapViewer");
+        Log.i(TAG, mTAG + "Starting MapViewer");
 
         setUpMapIfNeeded();
 
@@ -211,7 +209,7 @@ public final class MapFragment extends InjectionFragment implements OnSharedPref
         public void onReceive(Context context, Intent intent) {
             loadEntries();
             if (BuildConfig.DEBUG && mCellTowerGridMarkerClusterer != null && mCellTowerGridMarkerClusterer.getItems() != null) {
-                log.verbose("mMessageReceiver CellTowerMarkers.invalidate() markers.size():" + mCellTowerGridMarkerClusterer.getItems().size());
+                Log.i(TAG, mTAG + "mMessageReceiver CellTowerMarkers.invalidate() markers.size():" + mCellTowerGridMarkerClusterer.getItems().size());
             }
 
         }
@@ -219,7 +217,7 @@ public final class MapFragment extends InjectionFragment implements OnSharedPref
 
     /**
      * Service Connection to bind the activity to the service
-     * <p/>
+     *
      * This seem to setup the connection and animates the map window movement to the
      * last known location.
      */
@@ -242,7 +240,7 @@ public final class MapFragment extends InjectionFragment implements OnSharedPref
 
         @Override
         public void onServiceDisconnected(ComponentName arg0) {
-            log.error("Service Disconnected");
+           Log.e(TAG, mTAG + "Service Disconnected");
             mBound = false;
         }
     };
@@ -387,7 +385,7 @@ public final class MapFragment extends InjectionFragment implements OnSharedPref
                     // Grab cell data from CELL_TABLE (cellinfo) --> DBi_bts
                     c = mDbHelper.getCellData();
                 } catch (IllegalStateException ix) {
-                    log.error("Problem getting data from CELL_TABLE", ix);
+                   Log.e(TAG, mTAG + "Problem getting data from CELL_TABLE", ix);
                 }
 
                 /*
@@ -465,7 +463,7 @@ public final class MapFragment extends InjectionFragment implements OnSharedPref
                         double[] d = mDbHelper.getDefaultLocation(mcc);
                         ret = new GeoPoint(d[0], d[1]);
                     } catch (Exception e) {
-                        log.error("Error getting default location!", e);
+                       Log.e(TAG, mTAG + "Error getting default location!", e);
                     }
                 }
                 if (c != null) {
@@ -479,7 +477,7 @@ public final class MapFragment extends InjectionFragment implements OnSharedPref
                         }
                         Thread.sleep(100);
                     } catch (InterruptedException e) {
-                        log.warn("thread interrupted", e);
+                       Log.w(TAG, mTAG + "thread interrupted", e);
                     }
                 }
                 List<Cell> nc = mAimsicdService.getCellTracker().updateNeighbouringCells();
@@ -508,7 +506,7 @@ public final class MapFragment extends InjectionFragment implements OnSharedPref
                         ovm.setIcon(getResources().getDrawable(R.drawable.ic_map_pin_orange));
                         items.add(ovm);
                     } catch (Exception e) {
-                        log.error("Error plotting neighbouring cells", e);
+                       Log.e(TAG, mTAG + "Error plotting neighbouring cells", e);
                     }
                 }
 
@@ -552,7 +550,7 @@ public final class MapFragment extends InjectionFragment implements OnSharedPref
                 }
                 if (mCellTowerGridMarkerClusterer != null) {
                     if (BuildConfig.DEBUG && mCellTowerGridMarkerClusterer.getItems() != null) {
-                        log.verbose("CellTowerMarkers.invalidate() markers.size():" + mCellTowerGridMarkerClusterer.getItems().size());
+                        Log.i(TAG, mTAG + "CellTowerMarkers.invalidate() markers.size():" + mCellTowerGridMarkerClusterer.getItems().size());
                     }
                     //Drawing markers of cell tower immediately as possible
                     mCellTowerGridMarkerClusterer.invalidate();

@@ -11,15 +11,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.IBinder;
-
 import android.support.annotation.StringRes;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.WindowManager;
-
-import zz.aimsicd.lite.R;
-import zz.aimsicd.lite.adapters.AIMSICDDbAdapter;
-import zz.aimsicd.lite.service.AimsicdService;
-import zz.aimsicd.lite.utils.MiscUtils;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -28,33 +23,38 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.freefair.android.util.logging.AndroidLogger;
-import io.freefair.android.util.logging.Logger;
+import zz.aimsicd.lite.R;
+import zz.aimsicd.lite.adapters.AIMSICDDbAdapter;
+import zz.aimsicd.lite.service.AimsicdService;
+import zz.aimsicd.lite.utils.MiscUtils;
+
+
+
 
 /**
  * Description: Detects mysterious SMS by scraping Logcat entries.
- * <p/>
- * <p/>
+ *
+ *
  * NOTES:   For this to work better Samsung users might have to set their Debug Level to High
  * in SysDump menu *#9900# or *#*#9900#*#*
- * <p/>
+ *
  * This is by no means a complete detection method but gives us something to work off.
- * <p/>
+ *
  * For latest list of working phones/models, please see:
  * https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/532
- * <p/>
+ *
  * PHONE:Samsung S5      MODEL:SM-G900F      ANDROID_VER:4.4.2   TYPE0:YES MWI:YES
  * PHONE:Samsung S4-min  MODEL:GT-I9195      ANDROID_VER:4.2.2   TYPE0:YES MWI:YES
  * PHONE:Sony Xperia J   MODEL:ST260i        ANDROID_VER:4.1.2   TYPE0:NO  MWI:YES
- * <p/>
+ *
  * To Use:
- * <p/>
+ *
  * SmsDetector smsDetector = new SmsDetector(context);
- * <p/>
+ *
  * smsDetector.startSmsDetection();
  * smsDetector.stopSmsDetection();
- * <p/>
- * <p/>
+ *
+ *
  * TODO:
  * [ ] Add more mTAG to the detection Log items
  *
@@ -62,7 +62,8 @@ import io.freefair.android.util.logging.Logger;
  */
 public final class SmsDetector extends Thread {
 
-    private final Logger log = AndroidLogger.forClass(SmsDetector.class);
+    public static final String TAG = "AICDL";
+    public static final String mTAG = "XXX";
 
     private AimsicdService mAIMSICDService;
     private boolean mBound;
@@ -70,6 +71,7 @@ public final class SmsDetector extends Thread {
     private Context mContext;
     private final String[] LOADED_DETECTION_STRINGS;
     private static final int TYPE0 = 1, MWI = 2, WAP = 3;
+
     // TODO: replace this with retrieval from AIMSICDDbAdapter
     private static final int LOGCAT_BUFFER_MAX_SIZE = 100;
 
@@ -123,7 +125,7 @@ public final class SmsDetector extends Thread {
         Intent intent = new Intent(mContext, AimsicdService.class);
         mContext.bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
         start();
-        log.info("SMS detection started");
+        Log.i(TAG, mTAG + "SMS detection started");
     }
 
     public void stopSmsDetection() {
@@ -133,7 +135,7 @@ public final class SmsDetector extends Thread {
             mContext.unbindService(mConnection);
             mBound = false;
         }
-        log.info("SMS detection stopped");
+        Log.i(TAG, mTAG + "SMS detection stopped");
     }
 
     @Override
@@ -155,7 +157,7 @@ public final class SmsDetector extends Thread {
 
             mLogcatReader = new BufferedReader(new InputStreamReader(process.getInputStream()));
         } catch (InterruptedException | IOException e) {
-            log.error("Exception while initializing LogCat (time, radio, main) reader", e);
+           Log.e(TAG, mTAG + "Exception while initializing LogCat (time, radio, main) reader", e);
             return;
         }
 
@@ -236,16 +238,16 @@ public final class SmsDetector extends Thread {
                 }
 
             } catch (IOException e) {
-                log.error("IO Exception", e);
+               Log.e(TAG, mTAG + "IO Exception", e);
             } catch (InterruptedException e) {
-                log.error("Interrupted Exception", e);
+               Log.e(TAG, mTAG + "Interrupted Exception", e);
             }
         }
 
         try {
             mLogcatReader.close();
         } catch (IOException ee) {
-            log.error("IOE Error closing BufferedReader", ee);
+           Log.e(TAG, mTAG + "IOE Error closing BufferedReader", ee);
         }
     }
 
@@ -256,26 +258,26 @@ public final class SmsDetector extends Thread {
             // memory optimized and precaution for LOADED_DETECTION_STRING being not filled
             String[] splitDetectionString = LOADED_DETECTION_STRING == null ? null : LOADED_DETECTION_STRING.split("#");
             if (splitDetectionString == null || splitDetectionString.length < 2 || splitDetectionString[0] == null || splitDetectionString[1] == null) {
-                log.debug("Broken detection string: " + LOADED_DETECTION_STRING);
+               Log.d(TAG, mTAG + "Broken detection string: " + LOADED_DETECTION_STRING);
                 // skip broken detection string
                 continue;
             }
             if (line.contains(splitDetectionString[0])) {
                 if ("TYPE0".equalsIgnoreCase(splitDetectionString[1])) {
-                    log.info("TYPE0 detected");
+                    Log.i(TAG, mTAG + "TYPE0 detected");
                     return TYPE0;
                 } else if ("MWI".equalsIgnoreCase(splitDetectionString[1])) {
-                    log.info("MWI detected");
+                    Log.i(TAG, mTAG + "MWI detected");
                     return MWI;
                 } else if ("WAPPUSH".equalsIgnoreCase(splitDetectionString[1])) {
-                    log.info("WAPPUSH detected");
+                    Log.i(TAG, mTAG + "WAPPUSH detected");
                     return WAP;
                 }
 
             }
             // This is currently unused, but keeping as an example of possible data contents
             // else if (line.contains("BroadcastReceiver action: android.provider.Telephony.SMS_RECEIVED")) {
-            // log.info("SMS found");
+            // Log.i(TAG, mTAG + "SMS found");
             // return 0;
             // }
         }
@@ -310,7 +312,7 @@ public final class SmsDetector extends Thread {
             mDbAdapter.toEventLog(3, "Detected Type-0 SMS");
             startPopUpInfo(SmsType.SILENT);
         } else {
-            log.debug("Detected Sms already logged");
+           Log.d(TAG, mTAG + "Detected Sms already logged");
         }
 
     }
@@ -342,7 +344,7 @@ public final class SmsDetector extends Thread {
             mDbAdapter.toEventLog(4, "Detected MWI SMS");
             startPopUpInfo(SmsType.MWI);
         } else {
-            log.debug(" Detected Sms already logged");
+           Log.d(TAG, mTAG + " Detected Sms already logged");
         }
     }
 
@@ -372,7 +374,7 @@ public final class SmsDetector extends Thread {
             mDbAdapter.toEventLog(6, "Detected WAPPUSH SMS");
             startPopUpInfo(SmsType.WAP_PUSH);
         } else {
-            log.debug("Detected SMS already logged");
+           Log.d(TAG, mTAG + "Detected SMS already logged");
         }
     }
 
@@ -445,7 +447,7 @@ public final class SmsDetector extends Thread {
 
         @Override
         public void onServiceDisconnected(ComponentName arg0) {
-            log.info("Disconnected SMS Detection Service");
+            Log.i(TAG, mTAG + "Disconnected SMS Detection Service");
             mBound = false;
         }
     };

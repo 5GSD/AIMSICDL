@@ -12,12 +12,11 @@ import android.support.v4.view.PagerTabStrip;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 
-import zz.aimsicd.lite.R;
-import zz.aimsicd.lite.adapters.DetailsPagerAdapter;
-
 import io.freefair.android.injection.annotation.InjectView;
 import io.freefair.android.injection.annotation.XmlLayout;
 import io.freefair.android.injection.app.InjectionFragment;
+import zz.aimsicd.lite.R;
+import zz.aimsicd.lite.adapters.DetailsPagerAdapter;
 
 /**
  * This fragment will host child fragments to display device details, cell info, etc.

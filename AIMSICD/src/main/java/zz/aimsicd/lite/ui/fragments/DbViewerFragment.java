@@ -9,6 +9,9 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Spinner;
 
+import io.freefair.android.injection.annotation.InjectView;
+import io.freefair.android.injection.annotation.XmlLayout;
+import io.freefair.android.injection.app.InjectionFragment;
 import zz.aimsicd.lite.R;
 import zz.aimsicd.lite.adapters.AIMSICDDbAdapter;
 import zz.aimsicd.lite.adapters.BaseInflaterAdapter;
@@ -35,15 +38,11 @@ import zz.aimsicd.lite.smsdetection.DetectionStringsCardInflater;
 import zz.aimsicd.lite.smsdetection.DetectionStringsData;
 import zz.aimsicd.lite.utils.Cell;
 
-import io.freefair.android.injection.annotation.InjectView;
-import io.freefair.android.injection.annotation.XmlLayout;
-import io.freefair.android.injection.app.InjectionFragment;
-
 /**
  * Description:    Class that handles the display of the items in the 'Database Viewer' (DBV)
- * <p/>
+ *
  * Issues:
- * <p/>
+ *
  * Notes:          See issue #234 for details on how to format the UI
  */
 @XmlLayout(zz.aimsicd.lite.R.layout.fragment_db_viewer)
@@ -177,22 +176,22 @@ public final class DbViewerFragment extends InjectionFragment {
 
     /**
      * Description:     Content layout and presentation of the Database Viewer
-     * <p/>
+     *
      * This is where the text labels are created for each column in
      * the Database Viewer (DBV). For details of how this should be presented, see:
      * https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/issues/234
-     * <p/>
+     *
      * Lat/Lng:     Latitude / Longitude (We should use "Lon" instead of "Lng".)
      * AvgSignal:   Average Signal Strength
      * RSSI:        Received Signal Strength Indicator (previously "Signal Strength")
      * Can have different meanings on different RAN's, e.g. RSCP in UMTS.
      * RAN:         Radio Access Network (GSM, UMTS, LTE etc.)
-     * <p/>
+     *
      * Notes:
-     * <p/>
+     *
      * 1. Although "RAN" is more correct here, we'll use "RAT" (Radio Access Technology),
      * which is the more common terminology. Thus reverting.
-     * <p/>
+     *
      * 2. Since Signal is not an "indicator" we should just call it "RSS" or "RXS"
      */
     private BaseInflaterAdapter BuildTable(Cursor tableData) {

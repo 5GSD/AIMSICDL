@@ -16,16 +16,10 @@ import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.telephony.TelephonyManager;
+import android.util.Log;
 import android.view.View;
 import android.widget.TableRow;
 
-import zz.aimsicd.lite.R;
-import zz.aimsicd.lite.service.AimsicdService;
-import zz.aimsicd.lite.service.CellTracker;
-import zz.aimsicd.lite.utils.Cell;
-import zz.aimsicd.lite.utils.Device;
-import zz.aimsicd.lite.utils.Helpers;
-import zz.aimsicd.lite.ui.widget.HighlightTextView;
 import com.kaichunlin.transition.animation.AnimationManager;
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.OkHttpClient;
@@ -41,13 +35,22 @@ import io.freefair.android.injection.annotation.Inject;
 import io.freefair.android.injection.annotation.InjectView;
 import io.freefair.android.injection.annotation.XmlLayout;
 import io.freefair.android.injection.app.InjectionFragment;
-import io.freefair.android.util.logging.Logger;
+import zz.aimsicd.lite.R;
+import zz.aimsicd.lite.service.AimsicdService;
+import zz.aimsicd.lite.service.CellTracker;
+import zz.aimsicd.lite.ui.widget.HighlightTextView;
+import zz.aimsicd.lite.utils.Cell;
+import zz.aimsicd.lite.utils.Device;
+import zz.aimsicd.lite.utils.Helpers;
+
 
 @XmlLayout(R.layout.fragment_device)
 public class DeviceFragment extends InjectionFragment implements SwipeRefreshLayout.OnRefreshListener {
 
-    @Inject
-    private Logger log;
+    public static final String TAG = "AICDL";
+    public static final String mTAG = "XXX";
+
+
 
     @Inject
     OkHttpClient okHttpClient;
@@ -111,7 +114,7 @@ public class DeviceFragment extends InjectionFragment implements SwipeRefreshLay
 
         @Override
         public void onServiceDisconnected(ComponentName arg0) {
-            log.error("Service Disconnected");
+           Log.e(TAG, mTAG + "Service Disconnected");
             mBound = false;
         }
     };
@@ -294,7 +297,7 @@ public class DeviceFragment extends InjectionFragment implements SwipeRefreshLay
 
     private void processFinish(Cell cell) {
         if (cell != null) {
-            log.info("processFinish - Cell =" + cell.toString());
+            Log.i(TAG, mTAG + "processFinish - Cell =" + cell.toString());
             if (cell.isValid()) {
                 mAimsicdService.setCell(cell);
                 Helpers.msgShort(mContext, getActivity().getString(zz.aimsicd.lite.R.string.refreshed_cell_id_info));  // TODO re-translating other languages

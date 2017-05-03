@@ -10,27 +10,27 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Vibrator;
 import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
 import android.util.SparseArray;
+
+import java.lang.ref.WeakReference;
+import java.util.ArrayList;
+import java.util.List;
+
+import io.freefair.android.injection.app.InjectionAppCompatActivity;
+import io.freefair.android.injection.app.InjectionApplication;
+import io.freefair.android.injection.modules.AndroidLoggerModule;
+import io.freefair.android.injection.modules.OkHttpModule;
 
 import zz.aimsicd.lite.constants.TinyDbKeys;
 import zz.aimsicd.lite.enums.Status;
 import zz.aimsicd.lite.utils.BaseAsyncTask;
 import zz.aimsicd.lite.utils.TinyDB;
 
-import java.lang.ref.WeakReference;
-import java.util.ArrayList;
-import java.util.List;
-
-import io.freefair.android.injection.annotation.Inject;
-import io.freefair.android.injection.app.InjectionAppCompatActivity;
-import io.freefair.android.injection.app.InjectionApplication;
-import io.freefair.android.injection.modules.AndroidLoggerModule;
-import io.freefair.android.injection.modules.OkHttpModule;
-import io.freefair.android.util.logging.Logger;
-
 public class AppAIMSICD extends InjectionApplication {
 
-    private final String TAG = "AIMSICD";
+    public static final String TAG = "AICDL";
+    public static final String mTAG = "XXX";
 
     private static WeakReference<AppAIMSICD> instance;
 
@@ -39,8 +39,7 @@ public class AppAIMSICD extends InjectionApplication {
     }
 
     private Status currentStatus;
-    @Inject
-    private Logger log;
+
 
     /**
      * Maps between an activity class name and the list of currently running
@@ -70,7 +69,7 @@ public class AppAIMSICD extends InjectionApplication {
             for (BaseAsyncTask<?, ?, ?> lTask : tasks) {
                 if (lTask.equals(pTask)) {
                     tasks.remove(lTask);
-                    log.verbose("BaseTask removed:" + pTask.toString());
+                    Log.i(TAG, mTAG + "BaseTask removed:" + pTask.toString());
 
                     break;
                 }
@@ -87,7 +86,7 @@ public class AppAIMSICD extends InjectionApplication {
             return;
         }
 
-        log.debug("BaseTask addTask activity:" + activity.getClass().getCanonicalName());
+       Log.d(TAG, mTAG + "BaseTask addTask activity:" + activity.getClass().getCanonicalName());
 
         int key = activity.getClass().getCanonicalName().hashCode();
         List<BaseAsyncTask<?, ?, ?>> tasks = mActivityTaskMap.get(key);
@@ -95,7 +94,7 @@ public class AppAIMSICD extends InjectionApplication {
             tasks = new ArrayList<>();
             mActivityTaskMap.put(key, tasks);
         }
-        log.verbose("BaseTask added:" + pTask.toString());
+        Log.i(TAG, mTAG + "BaseTask added:" + pTask.toString());
         tasks.add(pTask);
     }
 
@@ -104,7 +103,7 @@ public class AppAIMSICD extends InjectionApplication {
             return;
         }
 
-        log.debug("BaseTask detach:" + activity.getClass().getCanonicalName());
+       Log.d(TAG, mTAG + "BaseTask detach:" + activity.getClass().getCanonicalName());
 
         List<BaseAsyncTask<?, ?, ?>> tasks = mActivityTaskMap.get(activity.getClass().getCanonicalName().hashCode());
         if (tasks != null) {
@@ -118,7 +117,7 @@ public class AppAIMSICD extends InjectionApplication {
         if (activity == null) {
             return;
         }
-        log.debug("BaseTask attach:" + activity.getClass().getCanonicalName());
+       Log.d(TAG, mTAG + "BaseTask attach:" + activity.getClass().getCanonicalName());
 
         List<BaseAsyncTask<?, ?, ?>> tasks = mActivityTaskMap.get(activity.getClass().getCanonicalName().hashCode());
         if (tasks != null) {

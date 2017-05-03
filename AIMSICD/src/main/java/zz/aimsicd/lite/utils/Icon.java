@@ -9,10 +9,9 @@ import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import io.freefair.android.util.function.Function;
 import zz.aimsicd.lite.R;
 import zz.aimsicd.lite.enums.Status;
-
-import io.freefair.android.util.function.Function;
 
 /**
  * Class that holds and returns the correct icon based on requested icon format and

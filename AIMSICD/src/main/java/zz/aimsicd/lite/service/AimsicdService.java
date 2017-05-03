@@ -35,6 +35,7 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
@@ -42,15 +43,13 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 
+import io.freefair.android.injection.app.InjectionService;
 import zz.aimsicd.lite.R;
 import zz.aimsicd.lite.rilexecutor.RilExecutor;
 import zz.aimsicd.lite.smsdetection.SmsDetector;
 import zz.aimsicd.lite.utils.Cell;
 import zz.aimsicd.lite.utils.GeoLocation;
 
-import io.freefair.android.injection.annotation.Inject;
-import io.freefair.android.injection.app.InjectionService;
-import io.freefair.android.util.logging.Logger;
 
 /**
  * This starts the (background?) AIMSICD service to check for SMS and track
@@ -58,12 +57,16 @@ import io.freefair.android.util.logging.Logger;
  */
 public class AimsicdService extends InjectionService {
 
+    public static final String TAG = "AICDL";
+    public static final String mTAG = "XXX";
+
+
     public static boolean isGPSchoiceChecked;
     public static final String GPS_REMEMBER_CHOICE = "remember choice";
     SharedPreferences gpsPreferences;
 
-    @Inject
-    private Logger log;
+
+
 
     // /data/data/com.SecUpwN.AIMSICD/shared_prefs/com.SecUpwN.AIMSICD_preferences.xml
     public static final String SHARED_PREFERENCES_BASENAME = "zz.aimsicd.lite_preferences";
@@ -134,7 +137,7 @@ public class AimsicdService extends InjectionService {
         mRilExecutor = new RilExecutor(this);
         mCellTracker = new CellTracker(this, signalStrengthTracker);
 
-        log.info("Service launched successfully.");
+        Log.i(TAG, mTAG + "Service launched successfully.");
     }
 
     @Override
@@ -156,7 +159,7 @@ public class AimsicdService extends InjectionService {
         if (SmsDetector.getSmsDetectionState()) {
             smsdetector.stopSmsDetection();
         }
-        log.info("Service destroyed.");
+        Log.i(TAG, mTAG + "Service destroyed.");
     }
 
     public GeoLocation lastKnownLocation() {
@@ -210,7 +213,7 @@ public class AimsicdService extends InjectionService {
 
     public void startSmsTracking() {
         if (!isSmsTracking()) {
-            log.info("Sms Detection Thread Started");
+            Log.i(TAG, mTAG + "Sms Detection Thread Started");
             smsdetector = new SmsDetector(this);
             smsdetector.startSmsDetection();
         }
@@ -219,7 +222,7 @@ public class AimsicdService extends InjectionService {
     public void stopSmsTracking() {
         if (isSmsTracking()) {
             smsdetector.stopSmsDetection();
-            log.info("Sms Detection Thread Stopped");
+            Log.i(TAG, mTAG + "Sms Detection Thread Stopped");
         }
     }
 

@@ -13,11 +13,11 @@ import android.view.View;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-import zz.aimsicd.lite.R;
-
 import org.osmdroid.bonuspack.overlays.Marker;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
+
+import zz.aimsicd.lite.R;
 
 /**
  * BTS pin item

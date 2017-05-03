@@ -10,24 +10,23 @@ import android.content.ClipboardManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import zz.aimsicd.lite.R;
-import zz.aimsicd.lite.utils.Helpers;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-import io.freefair.android.injection.annotation.Inject;
 import io.freefair.android.injection.annotation.InjectView;
 import io.freefair.android.injection.annotation.XmlLayout;
 import io.freefair.android.injection.annotation.XmlMenu;
-import io.freefair.android.util.logging.Logger;
+import zz.aimsicd.lite.R;
+import zz.aimsicd.lite.utils.Helpers;
+
 
 /**
  *  Description:    This class is providing for the Debug log feature in the swipe menu.
@@ -56,8 +55,8 @@ import io.freefair.android.util.logging.Logger;
 @XmlMenu(R.menu.activity_debug_logs)
 public class DebugLogs extends BaseActivity {
 
-    @Inject
-    private Logger log;
+    public static final String TAG = "AICDL";
+    public static final String mTAG = "XXX";
 
     private LogUpdaterThread logUpdater = null;
     private boolean updateLogs = true;
@@ -94,7 +93,7 @@ public class DebugLogs extends BaseActivity {
                 try {
                     clearLogs();
                 } catch (IOException e) {
-                    log.error("Error clearing logs", e);
+                   Log.e(TAG, mTAG + "Error clearing logs", e);
                 }
             }
         });
@@ -200,7 +199,7 @@ public class DebugLogs extends BaseActivity {
                     intent.putExtra(Intent.EXTRA_TEXT, log);
                     startActivity(Intent.createChooser(intent, "Send Error Log"));
                 } catch (IOException e) {
-                    log.warn("Error reading logs", e);
+                   Log.w(TAG, mTAG + "Error reading logs", e);
                 }
             }
         }.start();
@@ -293,7 +292,7 @@ public class DebugLogs extends BaseActivity {
                 try {
                     Runtime.getRuntime().exec("logcat -c -b main -b system -b radio -b events");
                 } catch (IOException e) {
-                    log.error("Error clearing logs", e);
+                   Log.e(TAG, mTAG + "Error clearing logs", e);
                 }
 
                 runOnUiThread(new Runnable() {
@@ -331,12 +330,12 @@ public class DebugLogs extends BaseActivity {
                         });
                     }
                 } catch (IOException e) {
-                    log.warn("Error updating logs", e);
+                   Log.w(TAG, mTAG + "Error updating logs", e);
                 }
                 try {
                     Thread.sleep(1000);
                 } catch (InterruptedException e) {
-                    log.warn("Thread was interrupted", e);
+                   Log.w(TAG, mTAG + "Thread was interrupted", e);
                 }
             }
         }

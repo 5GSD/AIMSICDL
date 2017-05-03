@@ -12,15 +12,18 @@ import android.support.annotation.Nullable;
 import android.telephony.TelephonyManager;
 import android.telephony.cdma.CdmaCellLocation;
 import android.telephony.gsm.GsmCellLocation;
+import android.util.Log;
 
 import io.freefair.android.util.function.Optional;
 import io.freefair.android.util.function.Supplier;
-import io.freefair.android.util.logging.AndroidLogger;
-import io.freefair.android.util.logging.Logger;
+
+
 
 public class Device {
 
-    private final Logger log = AndroidLogger.forClass(Device.class);
+    public static final String TAG = "AICDL";
+    public static final String mTAG = "Device";
+
 
     public Cell mCell;
     private int mPhoneID = -1;
@@ -78,7 +81,7 @@ public class Device {
                             mCell.setMNC(Integer.parseInt(tm.getNetworkOperator().substring(3, 5)));
                         }
                     } catch (Exception e) {
-                        log.info("MncMcc parse exception: ", e);
+                        Log.i(TAG, mTAG + "MncMcc parse exception: ", e);
                     }
                 }
                 mNetName = tm.getNetworkOperatorName();
@@ -116,7 +119,7 @@ public class Device {
                                     mCell.setMNC(Integer.valueOf(homeOperator.substring(3, 5)));
                                 }
                             } catch (Exception e) {
-                                log.info("HomeOperator parse exception - " + e.getMessage(), e);
+                                Log.i(TAG, mTAG + "HomeOperator parse exception - " + e.getMessage(), e);
                             }
                         }
                     }
@@ -158,7 +161,7 @@ public class Device {
             return Optional.ofNullable(simInfoSupplier.get());
         } catch (Exception e) {
             // SIM methods can cause Exceptions on some devices
-            log.error("Failed to get SIM-Information", e);
+           Log.e(TAG, mTAG + "Failed to get SIM-Information", e);
         }
         return Optional.empty();
     }

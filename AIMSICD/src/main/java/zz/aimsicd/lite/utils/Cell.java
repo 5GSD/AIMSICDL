@@ -15,6 +15,9 @@ import zz.aimsicd.lite.R;
 
 public class Cell implements Parcelable {
 
+    public static final String TAG = "AICDL";
+    public static final String mTAG = "XXX";
+
     public static final String INVALID_PSC = "invalid";
 
     // Cell Specific Variables

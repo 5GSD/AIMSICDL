@@ -26,13 +26,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
-
-import zz.aimsicd.lite.R;
-import zz.aimsicd.lite.ui.fragments.MapFragment;
-import zz.aimsicd.lite.adapters.AIMSICDDbAdapter;
-import zz.aimsicd.lite.constants.DrawerMenu;
-import zz.aimsicd.lite.service.AimsicdService;
-import zz.aimsicd.lite.service.CellTracker;
+import android.util.Log;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -42,8 +36,14 @@ import java.util.Collections;
 import java.util.List;
 
 import io.freefair.android.injection.app.InjectionAppCompatActivity;
-import io.freefair.android.util.logging.AndroidLogger;
-import io.freefair.android.util.logging.Logger;
+import zz.aimsicd.lite.R;
+import zz.aimsicd.lite.adapters.AIMSICDDbAdapter;
+import zz.aimsicd.lite.constants.DrawerMenu;
+import zz.aimsicd.lite.service.AimsicdService;
+import zz.aimsicd.lite.service.CellTracker;
+import zz.aimsicd.lite.ui.fragments.MapFragment;
+
+
 
 /**
  *
@@ -62,7 +62,9 @@ import io.freefair.android.util.logging.Logger;
  */
  public class Helpers {
 
-    private static final Logger log = AndroidLogger.forClass(Helpers.class);
+    public static final String TAG = "AICDL";
+    public static final String mTAG = "XXX";
+
     private static final int CHARS_PER_LINE = 34;
 
    /**
@@ -122,7 +124,7 @@ import io.freefair.android.util.logging.Logger;
                 return wifiInfo.isConnected() || mobileInfo.isConnected();
             }
         } catch (Exception e) {
-            log.error(e.getMessage(), e);
+           Log.e(TAG, mTAG + e.getMessage(), e);
         }
         return false;
     }
@@ -212,18 +214,18 @@ import io.freefair.android.util.logging.Logger;
                                    + String.valueOf(boundingCoords[1].getLatitudeInDegrees()) + ","
                                    + String.valueOf(boundingCoords[1].getLongitudeInDegrees());
 
-                    log.info("OCID BBOX is set to: " + boundParameter + "  with radius " + radius + " Km.");
+                    Log.i(TAG, mTAG + "OCID BBOX is set to: " + boundParameter + "  with radius " + radius + " Km.");
 
                     StringBuilder sb = new StringBuilder();
                     sb.append("http://www.opencellid.org/cell/getInArea?key=")
                             .append(CellTracker.OCID_API_KEY).append("&BBOX=")
                             .append(boundParameter);
 
-                    log.info("OCID MCC is set to: " + cell.getMCC());
+                    Log.i(TAG, mTAG + "OCID MCC is set to: " + cell.getMCC());
                     if (cell.getMCC() != Integer.MAX_VALUE) {
                         sb.append("&mcc=").append(cell.getMCC());
                     }
-                    log.info("OCID MNC is set to: " + cell.getMNC());
+                    Log.i(TAG, mTAG + "OCID MNC is set to: " + cell.getMNC());
                     if (cell.getMNC() != Integer.MAX_VALUE) {
                         sb.append("&mnc=").append(cell.getMNC());
                     }
@@ -232,7 +234,7 @@ import io.freefair.android.util.logging.Logger;
                     new RequestTask(injectionActivity, type, new RequestTask.AsyncTaskCompleteListener() {
                         @Override
                         public void onAsyncTaskSucceeded() {
-                            log.verbose("RequestTask's OCID download was successful. Callback rechecking connected cell against database");
+                            Log.i(TAG, mTAG + "RequestTask's OCID download was successful. Callback rechecking connected cell against database");
                             service.getCellTracker().compareLacAndOpenDb();
                         }
 
@@ -269,7 +271,7 @@ import io.freefair.android.util.logging.Logger;
 
         if (aob.length == 0) {
             // WARNING: This one is very chatty!
-            log.verbose("invokeOemRilRequestRaw: byte-list response Length = 0");
+            Log.i(TAG, mTAG + "invokeOemRilRequestRaw: byte-list response Length = 0");
             return Collections.emptyList();
         }
         int lines = aob.length / CHARS_PER_LINE;
@@ -281,13 +283,13 @@ import io.freefair.android.util.logging.Logger;
             byteCount = 0;
 
             if (offset + byteCount >= aob.length) {
-                log.error("Unexpected EOF");
+               Log.e(TAG, mTAG + "Unexpected EOF");
                 break;
             }
             while (aob[offset + byteCount] != 0 && (byteCount < CHARS_PER_LINE)) {
                 byteCount += 1;
                 if (offset + byteCount >= aob.length) {
-                    log.error("Unexpected EOF");
+                   Log.e(TAG, mTAG + "Unexpected EOF");
                     break;
                 }
             }
@@ -305,7 +307,7 @@ import io.freefair.android.util.logging.Logger;
         try {
             result = SystemPropertiesReflection.get(context, prop);
         } catch (IllegalArgumentException iae) {
-            log.error("Failed to get system property: " + prop, iae);
+           Log.e(TAG, mTAG + "Failed to get system property: " + prop, iae);
         }
         return result == null ? def : result;
     }

@@ -15,9 +15,9 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import zz.aimsicd.lite.R;
-
 import java.util.List;
+
+import zz.aimsicd.lite.R;
 
 
 public class AdvanceUserBaseSmsAdapter extends BaseAdapter {

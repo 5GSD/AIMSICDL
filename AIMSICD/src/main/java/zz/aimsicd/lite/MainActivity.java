@@ -23,6 +23,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.telephony.TelephonyManager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -31,21 +32,23 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.util.List;
+
+import zz.aimsicd.lite.adapters.AIMSICDDbAdapter;
+import zz.aimsicd.lite.constants.DrawerMenu;
+import zz.aimsicd.lite.service.AimsicdService;
+import zz.aimsicd.lite.service.CellTracker;
 import zz.aimsicd.lite.ui.activities.AboutActivity;
 import zz.aimsicd.lite.ui.activities.BaseActivity;
 import zz.aimsicd.lite.ui.activities.DebugLogs;
-import zz.aimsicd.lite.ui.fragments.MapFragment;
 import zz.aimsicd.lite.ui.activities.SettingsActivity;
-import zz.aimsicd.lite.adapters.AIMSICDDbAdapter;
-import zz.aimsicd.lite.constants.DrawerMenu;
 import zz.aimsicd.lite.ui.drawer.DrawerMenuActivityConfiguration;
 import zz.aimsicd.lite.ui.drawer.NavDrawerItem;
 import zz.aimsicd.lite.ui.fragments.AtCommandFragment;
 import zz.aimsicd.lite.ui.fragments.CellInfoFragment;
 import zz.aimsicd.lite.ui.fragments.DbViewerFragment;
 import zz.aimsicd.lite.ui.fragments.DeviceFragment;
-import zz.aimsicd.lite.service.AimsicdService;
-import zz.aimsicd.lite.service.CellTracker;
+import zz.aimsicd.lite.ui.fragments.MapFragment;
 import zz.aimsicd.lite.utils.AsyncResponse;
 import zz.aimsicd.lite.utils.Cell;
 import zz.aimsicd.lite.utils.GeoLocation;
@@ -53,8 +56,6 @@ import zz.aimsicd.lite.utils.Helpers;
 import zz.aimsicd.lite.utils.Icon;
 import zz.aimsicd.lite.utils.LocationServices;
 import zz.aimsicd.lite.utils.RequestTask;
-
-import java.util.List;
 
 public class MainActivity extends BaseActivity implements AsyncResponse {
 
@@ -273,14 +274,14 @@ public class MainActivity extends BaseActivity implements AsyncResponse {
                     mAimsicdService.stopSmsTracking();
                 }
             } catch (Exception ee) {
-                log.warn("Exception in smstracking module: " + ee.getMessage());
+               Log.w(TAG, mTAG + "Exception in smstracking module: " + ee.getMessage());
             }
 
             if (mAimsicdService != null) {
                 mAimsicdService.onDestroy();
             }
             //Close database on Exit
-            log.info("Closing db from DrawerMenu.ID.APPLICATION.QUIT");
+            Log.i(TAG, mTAG + "Closing db from DrawerMenu.ID.APPLICATION.QUIT");
             new AIMSICDDbAdapter(getApplicationContext()).close();
             finish();
         }
@@ -316,7 +317,7 @@ public class MainActivity extends BaseActivity implements AsyncResponse {
                 cell.setMCC(mcc);
                 int mnc = Integer.parseInt(networkOperator.substring(3));
                 cell.setMNC(mnc);
-                log.debug("CELL:: mcc=" + mcc + " mnc=" + mnc);
+               Log.d(TAG, mTAG + "CELL:: mcc=" + mcc + " mnc=" + mnc);
             }
 
 
@@ -349,7 +350,7 @@ public class MainActivity extends BaseActivity implements AsyncResponse {
 
     @Override
     public void processFinish(float[] location) {
-        log.info("processFinish - location[0]=" + location[0] + " location[1]=" + location[1]);
+        Log.i(TAG, mTAG + "processFinish - location[0]=" + location[0] + " location[1]=" + location[1]);
 
 
         if (Float.floatToRawIntBits(location[0]) == 0
@@ -366,7 +367,7 @@ public class MainActivity extends BaseActivity implements AsyncResponse {
         if (cells != null) {
             if (!cells.isEmpty()) {
                 for (Cell cell : cells) {
-                    log.info("processFinish - Cell =" + cell.toString());
+                    Log.i(TAG, mTAG + "processFinish - Cell =" + cell.toString());
                     if (cell.isValid()) {
                         mAimsicdService.setCell(cell);
                         Intent intent = new Intent(AimsicdService.UPDATE_DISPLAY);
@@ -412,7 +413,7 @@ public class MainActivity extends BaseActivity implements AsyncResponse {
 
         @Override
         public void onServiceDisconnected(ComponentName arg0) {
-            log.warn("Service disconnected");
+           Log.w(TAG, mTAG + "Service disconnected");
             mBound = false;
         }
     };
@@ -549,10 +550,10 @@ public class MainActivity extends BaseActivity implements AsyncResponse {
                     mAimsicdService.stopSmsTracking();
                 }
             } catch (Exception ee) {
-                log.error("Error: Stopping SMS detection : " + ee.getMessage());
+               Log.e(TAG, mTAG + "Error: Stopping SMS detection : " + ee.getMessage());
             }
             // Close database on Exit
-            log.info("Closing db from onBackPressed()");
+            Log.i(TAG, mTAG + "Closing db from onBackPressed()");
             new AIMSICDDbAdapter(getApplicationContext()).close();
             finish();
         }
@@ -565,11 +566,11 @@ public class MainActivity extends BaseActivity implements AsyncResponse {
         if (root_sms && !mAimsicdService.isSmsTracking()) {
             mAimsicdService.startSmsTracking();
             Helpers.msgShort(this, "SMS Detection Started");
-            log.info("SMS Detection Thread Started");
+            Log.i(TAG, mTAG + "SMS Detection Thread Started");
         } else if (!root_sms && mAimsicdService.isSmsTracking()) {
             mAimsicdService.stopSmsTracking();
             Helpers.msgShort(this, "Sms Detection Stopped");
-            log.info("SMS Detection Thread Stopped");
+            Log.i(TAG, mTAG + "SMS Detection Thread Stopped");
         }
     }
 

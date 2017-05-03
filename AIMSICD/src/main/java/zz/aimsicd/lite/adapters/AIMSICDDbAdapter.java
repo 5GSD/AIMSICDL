@@ -10,6 +10,7 @@ import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Vibrator;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.util.SparseArray;
 
 import java.io.File;
@@ -25,9 +26,6 @@ import java.util.Locale;
 
 import au.com.bytecode.opencsv.CSVReader;
 import au.com.bytecode.opencsv.CSVWriter;
-import io.freefair.android.util.logging.AndroidLogger;
-import io.freefair.android.util.logging.Logger;
-
 import zz.aimsicd.lite.constants.DBTableColumnIds;
 import zz.aimsicd.lite.enums.Status;
 import zz.aimsicd.lite.service.CellTracker;
@@ -121,10 +119,11 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
 
     public static final int DATABASE_VERSION = 1; // Is this "pragma user_version;" ?
 
+    public static final String TAG = "AICDL";
+    public static final String mTAG = "AIMSICDDbAdapter";
+
     // TODO: This should be implemented as a SharedPreference...
     private static final Boolean MONO_DB_DUMP = true; // Also back-up DB with one monolithic dump file?
-
-    private final Logger log = AndroidLogger.forClass(AIMSICDDbAdapter.class);
     private static final String DB_NAME = "aimsicd.db";
 
     private String[] mTables;
@@ -188,10 +187,10 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
             this.getReadableDatabase();
             try {
                 copyDataBase();
-                log.info("Database created");
+                Log.i(TAG, mTAG + "Database created");
                 return true;
             } catch (IOException e) {
-                log.error("Error creating database", e);
+                Log.i(TAG, mTAG + "Error creating database", e);
                 throw new Error("Error copying database", e);
             }
 
@@ -209,10 +208,10 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
         SQLiteDatabase checkDB = null;
 
         try {
-            log.info("Checking for db first install this will throw an error on install and is normal");
+            Log.i(TAG, mTAG + "Checking for db first install this will throw an error on install and is normal");
             checkDB = SQLiteDatabase.openDatabase(mDatabasePath, null, SQLiteDatabase.OPEN_READONLY);
         } catch (SQLiteException e) {
-            log.error("database not yet created", e);
+            Log.i(TAG, mTAG + "Exception: Database not yet created: " + e);
         }
 
         if (checkDB != null) {
@@ -280,7 +279,7 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
      * @return result   of deleting that CID
      */
     public int deleteCell(int cellId) {
-        log.info("Deleted CID: " + cellId);
+        Log.i(TAG, mTAG + "Deleted CID: " + cellId);
         // TODO Instead we need to delete this cell from DBi_measure, since:
         // we are using foreign_key enforced DB, that doesn't allow you to
         // remove Dbi_bts without corresponding DBi_measures that uses them.
@@ -383,14 +382,14 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
         while (bts_cursor.moveToNext()) {
             // 1=LAC, 8=Accuracy, 11=Time
             if (cell.getLAC() != bts_cursor.getInt(bts_cursor.getColumnIndex("LAC"))) {
-                log.info("ALERT: Changing LAC on CID: " + cell.getCID()
+                Log.i(TAG, mTAG + "ALERT: Changing LAC on CID: " + cell.getCID()
                         + " LAC(API): " + cell.getLAC()
                         + " LAC(DBi): " + bts_cursor.getInt(bts_cursor.getColumnIndex("LAC")));
 
                 bts_cursor.close();
                 return false;
             } else {
-                log.verbose("LAC checked - no change on CID:" + cell.getCID()
+                Log.i(TAG, mTAG + "LAC checked - no change on CID:" + cell.getCID()
                         + " LAC(API): " + cell.getLAC()
                         + " LAC(DBi): " + bts_cursor.getInt(bts_cursor.getColumnIndex("LAC")));
             }
@@ -520,7 +519,7 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
                     csvWrite.writeNext("mcc,mnc,lac,cellid,lon,lat,signal,measured_at,rating");
 
                     int size = c.getCount();
-                    log.debug("OCID UPLOAD: row count = " + size);
+                   Log.d(TAG, mTAG + "OCID UPLOAD: row count = " + size);
 
                     while (c.moveToNext()) {
                         csvWrite.writeNext(
@@ -543,7 +542,7 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
             c.close();
             return false;
         } catch (Exception e) {
-            log.error("prepareOpenCellUploadData(): Error creating OpenCellID Upload Data: ", e);
+           Log.e(TAG, mTAG + "prepareOpenCellUploadData(): Error creating OpenCellID Upload Data: ", e);
             return false;
         }
     }
@@ -628,7 +627,7 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
 
                 if (!csvCellID.isEmpty()) {
                     int lines = csvCellID.size();
-                    log.info("UpdateOpenCellID: OCID CSV size (lines): " + lines);
+                    Log.i(TAG, mTAG + "UpdateOpenCellID: OCID CSV size (lines): " + lines);
 
                     // TODO: WHAT IS THIS DOING?? (Why is it needed?)
                     // This counts how many CIDs we have in DBe_import
@@ -698,14 +697,14 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
                                 0                           // TODO: rej_cause , set default 0
                         );
                     }
-                    log.debug("PopulateDBeImport(): inserted " + rowCounter + " cells.");
+                   Log.d(TAG, mTAG + "PopulateDBeImport(): inserted " + rowCounter + " cells.");
                 }
             } else {
-                log.error("Opencellid.csv file does not exist!");
+               Log.e(TAG, mTAG + "Opencellid.csv file does not exist!");
             }
             return true;
         } catch (Exception e) {
-            log.error("Error parsing OpenCellID data: " + e.getMessage());
+           Log.e(TAG, mTAG + "Error parsing OpenCellID data: " + e.getMessage());
             return false;
         } finally {
             try {
@@ -757,7 +756,7 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
                                                 records.get(i)[4]        // lon
                                         );
                                     } catch (Exception ee) {
-                                        log.error("RestoreDB: Error in insertDefaultLocation()", ee);
+                                       Log.e(TAG, mTAG + "RestoreDB: Error in insertDefaultLocation()", ee);
                                     }
                                     break;
 
@@ -813,7 +812,7 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
                                                 0 //Integer.parseInt(records.get(i)[16])  // TODO: rej_cause
                                         );
                                     } catch (Exception ee) {
-                                        log.error("RestoreDB: Error in insertDBeImport()", ee);
+                                       Log.e(TAG, mTAG + "RestoreDB: Error in insertDBeImport()", ee);
                                     }
                                     break;
 
@@ -834,7 +833,7 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
                                                 Double.parseDouble(records.get(i)[12])  // lon
                                         );
                                     } catch (Exception ee) {
-                                        log.error("RestoreDB: Error in insertBTS()", ee);
+                                       Log.e(TAG, mTAG + "RestoreDB: Error in insertBTS()", ee);
                                     }
                                     break;
 
@@ -866,7 +865,7 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
                                                 //records.get(i)[23].toString()         // TODO: con_state
                                         );
                                     } catch (Exception ee) {
-                                        log.error("RestoreDB: Error in insertDbiMeasure()", ee);
+                                       Log.e(TAG, mTAG + "RestoreDB: Error in insertDbiMeasure()", ee);
                                     }
                                     break;
 
@@ -934,10 +933,10 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
                     }
                 }
             }
-            log.info("RestoreDB() Finished");
+            Log.i(TAG, mTAG + "RestoreDB() Finished");
             return true;
         } catch (Exception e) {
-            log.error("RestoreDB() Error", e);
+           Log.e(TAG, mTAG + "RestoreDB() Error", e);
             return false;
         }
 
@@ -981,12 +980,12 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
         String execString = "/system/xbin/sqlite3 " + aimdir + "aimsicd.db '.backup " + file + "'";
 
         try {
-            log.info("DumpDB() Attempting to dump DB to: " + file + "\nUsing: \"" + execString + "\"\n");
+            Log.i(TAG, mTAG + "DumpDB() Attempting to dump DB to: " + file + "\nUsing: \"" + execString + "\"\n");
             CMDProcessor.runSuCommand(execString); // We need SU for this...
         } catch (Exception e) {
-            log.error("DumpDB() Failed to export DB dump file: ", e);
+           Log.e(TAG, mTAG + "DumpDB() Failed to export DB dump file: ", e);
         }
-        log.info("DumpDB() Dumped internal database to: " + aimdir + file);
+        Log.i(TAG, mTAG + "DumpDB() Dumped internal database to: " + aimdir + file);
     }
 
 
@@ -1009,7 +1008,7 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
             }
             return true;
         } catch (Exception ioe) {
-            log.error("BackupDB() Error: ", ioe);
+           Log.e(TAG, mTAG + "BackupDB() Error: ", ioe);
             return false;
         }
     }
@@ -1020,20 +1019,20 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
      * @param tableName String representing table name to export
      */
     private void backup(String tableName) {
-        log.info("Database Backup: " + DB_NAME);
+        Log.i(TAG, mTAG + "Database Backup: " + DB_NAME);
 
         File dir = new File(mExternalFilesDirPath);
         if (!dir.exists()) {
             if (!dir.mkdirs()) {
-                log.error("Backup(): Cannot create directory structure to " + dir.getAbsolutePath());
+               Log.e(TAG, mTAG + "Backup(): Cannot create directory structure to " + dir.getAbsolutePath());
             }
         }  // We should probably add some more error handling here.
         File file = new File(dir, "aimsicd-" + tableName + ".csv");
 
         try {
-            log.info("Backup(): Backup file was created? " + file.createNewFile());
+            Log.i(TAG, mTAG + "Backup(): Backup file was created? " + file.createNewFile());
             CSVWriter csvWrite = new CSVWriter(new FileWriter(file));
-            log.debug("DB backup() tableName: " + tableName);
+           Log.d(TAG, mTAG + "DB backup() tableName: " + tableName);
 
             Cursor c = mDb.rawQuery("SELECT * FROM " + tableName, new String[0]);
 
@@ -1051,9 +1050,9 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
             c.close();
 
         } catch (Exception e) {
-            log.error("Error exporting table: " + tableName, e);
+           Log.e(TAG, mTAG + "Error exporting table: " + tableName, e);
         }
-        log.info("Backup(): Successfully exported DB table to: " + file);
+        Log.i(TAG, mTAG + "Backup(): Successfully exported DB table to: " + file);
     }
 
 
@@ -1125,7 +1124,7 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
         //===  DELETE bad cells from BTS data
         //=============================================================
 
-        log.debug("CheckDBe() Attempting to delete bad import data from DBe_import table...");
+       Log.d(TAG, mTAG + "CheckDBe() Attempting to delete bad import data from DBe_import table...");
 
         // =========== samples ===========
         sqlQuery = "DELETE FROM DBe_import WHERE samples < 1";
@@ -1165,7 +1164,7 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
         mDb.execSQL(sqlQuery);
 
         // SELECT count(*) from DBe_import;
-        log.info("CheckDBe() Deleted BTS entries from DBe_import table with bad LAC/CID...");
+        Log.i(TAG, mTAG + "CheckDBe() Deleted BTS entries from DBe_import table with bad LAC/CID...");
 
         //=============================================================
         //===  UPDATE "rej_cause" in BTS data (DBe_import)
@@ -1210,7 +1209,7 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
      */
 
     public void cleanseCellStrengthTables(long maxTime) {
-        log.debug("CleanseCellStrengthTables(): Cleaning DBi_measure WHERE time < " + maxTime);
+       Log.d(TAG, mTAG + "CleanseCellStrengthTables(): Cleaning DBi_measure WHERE time < " + maxTime);
 
         //TODO Change "time" to INTEGER in DB   -- currently not working
         String query = String.format(Locale.US,
@@ -1270,7 +1269,7 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
             mDb.delete("SmsData", "_id=" + deleteme, null);
             return true;
         } catch (Exception ee) {
-            log.info(mTAG + ": Deleting SMS data failed", ee);
+            Log.i(TAG, mTAG + mTAG + ": Deleting SMS data failed", ee);
         }
         return false;
     }
@@ -1281,7 +1280,7 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
             mDb.delete("DetectionStrings", "det_str='" + deleteme + "'", null);
             return true;
         } catch (Exception ee) {
-            log.info("Deleting detection string failed", ee);
+            Log.i(TAG, mTAG + "Deleting detection string failed", ee);
         }
         return false;
 
@@ -1320,14 +1319,14 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
         cursor.close();
 
         if (exists) {
-            log.info("Detection String already in Database");
+            Log.i(TAG, mTAG + "Detection String already in Database");
         } else {
             try {
                 mDb.insert("DetectionStrings", null, newString);
-                log.info("New detection string added.");
+                Log.i(TAG, mTAG + "New detection string added.");
                 return true;
             } catch (Exception ee) {
-                log.info("Adding detection string Failed! ", ee);
+                Log.i(TAG, mTAG + "Adding detection string Failed! ", ee);
             }
         }
         return false;
@@ -1389,11 +1388,11 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
 
     /**
      * Returns DBe_import contents
-     * <p/>
+     *
      * Used in:
      * DbViewerFragment.java
      * MapFragment.java
-     * <p/>
+     *
      * Returned Columns:
      * "_id"        INTEGER PRIMARY KEY AUTOINCREMENT,
      * "DBsource"   TEXT NOT NULL,
@@ -1644,7 +1643,7 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
     /**
      * This method is used to insert and populate the downloaded or previously
      * backed up OCID details into the DBe_import database table.
-     * <p/>
+     *
      * It also prevents adding multiple entries of the same cell-id, when OCID
      * downloads are repeated.
      */
@@ -1713,7 +1712,7 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
 
             mDb.insert("DBi_bts", null, values);
 
-            log.info("DBi_bts was populated.");
+            Log.i(TAG, mTAG + "DBi_bts was populated.");
 
         } else {
             // If cell is already in the DB, update it to last time seen and
@@ -1736,7 +1735,7 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
             // update (String table, ContentValues values, String whereClause, String[] whereArgs)
             mDb.update("DBi_bts", values, "CID=?", new String[]{Integer.toString(cell.getCID())});
 
-            log.info("DBi_bts updated: CID=" + cell.getCID() + " LAC=" + cell.getLAC());
+            Log.i(TAG, mTAG + "DBi_bts updated: CID=" + cell.getCID() + " LAC=" + cell.getLAC());
         }
 
         // TODO: This doesn't make sense, if it's in DBi_bts it IS part of DBi_measure!
@@ -1770,7 +1769,7 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
             dbiMeasure.put("isNeighbour", 0);
 
             mDb.insert("DBi_measure", null, dbiMeasure);
-            log.info("DBi_measure inserted bts_id=" + cell.getCID());  // TODO: NO!!
+            Log.i(TAG, mTAG + "DBi_measure inserted bts_id=" + cell.getCID());  // TODO: NO!!
 
         } else {
             // Updating DBi_measure tables if already exists.
@@ -1819,7 +1818,7 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
             //dbiMeasure.put("AvgEcNo",AvgEcNo);                // TODO: I need to check this...
 
             mDb.update("DBi_measure", dbiMeasure, "bts_id=?", new String[]{Integer.toString(cell.getCID())});
-            log.info("DBi_measure updated bts_id=" + cell.getCID());
+            Log.i(TAG, mTAG + "DBi_measure updated bts_id=" + cell.getCID());
 
         }
 
@@ -1865,7 +1864,7 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
                 // has changed. At the moment this is only PSC, since we don't have the others...
                 // =======================================================================
                 mDb.update("DBi_bts", btsValues, "CID=?", new String[]{Integer.toString(cid)});
-                log.info("Warning: Physical cell data in DBi_bts has changed! CID=" + cid);
+                Log.i(TAG, mTAG + "Warning: Physical cell data in DBi_bts has changed! CID=" + cid);
             }
         }
 
@@ -1937,7 +1936,7 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
     /**
      * This inserts Detection Flag data that is used to fine tune the various
      * available detection mechanisms. (See Detection List in issue #230)
-     * <p/>
+     *
      * There's also a CounterMeasure ID to link to possible future counter measures.
      */
     public void insertDetectionFlags(int code,
@@ -2062,10 +2061,10 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
                 eventLog.put("DF_description", DF_description);
 
                 mDb.insert("EventLog", null, eventLog);
-                log.info("InsertEventLog(): Insert detection event into EventLog table with CID=" + cid);
+                Log.i(TAG, mTAG + "InsertEventLog(): Insert detection event into EventLog table with CID=" + cid);
             } else {
                 // TODO This may need to be removed as it may spam the logcat buffer...
-                log.verbose("InsertEventLog(): Skipped inserting duplicate event into EventLog table with CID=" + cid);
+                Log.i(TAG, mTAG + "InsertEventLog(): Skipped inserting duplicate event into EventLog table with CID=" + cid);
             }
         }
     }
@@ -2113,7 +2112,7 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
                 eventLog.put("DF_description", DF_desc);    // DF_desc
 
                 mDb.insert("EventLog", null, eventLog);
-                log.info("ToEventLog(): Added new event: id=" + DF_id + " time=" + time + " cid=" + cid);
+                Log.i(TAG, mTAG + "ToEventLog(): Added new event: id=" + DF_id + " time=" + time + " cid=" + cid);
 
                 // Short 100 ms Vibration
                 // TODO not elegant solution, vibrator invocation should be moved somewhere else imho
@@ -2132,11 +2131,11 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
             }
 //            else {
             // TODO This may need to be removed as it may spam the logcat buffer...
-            //log.verbose(mTAG + ":toEventLog(): Skipped inserting duplicate event");
+            //Log.i(TAG, mTAG + mTAG + ":toEventLog(): Skipped inserting duplicate event");
 //            }
         }
         // TODO This may need to be removed as it may spam the logcat buffer...
-        //log.verbose(mTAG + ":insertEventLog(): Skipped inserting bad CID/LAC data");
+        //Log.i(TAG, mTAG + mTAG + ":insertEventLog(): Skipped inserting bad CID/LAC data");
     }
 
 

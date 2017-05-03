@@ -15,20 +15,20 @@ import android.support.annotation.DrawableRes;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 
-import zz.aimsicd.lite.MainActivity;
-import zz.aimsicd.lite.R;
-
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-import io.freefair.android.util.logging.AndroidLogger;
-import io.freefair.android.util.logging.Logger;
+import zz.aimsicd.lite.MainActivity;
+import zz.aimsicd.lite.R;
+
+
+
 
 public class MiscUtils {
 
-    private static final Logger log = AndroidLogger.forClass(MiscUtils.class);
+
 
     public static String getCurrentTimeStamp() {
         //yyyyMMddHHmmss <-- this format is needed for OCID upload

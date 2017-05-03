@@ -11,15 +11,14 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
 
+import io.freefair.android.injection.app.InjectionAppCompatActivity;
 import zz.aimsicd.lite.AppAIMSICD;
 import zz.aimsicd.lite.R;
 import zz.aimsicd.lite.service.AimsicdService;
 import zz.aimsicd.lite.utils.Icon;
 
-import io.freefair.android.injection.annotation.Inject;
-import io.freefair.android.injection.app.InjectionAppCompatActivity;
-import io.freefair.android.util.logging.Logger;
 
 /**
  * Base activity class, handles code that is shared between all activities
@@ -28,8 +27,8 @@ import io.freefair.android.util.logging.Logger;
  */
 public abstract class BaseActivity extends InjectionAppCompatActivity {
 
-    @Inject
-    protected Logger log;
+    public static final String TAG = "AICDL";
+    public static final String mTAG = "XXX";
 
     /**
      * Triggered when GUI is opened
@@ -37,7 +36,7 @@ public abstract class BaseActivity extends InjectionAppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        log.debug("StatusWatcher starting watching");
+       Log.d(TAG, mTAG + "StatusWatcher starting watching");
         LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver,
                 new IntentFilter("StatusChange"));
         updateIcon(this);
@@ -49,7 +48,7 @@ public abstract class BaseActivity extends InjectionAppCompatActivity {
     private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            log.debug("StatusWatcher received status change to " + ((AppAIMSICD) getApplication()).getStatus().name() + ", updating icon");
+           Log.d(TAG, mTAG + "StatusWatcher received status change to " + ((AppAIMSICD) getApplication()).getStatus().name() + ", updating icon");
             updateIcon(context);
         }
     };
@@ -73,7 +72,7 @@ public abstract class BaseActivity extends InjectionAppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        log.debug("StatusWatcher stopped watching");
+       Log.d(TAG, mTAG + "StatusWatcher stopped watching");
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mMessageReceiver);
     }
 }

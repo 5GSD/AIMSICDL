@@ -9,12 +9,9 @@ import android.app.ProgressDialog;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
-import zz.aimsicd.lite.R;
-import zz.aimsicd.lite.service.AimsicdService;
-import zz.aimsicd.lite.service.CellTracker;
-import zz.aimsicd.lite.utils.Helpers;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
@@ -23,7 +20,11 @@ import java.io.IOException;
 
 import io.freefair.android.injection.annotation.Inject;
 import io.freefair.android.injection.annotation.XmlLayout;
-import io.freefair.android.util.logging.Logger;
+import zz.aimsicd.lite.R;
+import zz.aimsicd.lite.service.AimsicdService;
+import zz.aimsicd.lite.service.CellTracker;
+import zz.aimsicd.lite.utils.Helpers;
+
 
 /**
  *  Popup toast messages asking if user wants to download
@@ -33,8 +34,9 @@ import io.freefair.android.util.logging.Logger;
 public class OpenCellIdActivity extends BaseActivity {
     private SharedPreferences prefs;
 
-    @Inject
-    private Logger log;
+    public static final String TAG = "AICDL";
+    public static final String mTAG = "XXX";
+
     private ProgressDialog pd;
 
     @Inject
@@ -70,7 +72,7 @@ public class OpenCellIdActivity extends BaseActivity {
             try {
                 return requestNewOCIDKey();
             } catch (final IOException e) {
-                log.warn("Error getting new OCID-API", e);
+               Log.w(TAG, mTAG + "Error getting new OCID-API", e);
 
                 /**
                  * In case response from OCID takes more time and user pressed back or anything else,
@@ -155,38 +157,38 @@ public class OpenCellIdActivity extends BaseActivity {
             String htmlResponse = response.body().string();
 
             // For debugging HTTP server response and codes
-            log.debug("Response Html=" + htmlResponse + " Response Code=" + String.valueOf(responseCode));
+           Log.d(TAG, mTAG + "Response Html=" + htmlResponse + " Response Code=" + String.valueOf(responseCode));
 
             if (responseCode == 200) {
-                log.debug("OCID Code 1: Cell Not found: " + htmlResponse);
+               Log.d(TAG, mTAG + "OCID Code 1: Cell Not found: " + htmlResponse);
                 return htmlResponse;
 
             } else if (responseCode == 401) {
-                log.debug("OCID Code 2: Invalid API Key! :" + htmlResponse);
+               Log.d(TAG, mTAG + "OCID Code 2: Invalid API Key! :" + htmlResponse);
                 return htmlResponse;
 
             } else if (responseCode == 400) {
-                log.debug("OCID Code 3: Invalid input data: " + htmlResponse);
+               Log.d(TAG, mTAG + "OCID Code 3: Invalid input data: " + htmlResponse);
                 return "Bad Request"; // For making a toast!
 
             } else if (responseCode == 403) {
-                log.debug("OCID Code 4:  Your API key must be white listed: " + htmlResponse);
+               Log.d(TAG, mTAG + "OCID Code 4:  Your API key must be white listed: " + htmlResponse);
                 return "Bad Request"; // For making a toast!
 
             } else if (responseCode == 500) {
-                log.debug("OCID Code 5: Remote internal server error: " + htmlResponse);
+               Log.d(TAG, mTAG + "OCID Code 5: Remote internal server error: " + htmlResponse);
                 return "Bad Request"; // For making a toast!
 
             } else if (responseCode == 503) {
-                log.debug("OCID Code 6: Reached 24hr API key request limit: " + htmlResponse);
+               Log.d(TAG, mTAG + "OCID Code 6: Reached 24hr API key request limit: " + htmlResponse);
                 return htmlResponse;
 
             } else if (responseCode == 429) {
-                log.debug("OCID Code 7: Exceeded daily request limit (1000) for your API key: " + htmlResponse);
+               Log.d(TAG, mTAG + "OCID Code 7: Exceeded daily request limit (1000) for your API key: " + htmlResponse);
                 return htmlResponse;
 
             } else {
-                log.debug("OCID Returned Unknown Response: " + responseCode);
+               Log.d(TAG, mTAG + "OCID Returned Unknown Response: " + responseCode);
                 return null;
             }
         }

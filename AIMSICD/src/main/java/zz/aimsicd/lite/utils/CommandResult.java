@@ -23,20 +23,23 @@ package zz.aimsicd.lite.utils;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-
-import zz.aimsicd.lite.adapters.AIMSICDDbAdapter;
+import android.util.Log;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
-import io.freefair.android.util.logging.AndroidLogger;
-import io.freefair.android.util.logging.Logger;
+import zz.aimsicd.lite.adapters.AIMSICDDbAdapter;
+
+
+
 
 //@SuppressWarnings("AccessOfSystemProperties")
 public class CommandResult implements Parcelable {
 
-    private final Logger log = AndroidLogger.forClass(CommandResult.class);
+    public static final String TAG = "AICDL";
+    public static final String mTAG = "XXX";
+
     private long mStartTime;
     private int mExitValue;
     private String mStdout;
@@ -50,7 +53,7 @@ public class CommandResult implements Parcelable {
         this.mStderr = stderr;
         this.mEndTime = endTime;
 
-        log.debug("Time to execute: " + (mEndTime - mStartTime) + " ns (nanoseconds)");
+       Log.d(TAG, mTAG + "Time to execute: " + (mEndTime - mStartTime) + " ns (nanoseconds)");
         // this is set last so log from here
         checkForErrors();
     }
@@ -109,13 +112,13 @@ public class CommandResult implements Parcelable {
                 }
                 errorWriter.write(lineEnding);
             } catch (IOException e) {
-                log.error("Failed to write command result to error file", e);
+               Log.e(TAG, mTAG + "Failed to write command result to error file", e);
             } finally {
                 if (errorWriter != null) {
                     try {
                         errorWriter.close();
                     } catch (IOException ignored) {
-                        log.error("Failed to close error writer", ignored);
+                       Log.e(TAG, mTAG + "Failed to close error writer", ignored);
                     }
                 }
             }

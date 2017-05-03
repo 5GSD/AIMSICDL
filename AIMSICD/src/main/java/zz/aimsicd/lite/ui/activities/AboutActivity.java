@@ -22,12 +22,11 @@ import android.widget.Button;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import zz.aimsicd.lite.BuildConfig;
-import zz.aimsicd.lite.R;
-
 import io.freefair.android.injection.annotation.InjectView;
 import io.freefair.android.injection.annotation.XmlLayout;
 import io.freefair.android.injection.app.InjectionAppCompatActivity;
+import zz.aimsicd.lite.BuildConfig;
+import zz.aimsicd.lite.R;
 
 
 @XmlLayout(R.layout.activity_about)

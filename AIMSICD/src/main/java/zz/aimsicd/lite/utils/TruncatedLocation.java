@@ -1,9 +1,7 @@
 package zz.aimsicd.lite.utils;
 
 import android.location.Location;
-
-import io.freefair.android.util.logging.AndroidLogger;
-import io.freefair.android.util.logging.Logger;
+import android.util.Log;
 
 import java.text.NumberFormat;
 import java.text.ParseException;
@@ -13,7 +11,9 @@ import java.text.ParseException;
  */
 public class TruncatedLocation extends Location {
 
-    private static final Logger log = AndroidLogger.forClass(TruncatedLocation.class);
+    public static final String TAG = "AICDL";
+    public static final String mTAG = "XXX";
+
 
     public TruncatedLocation(Location l) {
         super(l);
@@ -43,7 +43,7 @@ public class TruncatedLocation extends Location {
             Number number = format.parse(s);
             td = number.doubleValue();
         } catch (ParseException e) {
-            log.error("parsing exception", e);
+           Log.e(TAG, mTAG + "parsing exception", e);
         }
         return td;
     }

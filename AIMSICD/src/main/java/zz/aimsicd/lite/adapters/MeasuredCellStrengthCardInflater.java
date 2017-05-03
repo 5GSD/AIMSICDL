@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import zz.aimsicd.lite.R;
+
 import static java.lang.String.valueOf;
 
 /**

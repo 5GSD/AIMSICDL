@@ -16,14 +16,14 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.List;
+
 import zz.aimsicd.lite.R;
 import zz.aimsicd.lite.constants.DrawerMenu;
 import zz.aimsicd.lite.ui.drawer.DrawerMenuItem;
 import zz.aimsicd.lite.ui.drawer.DrawerMenuSection;
 import zz.aimsicd.lite.ui.drawer.NavDrawerItem;
 import zz.aimsicd.lite.utils.Helpers;
-
-import java.util.List;
 
 public class DrawerMenuAdapter extends ArrayAdapter<NavDrawerItem> {
 

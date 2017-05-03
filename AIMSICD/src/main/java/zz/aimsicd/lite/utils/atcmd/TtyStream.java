@@ -6,6 +6,7 @@
 package zz.aimsicd.lite.utils.atcmd;
 
 import android.os.Message;
+import android.util.Log;
 import android.util.Pair;
 
 import java.io.BufferedReader;
@@ -21,6 +22,9 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 /*package*/
 class TtyStream extends AtCommandTerminal {
+
+    public static final String TAG = "AICDL";
+    public static final String mTAG = "TtyStream";
 
     protected InputStream mInputStream;
     protected OutputStream mOutputStream;
@@ -65,7 +69,7 @@ class TtyStream extends AtCommandTerminal {
                         mOutputStream.write('\r');
                         mOutputStream.flush();
                     } catch (IOException e) {
-                        log.error("Output IOException", e);
+                       Log.e(TAG, mTAG + "Output IOException", e);
                         if (resultMessage != null) {
                             resultMessage.obj = e;
                             resultMessage.sendToTarget();
@@ -103,7 +107,7 @@ class TtyStream extends AtCommandTerminal {
                                 throw new IOException("reader closed");
                             }
                         } catch (IOException e) {
-                            log.error("Input IOException", e);
+                           Log.e(TAG, mTAG + "Input IOException", e);
                             if (resultMessage != null) {
                                 resultMessage.obj = e;
                                 resultMessage.sendToTarget();
@@ -125,7 +129,7 @@ class TtyStream extends AtCommandTerminal {
                         resultMessage.obj = lines;
                         resultMessage.sendToTarget();
                     } else {
-                        log.debug("Data came in with no handler");
+                       Log.d(TAG, mTAG + "Data came in with no handler");
                     }
                 }
             } catch (UnsupportedEncodingException e) {

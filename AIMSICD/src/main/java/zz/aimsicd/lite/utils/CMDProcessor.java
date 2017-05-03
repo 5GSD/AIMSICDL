@@ -21,12 +21,12 @@
 
 package zz.aimsicd.lite.utils;
 
-import io.freefair.android.util.logging.AndroidLogger;
-import io.freefair.android.util.logging.Logger;
+import android.util.Log;
 
 public final class CMDProcessor {
 
-    private static final Logger log = AndroidLogger.forClass(CMDProcessor.class);
+    public static final String TAG = "AICDL";
+    public static final String mTAG = "CMDProcessor";
 
     public CMDProcessor() {
 
@@ -79,7 +79,7 @@ public final class CMDProcessor {
         out.append(r.getStdout());
         out.append(" ; ");
         out.append(r.getStderr());
-        log.debug("canSU() su[" + r.getExitValue() + "]: " + out);
+       Log.d(TAG, mTAG + "canSU() su[" + r.getExitValue() + "]: " + out);
         return r.success();
     }
 }

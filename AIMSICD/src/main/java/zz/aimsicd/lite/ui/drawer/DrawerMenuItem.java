@@ -7,8 +7,8 @@ package zz.aimsicd.lite.ui.drawer;
 
 import zz.aimsicd.lite.R;
 import zz.aimsicd.lite.constants.DrawerMenu.ID.APPLICATION;
-import zz.aimsicd.lite.constants.DrawerMenu.ID.MAIN;
 import zz.aimsicd.lite.constants.DrawerMenu.ID.DATABASE_SETTINGS;
+import zz.aimsicd.lite.constants.DrawerMenu.ID.MAIN;
 
 public class DrawerMenuItem implements NavDrawerItem {
 

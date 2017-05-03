@@ -11,14 +11,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
 
-import zz.aimsicd.lite.BuildConfig;
-import zz.aimsicd.lite.R;
-import zz.aimsicd.lite.ui.fragments.MapFragment;
-import zz.aimsicd.lite.adapters.AIMSICDDbAdapter;
-import zz.aimsicd.lite.constants.DrawerMenu;
-import zz.aimsicd.lite.constants.TinyDbKeys;
-import zz.aimsicd.lite.service.CellTracker;
 import com.squareup.okhttp.MediaType;
 import com.squareup.okhttp.MultipartBuilder;
 import com.squareup.okhttp.OkHttpClient;
@@ -38,7 +32,14 @@ import java.util.concurrent.TimeUnit;
 
 import io.freefair.android.injection.annotation.Inject;
 import io.freefair.android.injection.app.InjectionAppCompatActivity;
-import io.freefair.android.util.logging.Logger;
+import zz.aimsicd.lite.BuildConfig;
+import zz.aimsicd.lite.R;
+import zz.aimsicd.lite.adapters.AIMSICDDbAdapter;
+import zz.aimsicd.lite.constants.DrawerMenu;
+import zz.aimsicd.lite.constants.TinyDbKeys;
+import zz.aimsicd.lite.service.CellTracker;
+import zz.aimsicd.lite.ui.fragments.MapFragment;
+
 
 /**
  *
@@ -81,6 +82,9 @@ import io.freefair.android.util.logging.Logger;
  */
 public class RequestTask extends BaseAsyncTask<String, Integer, String> {
 
+    public static final String TAG = "AICDL";
+    public static final String mTAG = "XXX";
+
     //Calling from the menu more extensive(more difficult for sever),
     // we have to give more time for the server response
     public static final int REQUEST_TIMEOUT_MAPS = 80000;       // [ms] 80 s Calling from map
@@ -93,8 +97,6 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
     public static final char RESTORE_DATABASE = 4;              // Restore DB from CSV files
     public static final char CELL_LOOKUP = 5;                   // TODO: "All Current Cell Details (ALL_CURRENT_CELL_DETAILS)"
 
-    @Inject
-    private Logger log;
 
     private AIMSICDDbAdapter mDbAdapter;
     private Context mAppContext;
@@ -130,7 +132,7 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
     @Deprecated
     public RequestTask(InjectionAppCompatActivity context, char type) {
         this(context, type, null);
-        log.warn("RequestTask(InjectionAppCompatActivity, char) is deprecated in favour of using listener callbacks");
+       Log.w(TAG, mTAG + "RequestTask(InjectionAppCompatActivity, char) is deprecated in favour of using listener callbacks");
     }
 
     @Override
@@ -143,7 +145,7 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
                 try {
                     boolean prepared = mDbAdapter.prepareOpenCellUploadData();
 
-                    log.info("OCID upload data prepared - " + String.valueOf(prepared));
+                    Log.i(TAG, mTAG + "OCID upload data prepared - " + String.valueOf(prepared));
                     if (prepared) {
                         File file = new File((mAppContext.getExternalFilesDir(null) + File.separator) + "OpenCellID/aimsicd-ocid-data.csv");
                         publishProgress(25, 100);
@@ -165,7 +167,7 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
 
                         publishProgress(80, 100);
                         if (response != null) {
-                            log.info("OCID Upload Response: "
+                            Log.i(TAG, mTAG + "OCID Upload Response: "
                                     + response.code() + " - "
                                     + response.message());
                             if (response.code() == 200) {
@@ -181,13 +183,13 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
 
                     // all caused by httpclient.execute(httppost);
                 } catch (UnsupportedEncodingException e) {
-                    log.error("Upload OpenCellID data Exception", e);
+                   Log.e(TAG, mTAG + "Upload OpenCellID data Exception", e);
                 } catch (FileNotFoundException e) {
-                    log.error("Upload OpenCellID data Exception", e);
+                   Log.e(TAG, mTAG + "Upload OpenCellID data Exception", e);
                 } catch (IOException e) {
-                    log.error("Upload OpenCellID data Exception", e);
+                   Log.e(TAG, mTAG + "Upload OpenCellID data Exception", e);
                 } catch (Exception e) {
-                    log.error("Upload OpenCellID data Exception", e);
+                   Log.e(TAG, mTAG + "Upload OpenCellID data Exception", e);
                 }
 
                 // DOWNLOADING...
@@ -204,7 +206,7 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
                         dir.mkdirs();
                     }
                     File file = new File(dir, OCDB_File_Name);
-                    log.info("DBE_DOWNLOAD_REQUEST write to: " + dirName + OCDB_File_Name);
+                    Log.i(TAG, mTAG + "DBE_DOWNLOAD_REQUEST write to: " + dirName + OCDB_File_Name);
 
                     Request request = new Request.Builder()
                             .url(commandString[0])
@@ -219,7 +221,7 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
                         response = okHttpClient.newCall(request).execute();
                         okHttpClient.setReadTimeout(10, TimeUnit.SECONDS); // Restore back to default
                     } catch (SocketTimeoutException e) {
-                        log.warn("Trying to talk to OCID timed out after 60 seconds. API is slammed? Throttled?");
+                       Log.w(TAG, mTAG + "Trying to talk to OCID timed out after 60 seconds. API is slammed? Throttled?");
                         return "Timeout";
                     }
 
@@ -227,22 +229,22 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
                         try {
                             String error = response.body().string();
                             Helpers.msgLong(mAppContext, mAppContext.getString(zz.aimsicd.lite.R.string.download_error) + " " + error);
-                            log.error("Download OCID data error: " + error);
+                           Log.e(TAG, mTAG + "Download OCID data error: " + error);
                         } catch (Exception e) {
                             Helpers.msgLong(mAppContext, mAppContext.getString(R.string.download_error) + " "
                                     + e.getClass().getName() + " - "
                                     + e.getMessage());
-                            log.error("Download OCID exception: ", e);
+                           Log.e(TAG, mTAG + "Download OCID exception: ", e);
                         }
                         return "Error";
                     } else {
                         // This returns "-1" for streamed response (Chunked Transfer Encoding)
                         total = response.body().contentLength();
                         if (total == -1) {
-                            log.debug("doInBackground DBE_DOWNLOAD_REQUEST total not returned!");
+                           Log.d(TAG, mTAG + "doInBackground DBE_DOWNLOAD_REQUEST total not returned!");
                             total = 1024; // Let's set it arbitrarily to something other than "-1"
                         } else {
-                            log.debug("doInBackground DBE_DOWNLOAD_REQUEST total: " + total);
+                           Log.d(TAG, mTAG + "doInBackground DBE_DOWNLOAD_REQUEST total: " + total);
                             publishProgress((int) (0.25 * total), (int) total); // Let's show something!
                         }
 
@@ -264,7 +266,7 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
                     return "Successful";
 
                 } catch (IOException e) {
-                    log.warn("Problem reading data from steam", e);
+                   Log.w(TAG, mTAG + "Problem reading data from steam", e);
                     return null;
                 }
 
@@ -418,7 +420,7 @@ public class RequestTask extends BaseAsyncTask<String, Integer, String> {
     private void showHideMapProgressBar(boolean pFlag) {
         InjectionAppCompatActivity lActivity = getActivity();
         if (BuildConfig.DEBUG && lActivity == null) {
-            log.verbose("BaseTask showHideMapProgressBar() activity is null");
+            Log.i(TAG, mTAG + "BaseTask showHideMapProgressBar() activity is null");
         }
 
         if (lActivity != null) {

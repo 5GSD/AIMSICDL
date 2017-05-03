@@ -7,11 +7,11 @@ package zz.aimsicd.lite.enums;
 
 import android.content.Context;
 
-import zz.aimsicd.lite.R;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import zz.aimsicd.lite.R;
 
 public enum StatesDbViewer {
 

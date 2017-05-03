@@ -5,9 +5,14 @@
  */
 package zz.aimsicd.lite.utils.atcmd;
 
+import android.util.Log;
+
 import java.io.IOException;
 
 public class TtyPrivFile extends TtyStream {
+
+    public static final String TAG = "AICDL";
+    public static final String mTAG = "XXX";
 
     protected Process mReadProc;
     protected Process mWriteProc;
@@ -25,7 +30,7 @@ public class TtyPrivFile extends TtyStream {
         mReadProc = read;
         mWriteProc = write;
 
-        log.debug("mReadProc=" + mReadProc + ", mWriteProc=" + mWriteProc);
+       Log.d(TAG, mTAG + "mReadProc=" + mReadProc + ", mWriteProc=" + mWriteProc);
     }
 
     @Override
@@ -37,7 +42,7 @@ public class TtyPrivFile extends TtyStream {
             mOutputStream.write("ATE0\r".getBytes("ASCII")); // disable local Echo
             mOutputStream.flush();
         } catch (IOException e) {
-            log.error("moutputstream didnt close", e);
+           Log.e(TAG, mTAG + "moutputstream didnt close", e);
         }
         mReadProc.destroy();
         mWriteProc.destroy();

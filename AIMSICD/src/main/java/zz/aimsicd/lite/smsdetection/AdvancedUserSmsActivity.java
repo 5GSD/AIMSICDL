@@ -10,30 +10,30 @@ package zz.aimsicd.lite.smsdetection;
 
 import android.database.Cursor;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import io.freefair.android.injection.annotation.InjectView;
+import io.freefair.android.injection.annotation.XmlLayout;
+import io.freefair.android.injection.app.InjectionAppCompatActivity;
 import zz.aimsicd.lite.R;
 import zz.aimsicd.lite.adapters.AIMSICDDbAdapter;
 import zz.aimsicd.lite.constants.DBTableColumnIds;
 
-import java.util.ArrayList;
-import java.util.List;
 
-import io.freefair.android.injection.annotation.Inject;
-import io.freefair.android.injection.annotation.InjectView;
-import io.freefair.android.injection.annotation.XmlLayout;
-import io.freefair.android.injection.app.InjectionAppCompatActivity;
-import io.freefair.android.util.logging.AndroidLogger;
-import io.freefair.android.util.logging.Logger;
 
 @XmlLayout(R.layout.activity_advanced_sms_user)
 public class AdvancedUserSmsActivity extends InjectionAppCompatActivity {
 
-    @Inject
-    private final Logger log = AndroidLogger.forClass(AdvancedUserSmsActivity.class);
+    public static final String TAG = "AICDL";
+    public static final String mTAG = "XXX";
+
 
     @InjectView(R.id.listView_Adv_Sms_Activity)
     ListView listViewAdv;
@@ -69,7 +69,7 @@ public class AdvancedUserSmsActivity extends InjectionAppCompatActivity {
             smscur.close();
 
         } catch (Exception ee) {
-            log.error("DB ERROR", ee);
+           Log.e(TAG, mTAG + "DB ERROR", ee);
         }
 
 
@@ -91,7 +91,7 @@ public class AdvancedUserSmsActivity extends InjectionAppCompatActivity {
                 try {
                     loadDbString();
                 } catch (Exception ee) {
-                    log.debug("", ee);
+                   Log.d(TAG, mTAG + "", ee);
                 }
                 return false;
             }
@@ -126,7 +126,7 @@ public class AdvancedUserSmsActivity extends InjectionAppCompatActivity {
             smscur.close();
             listViewAdv.setAdapter(new AdvanceUserBaseSmsAdapter(getApplicationContext(), newmsglist));
         } catch (Exception ee) {
-            log.error("DB ERROR", ee);
+           Log.e(TAG, mTAG + "DB ERROR", ee);
         }
 
 

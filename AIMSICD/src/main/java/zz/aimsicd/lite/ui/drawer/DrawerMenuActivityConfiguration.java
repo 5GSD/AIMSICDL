@@ -8,12 +8,12 @@ package zz.aimsicd.lite.ui.drawer;
 import android.content.Context;
 import android.widget.BaseAdapter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import zz.aimsicd.lite.R;
 import zz.aimsicd.lite.adapters.DrawerMenuAdapter;
 import zz.aimsicd.lite.constants.DrawerMenu;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class DrawerMenuActivityConfiguration {
 

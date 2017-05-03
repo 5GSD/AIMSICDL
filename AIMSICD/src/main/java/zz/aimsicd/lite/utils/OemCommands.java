@@ -6,15 +6,16 @@
 package zz.aimsicd.lite.utils;
 
 import android.content.Context;
-
-import zz.aimsicd.lite.R;
+import android.util.Log;
 
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
-import io.freefair.android.util.logging.AndroidLogger;
-import io.freefair.android.util.logging.Logger;
+import zz.aimsicd.lite.R;
+
+
+
 
 /**
  * These are the OEM commands used by the MulticlientRil ServiceMode menu scraper,
@@ -24,7 +25,9 @@ import io.freefair.android.util.logging.Logger;
  */
 public class OemCommands {
 
-    private static final Logger log = AndroidLogger.forClass(OemCommands.class);
+    public static final String TAG = "AICDL";
+    public static final String mTAG = "XXX";
+
 
     public static final char OEM_SERVM_FUNCTAG = 1;
     public static final char OEM_SM_ACTION = 0;
@@ -109,7 +112,7 @@ public class OemCommands {
             dos.writeByte(query);
             return baos.toByteArray();
         } catch (IOException e) {
-            log.error("", e);
+           Log.e(TAG, mTAG + "", e);
         }
         return null;
     }
@@ -131,7 +134,7 @@ public class OemCommands {
             dos.writeByte(modeType);
             return baos.toByteArray();
         } catch (IOException e) {
-            log.error("", e);
+           Log.e(TAG, mTAG + "", e);
         }
         return null;
     }
@@ -154,7 +157,7 @@ public class OemCommands {
             dos.writeByte(query);
             return baos.toByteArray();
         } catch (IOException e) {
-            log.error("", e);
+           Log.e(TAG, mTAG + "", e);
         }
         return null;
     }

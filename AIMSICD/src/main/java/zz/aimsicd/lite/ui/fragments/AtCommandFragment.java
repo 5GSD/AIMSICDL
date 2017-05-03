@@ -10,6 +10,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.text.Editable;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -19,10 +20,6 @@ import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import zz.aimsicd.lite.R;
-import zz.aimsicd.lite.utils.Helpers;
-import zz.aimsicd.lite.utils.atcmd.AtCommandTerminal;
-import zz.aimsicd.lite.utils.atcmd.TtyPrivFile;
 import com.stericson.RootShell.RootShell;
 import com.stericson.RootShell.execution.Command;
 import com.stericson.RootShell.execution.Shell;
@@ -32,11 +29,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.freefair.android.injection.annotation.Inject;
 import io.freefair.android.injection.annotation.InjectView;
 import io.freefair.android.injection.annotation.XmlLayout;
 import io.freefair.android.injection.app.InjectionFragment;
-import io.freefair.android.util.logging.Logger;
+import zz.aimsicd.lite.R;
+import zz.aimsicd.lite.utils.Helpers;
+import zz.aimsicd.lite.utils.atcmd.AtCommandTerminal;
+import zz.aimsicd.lite.utils.atcmd.TtyPrivFile;
+
 
 
 /**
@@ -64,8 +64,8 @@ import io.freefair.android.util.logging.Logger;
 @XmlLayout(R.layout.activity_at_command)
 public class AtCommandFragment extends InjectionFragment {
 
-    @Inject
-    private Logger log;
+    public static final String TAG = "AICDL";
+    public static final String mTAG = "XXX";
 
     //Return value constants
     private static final int SERIAL_INIT_OK = 100;
@@ -207,7 +207,7 @@ public class AtCommandFragment extends InjectionFragment {
         public void onClick(View v) {
             if (mAtCommand.getText() != null) {
                 String command = mAtCommand.getText().toString();
-                log.info("AT Command Detected: " + command);
+                Log.i(TAG, mTAG + "AT Command Detected: " + command);
                 executeAT();
             }
         }
@@ -268,7 +268,7 @@ public class AtCommandFragment extends InjectionFragment {
                     mSerialDevices.add(mSerialDevice);
                 }
             } catch (StringIndexOutOfBoundsException e) {
-                log.warn(e.getMessage());
+               Log.w(TAG, mTAG + e.getMessage());
                 // ignore, move on
             }
 
@@ -326,7 +326,7 @@ public class AtCommandFragment extends InjectionFragment {
             }
 
         } catch (Exception e) {
-            log.error("InitSerialDevice ", e);
+           Log.e(TAG, mTAG + "InitSerialDevice ", e);
         }
 
         if (!mSerialDevices.isEmpty()) {
@@ -371,7 +371,7 @@ public class AtCommandFragment extends InjectionFragment {
         // We need a device-type check here, perhaps: gsm.version.ril-impl.
         Editable cmd = mAtCommand.getText();
         if (cmd != null && cmd.length() != 0) {
-            log.debug("ExecuteAT: attempting to send: " + cmd.toString());
+           Log.d(TAG, mTAG + "ExecuteAT: attempting to send: " + cmd.toString());
 
             if (getSerialDevice() != null) {
                 mCommandTerminal.send(cmd.toString(), new Handler(Looper.getMainLooper()) {
@@ -414,26 +414,26 @@ public class AtCommandFragment extends InjectionFragment {
                         cmd.wait(mTimeout);
                     }
                 } catch (InterruptedException e) {
-                    log.error(e.getMessage());
+                   Log.e(TAG, mTAG + e.getMessage());
                 }
             }
             if (!cmd.isExecuting() && !cmd.isFinished()) {
                 Exception e = new Exception();
 
                 if (!shell.isExecuting && !shell.isReading) {
-                    log.warn("Waiting for a command to be executed in a shell that is not executing and not reading! \n\n Command: " + cmd.getCommand());
+                   Log.w(TAG, mTAG + "Waiting for a command to be executed in a shell that is not executing and not reading! \n\n Command: " + cmd.getCommand());
                     e.setStackTrace(Thread.currentThread().getStackTrace());
-                    log.error(e.getMessage(), e);
+                   Log.e(TAG, mTAG + e.getMessage(), e);
 
                 } else if (shell.isExecuting && !shell.isReading) {
-                    log.error("Waiting for a command to be executed in a shell that is executing but not reading! \n\n Command: " + cmd.getCommand());
+                   Log.e(TAG, mTAG + "Waiting for a command to be executed in a shell that is executing but not reading! \n\n Command: " + cmd.getCommand());
                     e.setStackTrace(Thread.currentThread().getStackTrace());
-                    log.error(e.getMessage(), e);
+                   Log.e(TAG, mTAG + e.getMessage(), e);
 
                 } else {
-                    log.error("Waiting for a command to be executed in a shell that is not reading! \n\n Command: " + cmd.getCommand());
+                   Log.e(TAG, mTAG + "Waiting for a command to be executed in a shell that is not reading! \n\n Command: " + cmd.getCommand());
                     e.setStackTrace(Thread.currentThread().getStackTrace());
-                    log.error(e.getMessage(), e);
+                   Log.e(TAG, mTAG + e.getMessage(), e);
                 }
             }
         }

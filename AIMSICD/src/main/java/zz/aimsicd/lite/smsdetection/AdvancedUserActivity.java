@@ -10,6 +10,7 @@ package zz.aimsicd.lite.smsdetection;
 
 import android.content.ContentValues;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -18,24 +19,24 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import io.freefair.android.injection.annotation.InjectView;
+import io.freefair.android.injection.annotation.XmlLayout;
+import io.freefair.android.injection.app.InjectionAppCompatActivity;
 import zz.aimsicd.lite.R;
 import zz.aimsicd.lite.adapters.AIMSICDDbAdapter;
 import zz.aimsicd.lite.constants.DBTableColumnIds;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import io.freefair.android.injection.annotation.Inject;
-import io.freefair.android.injection.annotation.InjectView;
-import io.freefair.android.injection.annotation.XmlLayout;
-import io.freefair.android.injection.app.InjectionAppCompatActivity;
-import io.freefair.android.util.logging.Logger;
 
 @XmlLayout(R.layout.activity_advanced_user)
 public class AdvancedUserActivity extends InjectionAppCompatActivity {
 
-    @Inject
-    private Logger log;
+    public static final String TAG = "AICDL";
+    public static final String mTAG = "XXX";
+
+
 
     @InjectView(R.id.listView_Adv_Activity)
     private ListView listViewAdv;
@@ -59,7 +60,7 @@ public class AdvancedUserActivity extends InjectionAppCompatActivity {
         try {
             msgItems = dbAccess.getDetectionStrings();
         } catch (Exception ee) {
-            log.error("Database error", ee);
+           Log.e(TAG, mTAG + "Database error", ee);
             msgItems = new ArrayList<>();
             AdvanceUserItems advUserItems = new AdvanceUserItems();
             advUserItems.setDetection_string("NO DATA");
@@ -88,7 +89,7 @@ public class AdvancedUserActivity extends InjectionAppCompatActivity {
                 try {
                     loadDbString();
                 } catch (Exception ee) {
-                    log.debug("Error loading db string", ee);
+                   Log.d(TAG, mTAG + "Error loading db string", ee);
                 }
                 return false;
             }
@@ -121,7 +122,7 @@ public class AdvancedUserActivity extends InjectionAppCompatActivity {
                     try {
                         loadDbString();
                     } catch (Exception ee) {
-                        log.error(ee.getMessage(), ee);
+                       Log.e(TAG, mTAG + ee.getMessage(), ee);
                     }
                 }
             }
@@ -138,7 +139,7 @@ public class AdvancedUserActivity extends InjectionAppCompatActivity {
             newmsglist = dbAccess.getDetectionStrings();
             listViewAdv.setAdapter(new AdvanceUserBaseAdapter(getApplicationContext(), newmsglist));
         } catch (Exception ee) {
-            log.error("<AdvanceUserItems>", ee);
+           Log.e(TAG, mTAG + "<AdvanceUserItems>", ee);
         }
     }
 }

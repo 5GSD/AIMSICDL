@@ -33,6 +33,12 @@ import android.widget.ListView;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+import io.freefair.android.injection.annotation.InjectView;
+import io.freefair.android.injection.annotation.XmlLayout;
+import io.freefair.android.injection.app.InjectionFragment;
 import zz.aimsicd.lite.adapters.BaseInflaterAdapter;
 import zz.aimsicd.lite.adapters.CardItemData;
 import zz.aimsicd.lite.adapters.CellCardInflater;
@@ -41,13 +47,6 @@ import zz.aimsicd.lite.service.AimsicdService;
 import zz.aimsicd.lite.service.CellTracker;
 import zz.aimsicd.lite.utils.Cell;
 import zz.aimsicd.lite.utils.Helpers;
-
-import java.util.List;
-import java.util.concurrent.TimeUnit;
-
-import io.freefair.android.injection.annotation.InjectView;
-import io.freefair.android.injection.annotation.XmlLayout;
-import io.freefair.android.injection.app.InjectionFragment;
 
 /**
  *  Description:    This class updates the CellInfo fragment. This is also known as

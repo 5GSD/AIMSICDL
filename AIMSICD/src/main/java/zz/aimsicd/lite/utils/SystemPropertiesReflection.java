@@ -18,13 +18,14 @@
 package zz.aimsicd.lite.utils;
 
 import android.content.Context;
+import android.util.Log;
 
 import java.io.File;
 import java.lang.reflect.Method;
 
 import dalvik.system.DexFile;
-import io.freefair.android.util.logging.AndroidLogger;
-import io.freefair.android.util.logging.Logger;
+
+
 
 /**
  * Class using reflection to grant access to the private hidden
@@ -32,7 +33,9 @@ import io.freefair.android.util.logging.Logger;
  */
 public class SystemPropertiesReflection {
 
-    private static final Logger log = AndroidLogger.forClass(SystemPropertiesReflection.class);
+    public static final String TAG = "AICDL";
+    public static final String mTAG = "SPReflection";
+
 
     /**
      * This class cannot be instantiated
@@ -69,10 +72,10 @@ public class SystemPropertiesReflection {
             ret = (String) get.invoke(SystemProperties, params);
 
         } catch (IllegalArgumentException iae) {
-            log.error(iae.getMessage(), iae);
+           Log.e(TAG, mTAG + iae.getMessage(), iae);
             throw iae;
         } catch (Exception e) {
-            log.error(e.getMessage(), e);
+           Log.e(TAG, mTAG + e.getMessage(), e);
             ret = "";
         }
 
@@ -111,10 +114,10 @@ public class SystemPropertiesReflection {
             ret = (String) get.invoke(SystemProperties, params);
 
         } catch (IllegalArgumentException iae) {
-            log.error(iae.getMessage(), iae);
+           Log.e(TAG, mTAG + iae.getMessage(), iae);
             throw iae;
         } catch (Exception e) {
-            log.error(e.getMessage(), e);
+           Log.e(TAG, mTAG + e.getMessage(), e);
             ret = def;
         }
 
@@ -154,10 +157,10 @@ public class SystemPropertiesReflection {
             set.invoke(SystemProperties, params);
 
         } catch (IllegalArgumentException iae) {
-            log.error(iae.getMessage(), iae);
+           Log.e(TAG, mTAG + iae.getMessage(), iae);
             throw iae;
         } catch (Exception ignored) {
-            log.debug(ignored.getMessage(), ignored);
+           Log.d(TAG, mTAG + ignored.getMessage(), ignored);
         }
 
     }

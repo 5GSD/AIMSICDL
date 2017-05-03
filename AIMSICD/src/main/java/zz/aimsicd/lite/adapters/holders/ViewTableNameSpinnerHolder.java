@@ -5,7 +5,6 @@
  */
 package zz.aimsicd.lite.adapters.holders;
 
-
 import android.widget.TextView;
 
 public class ViewTableNameSpinnerHolder {

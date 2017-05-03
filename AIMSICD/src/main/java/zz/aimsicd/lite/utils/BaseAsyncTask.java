@@ -8,9 +8,10 @@ package zz.aimsicd.lite.utils;
 
 import android.os.AsyncTask;
 
-import zz.aimsicd.lite.AppAIMSICD;
 import java.lang.ref.WeakReference;
+
 import io.freefair.android.injection.app.InjectionAppCompatActivity;
+import zz.aimsicd.lite.AppAIMSICD;
 
 
 public abstract class BaseAsyncTask<TParams, TProgress, TResult> extends AsyncTask<TParams, TProgress, TResult> {

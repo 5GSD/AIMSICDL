@@ -5,11 +5,12 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.TextView;
 
-import zz.aimsicd.lite.R;
 import com.kaichunlin.transition.ViewTransitionBuilder;
 import com.kaichunlin.transition.animation.AnimationManager;
 import com.kaichunlin.transition.internal.TransitionController;
 import com.nineoldandroids.animation.ArgbEvaluator;
+
+import zz.aimsicd.lite.R;
 
 /**
  * Highlight the updated text

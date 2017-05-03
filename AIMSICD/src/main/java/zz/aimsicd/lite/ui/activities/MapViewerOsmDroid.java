@@ -24,9 +24,25 @@ import android.telephony.CellInfo;
 import android.telephony.PhoneStateListener;
 import android.telephony.ServiceState;
 import android.telephony.TelephonyManager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
+import org.osmdroid.util.GeoPoint;
+import org.osmdroid.views.MapView;
+import org.osmdroid.views.overlay.ScaleBarOverlay;
+import org.osmdroid.views.overlay.compass.CompassOverlay;
+import org.osmdroid.views.overlay.compass.InternalCompassOrientationProvider;
+import org.osmdroid.views.overlay.mylocation.GpsMyLocationProvider;
+import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay;
+
+import java.util.LinkedList;
+import java.util.List;
+
+import io.freefair.android.injection.annotation.InjectView;
+import io.freefair.android.injection.annotation.XmlLayout;
+import io.freefair.android.injection.annotation.XmlMenu;
 import zz.aimsicd.lite.AppAIMSICD;
 import zz.aimsicd.lite.BuildConfig;
 import zz.aimsicd.lite.R;
@@ -43,31 +59,14 @@ import zz.aimsicd.lite.utils.Helpers;
 import zz.aimsicd.lite.utils.RequestTask;
 import zz.aimsicd.lite.utils.TinyDB;
 
-import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
-import org.osmdroid.util.GeoPoint;
-import org.osmdroid.views.MapView;
-import org.osmdroid.views.overlay.ScaleBarOverlay;
-import org.osmdroid.views.overlay.compass.CompassOverlay;
-import org.osmdroid.views.overlay.compass.InternalCompassOrientationProvider;
-import org.osmdroid.views.overlay.mylocation.GpsMyLocationProvider;
-import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay;
-
-import java.util.LinkedList;
-import java.util.List;
-
-import io.freefair.android.injection.annotation.Inject;
-import io.freefair.android.injection.annotation.InjectView;
-import io.freefair.android.injection.annotation.XmlLayout;
-import io.freefair.android.injection.annotation.XmlMenu;
-import io.freefair.android.util.logging.Logger;
 
 /**
  * Description:    TODO: add details
- * <p/>
+ *
  * Variables:      TODO: add a list of variables that can be tuned (Max/MinZoom factors etc)
- * <p/>
+ *
  * Current Issues:
- * <p/>
+ *
  * [x] Map is not immediately updated with the BTS info. It take a "long" time ( >10 seconds)
  * before map is updated. Any way to shorten this?
  * [ ] See: #272 #250 #228
@@ -76,7 +75,7 @@ import io.freefair.android.util.logging.Logger;
  * [x] pin icons are too big. We need to reduce pin dot diameter by ~50%
  * [ ] Need a manual way to add GPS coordinates of current location (see code comments below)
  * [ ]
- * <p/>
+ *
  * Notes:
  * a) Latest OSM version can use MaxZoomLevel of 21, please see:
  * https://github.com/osmdroid/osmdroid/issues/49
@@ -87,8 +86,10 @@ import io.freefair.android.util.logging.Logger;
 @XmlMenu(R.menu.activity_map_viewer)
 public final class MapViewerOsmDroid extends BaseActivity implements OnSharedPreferenceChangeListener {
 
-    @Inject
-    private Logger log;
+    public static final String TAG = "AICDL";
+    public static final String mTAG = "XXX";
+
+
     public static final String updateOpenCellIDMarkers = "update_open_cell_markers";
 
     @InjectView(R.id.mapview)
@@ -124,7 +125,7 @@ public final class MapViewerOsmDroid extends BaseActivity implements OnSharedPre
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        log.info("Starting MapViewer");
+        Log.i(TAG, mTAG + "Starting MapViewer");
 
         setUpMapIfNeeded();
 
@@ -205,7 +206,7 @@ public final class MapViewerOsmDroid extends BaseActivity implements OnSharedPre
         public void onReceive(Context context, Intent intent) {
             loadEntries();
             if (BuildConfig.DEBUG && mCellTowerGridMarkerClusterer != null && mCellTowerGridMarkerClusterer.getItems() != null) {
-                log.verbose("mMessageReceiver CellTowerMarkers.invalidate() markers.size():" + mCellTowerGridMarkerClusterer.getItems().size());
+                Log.i(TAG, mTAG + "mMessageReceiver CellTowerMarkers.invalidate() markers.size():" + mCellTowerGridMarkerClusterer.getItems().size());
             }
 
         }
@@ -213,7 +214,7 @@ public final class MapViewerOsmDroid extends BaseActivity implements OnSharedPre
 
     /**
      * Service Connection to bind the activity to the service
-     * <p/>
+     *
      * This seem to setup the connection and animates the map window movement to the
      * last known location.
      */
@@ -236,7 +237,7 @@ public final class MapViewerOsmDroid extends BaseActivity implements OnSharedPre
 
         @Override
         public void onServiceDisconnected(ComponentName arg0) {
-            log.error("Service Disconnected");
+           Log.e(TAG, mTAG + "Service Disconnected");
             mBound = false;
         }
     };
@@ -382,7 +383,7 @@ public final class MapViewerOsmDroid extends BaseActivity implements OnSharedPre
                     // Grab cell data from CELL_TABLE (cellinfo) --> DBi_bts
                     c = mDbHelper.getCellData();
                 } catch (IllegalStateException ix) {
-                    log.error("Problem getting data from CELL_TABLE", ix);
+                   Log.e(TAG, mTAG + "Problem getting data from CELL_TABLE", ix);
                 }
 
                 /*
@@ -459,7 +460,7 @@ public final class MapViewerOsmDroid extends BaseActivity implements OnSharedPre
                         double[] d = mDbHelper.getDefaultLocation(mcc);
                         ret = new GeoPoint(d[0], d[1]);
                     } catch (Exception e) {
-                        log.error("Error getting default location!", e);
+                       Log.e(TAG, mTAG + "Error getting default location!", e);
                     }
                 }
                 if (c != null) {
@@ -473,7 +474,7 @@ public final class MapViewerOsmDroid extends BaseActivity implements OnSharedPre
                         }
                         Thread.sleep(100);
                     } catch (InterruptedException e) {
-                        log.warn("thread interrupted", e);
+                       Log.w(TAG, mTAG + "thread interrupted", e);
                     }
                 }
                 List<Cell> nc = mAimsicdService.getCellTracker().updateNeighbouringCells();
@@ -502,7 +503,7 @@ public final class MapViewerOsmDroid extends BaseActivity implements OnSharedPre
                         ovm.setIcon(getResources().getDrawable(R.drawable.ic_map_pin_orange));
                         items.add(ovm);
                     } catch (Exception e) {
-                        log.error("Error plotting neighbouring cells", e);
+                       Log.e(TAG, mTAG + "Error plotting neighbouring cells", e);
                     }
                 }
 
@@ -546,7 +547,7 @@ public final class MapViewerOsmDroid extends BaseActivity implements OnSharedPre
                 }
                 if (mCellTowerGridMarkerClusterer != null) {
                     if (BuildConfig.DEBUG && mCellTowerGridMarkerClusterer.getItems() != null) {
-                        log.verbose("CellTowerMarkers.invalidate() markers.size():" + mCellTowerGridMarkerClusterer.getItems().size());
+                        Log.i(TAG, mTAG + "CellTowerMarkers.invalidate() markers.size():" + mCellTowerGridMarkerClusterer.getItems().size());
                     }
                     //Drawing markers of cell tower immediately as possible
                     mCellTowerGridMarkerClusterer.invalidate();
