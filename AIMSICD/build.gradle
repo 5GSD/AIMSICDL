@@ -87,7 +87,7 @@ android {
 //        disable 'SetJavaScriptEnabled'  // Used in:
 //        disable 'Wakelock'            // lint wakelock check is buggy, we're probably doing it right.
 //        disable 'Overdraw'            // @color/common_sectionBackground
-        //disable 'UnusedAttribute'     // New attributes in AndroidManifest, not supported in lower API's
+        disable 'UnusedAttribute'     // New attributes in AndroidManifest, not supported in lower API's
 //        disable 'UnusedResources'     // Many unused strings and images: <placeholders?>
         //disable 'UselessParent'       //
         //disable 'TooManyViews'        //
@@ -176,6 +176,9 @@ dependencies {
     //  2) Uncomment these, AND then:  File >> Invalidate Cashes / Restart
     // provided "org.projectlombok:lombok:1.16.16"                  // new
     // annotationProcessor "org.projectlombok:lombok:1.16.16"       // new
+
+    // OTHERS
+    //compile 'com.squareup.okio:okio:1.12.0'                         // a new library that complements java.io and java.nio
 }
 
 apply from: "signing.gradle"

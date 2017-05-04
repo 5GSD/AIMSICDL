@@ -173,6 +173,7 @@ public final class DbViewerFragment extends InjectionFragment {
                             emptyView.setVisibility(View.VISIBLE);
                         }
 
+                        // ToDo: 2017-05-04
                         getActivity().setProgressBarIndeterminateVisibility(false);
                         /*getActivity().setSupportProgressBarIndeterminateVisibility(false);
                         getSupportActionBar().setDisplayShowCustomEnabled(true);

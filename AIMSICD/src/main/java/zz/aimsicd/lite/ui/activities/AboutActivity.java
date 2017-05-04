@@ -196,8 +196,6 @@ public class AboutActivity extends InjectionAppCompatActivity {
                         .setPositiveButton(android.R.string.ok, null)
                         .setView(mScrollView)
                         .show();
-
-
             }
         });
     }

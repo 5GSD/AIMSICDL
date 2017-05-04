@@ -13,6 +13,8 @@ import android.content.SharedPreferences;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
+import java.util.Locale;
+
 import zz.aimsicd.lite.AppAIMSICD;
 import zz.aimsicd.lite.R;
 import zz.aimsicd.lite.enums.Status;
@@ -49,7 +51,7 @@ public abstract class BaseActivity extends InjectionAppCompatActivity {
     private void updateIcon(Context context) {
         SharedPreferences prefs = context.getSharedPreferences(AimsicdService.SHARED_PREFERENCES_BASENAME, 0);
         //final String iconType = prefs.getString(context.getString(R.string.pref_ui_icons_key), "SENSE").toUpperCase();
-        final String iconTypeString = prefs.getString(context.getString(R.string.pref_ui_icons_key), "SENSE").toUpperCase();
+        final String iconTypeString = prefs.getString(context.getString(R.string.pref_ui_icons_key), "SENSE").toUpperCase(Locale.US);
         final Icon.Type iconType = Icon.Type.valueOf(iconTypeString);
 
         runOnUiThread(new Runnable() {

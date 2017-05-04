@@ -44,6 +44,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 
 import io.freefair.android.injection.app.InjectionService;
+
 import zz.aimsicd.lite.R;
 import zz.aimsicd.lite.rilexecutor.RilExecutor;
 import zz.aimsicd.lite.smsdetection.SmsDetector;
@@ -64,9 +65,6 @@ public class AimsicdService extends InjectionService {
     public static boolean isGPSchoiceChecked;
     public static final String GPS_REMEMBER_CHOICE = "remember choice";
     SharedPreferences gpsPreferences;
-
-
-
 
     // /data/data/com.SecUpwN.AIMSICD/shared_prefs/com.SecUpwN.AIMSICD_preferences.xml
     public static final String SHARED_PREFERENCES_BASENAME = "zz.aimsicd.lite_preferences";
@@ -93,7 +91,6 @@ public class AimsicdService extends InjectionService {
     }
 
     public class AimscidBinder extends Binder {
-
         public AimsicdService getService() {
             return AimsicdService.this;
         }
@@ -104,14 +101,12 @@ public class AimsicdService extends InjectionService {
         super.onCreate();
         setTheme(R.style.AppTheme);
 
-
         signalStrengthTracker = new SignalStrengthTracker(getBaseContext());
 
         mAccelerometerMonitor = new AccelerometerMonitor(this, new Runnable() {
             @Override
             public void run() {
                 // movement detected, so enable GPS
-
                 Runnable runnable = new Runnable() {
                     @Override
                     public void run() {
@@ -194,18 +189,6 @@ public class AimsicdService extends InjectionService {
         mCellTracker.setCellMonitoring(monitor);
     }
 
-    public boolean isTrackingFemtocell() {
-        return mCellTracker.isTrackingFemtocell();
-    }
-
-    public void setTrackingFemtocell(boolean track) {
-        if (track) {
-            mCellTracker.startTrackingFemto();
-        } else {
-            mCellTracker.stopTrackingFemto();
-        }
-    }
-
     // SMS Detection Thread
     public boolean isSmsTracking() {
         return SmsDetector.getSmsDetectionState();
@@ -270,6 +253,8 @@ public class AimsicdService extends InjectionService {
         }
 
         LayoutInflater dialogInflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+        // https://possiblemobile.com/2013/05/layout-inflation-as-intended/
+        @SuppressWarnings("InflateParams")  // This is an AlertDialog so null is ok
         View dialogView = dialogInflater.inflate(R.layout.dialog_request_gps, null, false);
         CheckBox rememberChoice = (CheckBox) dialogView.findViewById(R.id.check_choice);
         Button notNow = (Button) dialogView.findViewById(R.id.not_now_button);
@@ -353,8 +338,7 @@ public class AimsicdService extends InjectionService {
 
         @Override
         public void onProviderDisabled(String provider) {
-            if (mCellTracker.isTrackingCell() && provider.equals(LocationManager.GPS_PROVIDER) &&
-                    !isGPSchoiceChecked) {
+            if (mCellTracker.isTrackingCell() && provider.equals(LocationManager.GPS_PROVIDER) && !isGPSchoiceChecked) {
                 enableLocationServices();
             }
         }

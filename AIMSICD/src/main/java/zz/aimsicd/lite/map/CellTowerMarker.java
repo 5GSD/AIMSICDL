@@ -28,15 +28,13 @@ public class CellTowerMarker extends Marker {
 
     public CellTowerMarker(Context context, MapView mapView, String aTitle, String aSnippet, GeoPoint aGeoPoint, MarkerData data) {
         super(mapView);
-        mContext = context;
 
+        mContext = context;
         mTitle = aTitle;
         mSnippet = aSnippet;
         mPosition = aGeoPoint;
-
         mMarkerData = data;
         mOnMarkerClickListener = new OnCellTowerMarkerClickListener();
-
         mInfoWindow = null;
     }
 
@@ -55,13 +53,13 @@ public class CellTowerMarker extends Marker {
     public View getInfoContents(MarkerData data) {
 
         TextView tv;
-
         // Getting view from the layout file:  marker_info_window.xml
+        @SuppressWarnings("InflateParams")  // This is an alert kind of view so "null" is probably ok
         View v = LayoutInflater.from(mContext).inflate(R.layout.marker_info_window, null);
 
         if (v != null) {
             if (data != null) {
-                // We would also like to show this in HEX: "CID: 65535 (0xFFFF)"
+                // ToDo: We would also like to show this in HEX: "CID: 65535 (0xFFFF)"
                 if (data.openCellID) {
                     TableRow tr = (TableRow) v.findViewById(R.id.open_cell_label);
                     tr.setVisibility(View.VISIBLE);

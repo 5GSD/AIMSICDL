@@ -33,6 +33,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.List;
+import java.util.Locale;
 
 import zz.aimsicd.lite.adapters.AIMSICDDbAdapter;
 import zz.aimsicd.lite.constants.DrawerMenu;
@@ -182,7 +183,7 @@ public class MainActivity extends BaseActivity implements AsyncResponse {
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-        final String iconType = prefs.getString(getString(R.string.pref_ui_icons_key), "SENSE").toUpperCase();
+        final String iconType = prefs.getString(getString(R.string.pref_ui_icons_key), "SENSE").toUpperCase(Locale.US);
         mActionBar.setIcon(Icon.getIcon(Icon.Type.valueOf(iconType), ((AppAIMSICD) getApplication()).getStatus()));
         mDrawerToggle.syncState();
     }
@@ -586,13 +587,6 @@ public class MainActivity extends BaseActivity implements AsyncResponse {
      */
     private void monitorCell() {
         mAimsicdService.setCellMonitoring(!mAimsicdService.isMonitoringCell());
-    }
-
-    /**
-     * FemtoCell Detection (CDMA Phones ONLY) - Enable/Disable
-     */
-    private void trackFemtocell() {
-        mAimsicdService.setTrackingFemtocell(!mAimsicdService.isTrackingFemtocell());
     }
 
     public void onStop() {
