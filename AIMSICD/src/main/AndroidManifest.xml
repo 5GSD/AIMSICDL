@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="zz.aimsicd.lite"
     tools:ignore="GoogleAppIndexingWarning">
@@ -33,10 +34,24 @@
         <uses-permission android:name="org.simalliance.openmobileapi.SMARTCARD"/>
     -->
 
+    <!-- NOTE:
+         allowBackup                - If false, no backup or restore of the application will ever be performed, even by a full-system backup
+         fullBackupContent          - This attribute points to an XML file that contains full backup rules for Auto Backup.
+            android:fullBackupOnly     - API >20  [false]
+            android:extractNativeLibs  - API >22  [true]
+         to disable lint, use:  "disable 'UnusedAttribute'" in build.gradle
+
+         tools:replace="allowBackup"    TODO: 2017-05-03 WTF is this?
+                                        see: https://developer.android.com/studio/build/manifest-merge.html#attribute_markers
+         -->
+
     <application
-            tools:replace="allowBackup"
             android:allowBackup="false"
+            android:fullBackupContent="false"
+            android:fullBackupOnly="false"
+            android:restoreAnyVersion="false"
             android:supportsRtl="false"
+            android:extractNativeLibs="true"
             android:icon="@drawable/sense_danger"
             android:label="@string/main_app_name"
             android:theme="@style/AppTheme"

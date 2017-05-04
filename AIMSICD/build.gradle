@@ -18,13 +18,15 @@ android {
 
     defaultConfig {
         applicationId "zz.aimsicd.lite"             // com.SecUpwN.AIMSICD
-        minSdkVersion 18
-        targetSdkVersion 19 // Do not change: Working Icons on Android 5+
-        versionCode 41
+        minSdkVersion 18                            //
+        targetSdkVersion 19                         // Do not change: Working Icons on Android 5+
+        versionCode 42                              // 41
+        versionName "0503"                          // Last Release: "2.x.x"
         testApplicationId "zz.aimsicd.lite.test"    // com.SecUpwN.AIMSICD.test
 
         buildConfigField 'String', 'BUILD_NUMBER', (getBuildNumber() == null ? 'null' : "\"${buildNumber}\"")
         buildConfigField 'String', 'GIT_SHA', (gitSha == null ? 'null' : "\"${gitSha}\"")
+
         jackOptions {
             enabled true
         }
@@ -141,18 +143,19 @@ android {
     }
 
     productFlavors {
-        system {
-            versionName "$project.version-system"
-        }
+        // We disable system flavors for now
+        /*system {
+            versionName "$project.version-system"           // For system apps
+        }*/
         normal {
-            versionName "$project.version-normal"
+            versionName "$project.version-normal"           // For normal apps
         }
     }
 }
 
 dependencies {
     // Android Support Libraries
-    compile 'com.android.support:appcompat-v7:25.3.1'
+    compile 'com.android.support:appcompat-v7:25.3.1'               // app compat ...
 
     compile 'au.com.bytecode:opencsv:2.4'                           // OpenCSV (comma-separated values) parser library
     compile 'com.github.Stericson:RootShell:d708ae1f0a'             // Easy to use Root Shell for Android Applications
