@@ -10,9 +10,6 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.DrawableRes;
-import android.support.annotation.StringRes;
-import android.support.v7.app.AlertDialog;
 import android.text.method.LinkMovementMethod;
 import android.view.Gravity;
 import android.view.View;
@@ -22,9 +19,14 @@ import android.widget.Button;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import android.support.annotation.DrawableRes;
+import android.support.annotation.StringRes;
+import android.support.v7.app.AlertDialog;
+
 import io.freefair.android.injection.annotation.InjectView;
 import io.freefair.android.injection.annotation.XmlLayout;
 import io.freefair.android.injection.app.InjectionAppCompatActivity;
+
 import zz.aimsicd.lite.BuildConfig;
 import zz.aimsicd.lite.R;
 

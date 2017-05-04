@@ -5,7 +5,6 @@
  */
 package zz.aimsicd.lite.utils;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.CountDownTimer;
 import android.os.Handler;
@@ -36,7 +35,6 @@ public class Toaster {
             }
 
             new Handler(context.getMainLooper()).post(new Runnable() {
-                @SuppressLint("ShowToast")
                 @Override
                 public void run() {
                     toast = Toast.makeText(context, msg, Toast.LENGTH_SHORT);

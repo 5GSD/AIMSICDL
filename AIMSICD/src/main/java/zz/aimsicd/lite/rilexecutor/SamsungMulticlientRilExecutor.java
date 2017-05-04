@@ -15,7 +15,6 @@
  */
 package zz.aimsicd.lite.rilexecutor;
 
-import android.annotation.SuppressLint;
 import android.net.LocalSocket;
 import android.net.LocalSocketAddress;
 import android.os.Message;
@@ -33,12 +32,10 @@ import java.util.Random;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 
-
-
 public class SamsungMulticlientRilExecutor implements OemRilExecutor {
 
     public static final String TAG = "AICDL";
-    public static final String mTAG = "XXX";
+    public static final String mTAG = "SEC_RIL";
 
     private static final String MULTICLIENT_SOCKET = "Multiclient";
     private static final int RIL_REQUEST_OEM_RAW = 59;
@@ -49,7 +46,7 @@ public class SamsungMulticlientRilExecutor implements OemRilExecutor {
     private static final int ID_REQUEST_AT_COMMAND = 5;
     private static final int ID_RESPONSE_AT_COMMAND = 104;
 
-    // If you need debugging on, for testing on toher devices, change here.
+    // If you need debugging on, for testing on other devices, change here.
     //  WARNING: Could fill your logcat if running app long!
     // private static final boolean DBG = BuildConfig.DEBUG;
     private static final boolean DBG = false;
@@ -80,14 +77,13 @@ public class SamsungMulticlientRilExecutor implements OemRilExecutor {
         try {
             s.connect(new LocalSocketAddress(MULTICLIENT_SOCKET));
         } catch (IOException e) {
-           Log.w(TAG, mTAG + e.getMessage());
-            return DetectResult.Unavailable(
-                    "Multiclient socket is not available\n" + "gsm.version.ril-impl = " + gsmVerRilImpl);
+            Log.w(TAG, mTAG + e.getMessage());
+            return DetectResult.Unavailable("Multiclient socket is not available\n" + "gsm.version.ril-impl = " + gsmVerRilImpl);
         } finally {
             try {
                 s.close();
             } catch (IOException e) {
-               Log.e(TAG, mTAG + e.getMessage(), e);
+                Log.e(TAG, mTAG + e.getMessage(), e);
             }
         }
 
@@ -151,7 +147,7 @@ public class SamsungMulticlientRilExecutor implements OemRilExecutor {
         private final Random mTokenGen = new Random();
         private final Map<Integer, Message> mMessages;
 
-        @SuppressLint("UseSparseArrays")
+        //@SuppressLint("UseSparseArrays")
         public LocalSocketThread(String socketPath) {
             mSocketPath = new LocalSocketAddress(socketPath);
             mInputStream = null;

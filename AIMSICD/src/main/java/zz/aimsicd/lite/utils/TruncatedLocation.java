@@ -7,13 +7,16 @@ import java.text.NumberFormat;
 import java.text.ParseException;
 
 /**
- * Created by Marvin Arnold on 1/07/15.
+ *  Description:
+ *      Used to truncate the Lat/Lon coordinates to 5 decimals when shown in DB tables viewer
+ *
+ * Note:
+ *      5 decimals are more than sufficient for most purposes, as its a matter of 10's of meters on normal latitudes.
  */
 public class TruncatedLocation extends Location {
 
     public static final String TAG = "AICDL";
-    public static final String mTAG = "XXX";
-
+    public static final String mTAG = "TruncatedLocation: ";
 
     public TruncatedLocation(Location l) {
         super(l);

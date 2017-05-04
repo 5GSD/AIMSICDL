@@ -2,9 +2,7 @@ package zz.aimsicd.lite.utils;
 
 import java.util.ArrayList;
 
-/**
- * Created by Marvin Arnold on 9/06/15.
- */
+
 public class OCIDCSV  extends ArrayList<OCIDCSV.OCIDCSVLine> {
 
     public OCIDCSV() {
@@ -46,18 +44,12 @@ public class OCIDCSV  extends ArrayList<OCIDCSV.OCIDCSVLine> {
             return Integer.parseInt(this.ocidCell[5]);
         }
 
-        /**
-         * Average signal in [dBm]
-         * @return
-         */
+        // Average signal in [dBm]
         public int getAvgSig() {
             return Integer.parseInt(this.ocidCell[6]);
         }
 
-        /**
-         * Average range in [m]
-         * @return
-         */
+        //Average range in [m]
         public int getAvgRange() {
             return Integer.parseInt(this.ocidCell[7]);
         }
@@ -74,5 +66,6 @@ public class OCIDCSV  extends ArrayList<OCIDCSV.OCIDCSVLine> {
             return String.valueOf(this.ocidCell[10]);
         }
 
+        // todo: what else we got here? ...
     }
 }

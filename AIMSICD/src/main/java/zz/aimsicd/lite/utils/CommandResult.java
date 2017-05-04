@@ -31,10 +31,6 @@ import java.io.IOException;
 
 import zz.aimsicd.lite.adapters.AIMSICDDbAdapter;
 
-
-
-
-//@SuppressWarnings("AccessOfSystemProperties")
 public class CommandResult implements Parcelable {
 
     public static final String TAG = "AICDL";
@@ -53,14 +49,13 @@ public class CommandResult implements Parcelable {
         this.mStderr = stderr;
         this.mEndTime = endTime;
 
-       Log.d(TAG, mTAG + "Time to execute: " + (mEndTime - mStartTime) + " ns (nanoseconds)");
+       Log.d(TAG, mTAG + "Time to execute: " + (mEndTime - mStartTime) + " [ns]");
         // this is set last so log from here
         checkForErrors();
     }
 
     // pretty much just forward the constructor from parcelable to our main
     // loading constructor
-    //@SuppressWarnings("CastToConcreteClass")
     public CommandResult(Parcel inParcel) {
         this(inParcel.readLong(), inParcel.readInt(), inParcel.readString(),
                 inParcel.readString(), inParcel.readLong());
@@ -82,7 +77,6 @@ public class CommandResult implements Parcelable {
         return mExitValue;
     }
 
-    //@SuppressWarnings("UnnecessaryExplicitNumericCast")
     private void checkForErrors() {
         if (mExitValue != 0 || !mStderr.trim().isEmpty()) {
             // don't log the commands that failed
@@ -90,8 +84,9 @@ public class CommandResult implements Parcelable {
             boolean skipOfflineCpu =
                     // if core is off locking fails
                     mStderr.contains("chmod: /sys/devices/system/cpu/cpu")
-                            // if core is off applying cpu freqs fails
-                            || mStderr.contains(": can't create /sys/devices/system/cpu/cpu");
+                    // if core is off applying cpu freqs fails
+                 || mStderr.contains(": can't create /sys/devices/system/cpu/cpu");
+
             String lineEnding = System.getProperty("line.separator");
             FileWriter errorWriter = null;
             try {

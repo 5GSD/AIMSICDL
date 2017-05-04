@@ -1,6 +1,7 @@
 package zz.aimsicd.lite.ui.fragments;
 
 import android.app.Activity;
+import android.content.Context;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -9,9 +10,8 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Spinner;
 
-import io.freefair.android.injection.annotation.InjectView;
-import io.freefair.android.injection.annotation.XmlLayout;
-import io.freefair.android.injection.app.InjectionFragment;
+import android.support.v4.app.ActivityCompat;
+
 import zz.aimsicd.lite.R;
 import zz.aimsicd.lite.adapters.AIMSICDDbAdapter;
 import zz.aimsicd.lite.adapters.BaseInflaterAdapter;
@@ -38,6 +38,11 @@ import zz.aimsicd.lite.smsdetection.DetectionStringsCardInflater;
 import zz.aimsicd.lite.smsdetection.DetectionStringsData;
 import zz.aimsicd.lite.utils.Cell;
 
+// TODO: remove this crap
+import io.freefair.android.injection.annotation.InjectView;
+import io.freefair.android.injection.annotation.XmlLayout;
+import io.freefair.android.injection.app.InjectionFragment;
+
 /**
  * Description:    Class that handles the display of the items in the 'Database Viewer' (DBV)
  *
@@ -63,10 +68,15 @@ public final class DbViewerFragment extends InjectionFragment {
     public DbViewerFragment() {
     }
 
+    // Todo: Let me try to fix this deprecation...
     @Override
-    public void onAttach(Activity activity) {
+    public void onAttach(Context activity) {
         super.onAttach(activity);
-        mDb = new AIMSICDDbAdapter(activity.getBaseContext());
+        mDb = new AIMSICDDbAdapter(activity);
+
+    //public void onAttach(Activity activity) {
+    //    super.onAttach(activity);
+    //    mDb = new AIMSICDDbAdapter(activity.getBaseContext());
     }
 
 
@@ -164,6 +174,9 @@ public final class DbViewerFragment extends InjectionFragment {
                         }
 
                         getActivity().setProgressBarIndeterminateVisibility(false);
+                        /*getActivity().setSupportProgressBarIndeterminateVisibility(false);
+                        getSupportActionBar().setDisplayShowCustomEnabled(true);
+                        getSupportActionBar().setCustomView(R.layout.toolbar);*/
                     }
                 }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             }

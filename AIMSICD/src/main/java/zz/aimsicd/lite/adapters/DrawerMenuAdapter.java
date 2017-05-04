@@ -5,7 +5,6 @@
  */
 package zz.aimsicd.lite.adapters;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,7 +32,6 @@ public class DrawerMenuAdapter extends ArrayAdapter<NavDrawerItem> {
 
     private static Context appContext;
  
-    @SuppressLint("ShowToast")
     public DrawerMenuAdapter(Context context, int textViewResourceId, List<NavDrawerItem> objects) {
         super(context, textViewResourceId, objects);
         inflater = LayoutInflater.from(context);
@@ -107,16 +105,14 @@ public class DrawerMenuAdapter extends ArrayAdapter<NavDrawerItem> {
         return convertView;
     }
 
-    View getSectionView(View convertView, ViewGroup parentView,
-            NavDrawerItem navDrawerItem) {
+    View getSectionView(View convertView, ViewGroup parentView, NavDrawerItem navDrawerItem) {
 
         DrawerMenuSection menuSection = (DrawerMenuSection) navDrawerItem;
         NavMenuSectionHolder navMenuItemHolder = null;
 
         if (convertView == null) {
             convertView = inflater.inflate(R.layout.drawer_section, parentView, false);
-            TextView labelView = (TextView) convertView
-                    .findViewById(R.id.drawer_menu_section_label);
+            TextView labelView = (TextView) convertView.findViewById(R.id.drawer_menu_section_label);
 
             navMenuItemHolder = new NavMenuSectionHolder();
             navMenuItemHolder.itemName = labelView;
@@ -146,7 +142,6 @@ public class DrawerMenuAdapter extends ArrayAdapter<NavDrawerItem> {
     public boolean isEnabled(int position) {
         return getItem(position).isEnabled();
     }
-
 
     private static class NavMenuItemHolder {
         TextView itemName;
