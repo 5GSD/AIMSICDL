@@ -305,7 +305,8 @@ public final class MapFragment extends InjectionFragment implements OnSharedPref
 
         // Sets cluster pin color
         mCellTowerGridMarkerClusterer = new CellTowerGridMarkerClusterer(getActivity());
-        BitmapDrawable mapPinDrawable = (BitmapDrawable) getResources().getDrawable(R.drawable.ic_map_pin_orange);
+        //BitmapDrawable mapPinDrawable = (BitmapDrawable) getResources().getDrawable(R.drawable.ic_map_pin_orange);
+        BitmapDrawable mapPinDrawable = (BitmapDrawable) ResourcesCompat.getDrawable(getResources(), R.drawable.ic_map_pin_orange, null);
         mCellTowerGridMarkerClusterer.setIcon(mapPinDrawable == null ? null : mapPinDrawable.getBitmap());
 
         GpsMyLocationProvider gpsMyLocationProvider = new GpsMyLocationProvider(getActivity().getBaseContext());
@@ -448,7 +449,7 @@ public final class MapFragment extends InjectionFragment implements OnSharedPref
                                             "", false)
                             );
                             // The pin of our current position
-                            //ovm.setIcon(getResources().getDrawable(R.drawable.ic_map_pin_blue)); // EVA 20170502
+                            //ovm.setIcon(getResources().getDrawable(R.drawable.ic_map_pin_blue));
                             ovm.setIcon(ResourcesCompat.getDrawable(getResources(), R.drawable.ic_map_pin_blue, null));
 
                             items.add(ovm);
@@ -511,7 +512,8 @@ public final class MapFragment extends InjectionFragment implements OnSharedPref
                                         "", false));
 
                         // The pin of other BTS
-                        ovm.setIcon(getResources().getDrawable(R.drawable.ic_map_pin_orange));
+                        //ovm.setIcon(getResources().getDrawable(R.drawable.ic_map_pin_orange));
+                        ovm.setIcon(ResourcesCompat.getDrawable(getResources(), R.drawable.ic_map_pin_orange, null));
                         items.add(ovm);
                     } catch (Exception e) {
                        Log.e(TAG, mTAG + "Error plotting neighbouring cells", e);
@@ -578,7 +580,8 @@ public final class MapFragment extends InjectionFragment implements OnSharedPref
             currentMnc = Integer.parseInt(networkOperator.substring(3));
         }
         // DBe_import tower pins.
-        Drawable cellTowerMarkerIcon = getResources().getDrawable(R.drawable.ic_map_pin_green);
+        //Drawable cellTowerMarkerIcon = getResources().getDrawable(R.drawable.ic_map_pin_green);
+        Drawable cellTowerMarkerIcon = ResourcesCompat.getDrawable(getResources(), R.drawable.ic_map_pin_green, null);
 
         Cursor c = mDbHelper.returnOcidBtsByNetwork(currentMmc, currentMnc);
         if (c.moveToFirst()) {

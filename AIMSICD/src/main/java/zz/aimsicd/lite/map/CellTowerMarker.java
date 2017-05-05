@@ -5,6 +5,7 @@
  */
 package zz.aimsicd.lite.map;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -54,7 +55,8 @@ public class CellTowerMarker extends Marker {
 
         TextView tv;
         // Getting view from the layout file:  marker_info_window.xml
-        @SuppressWarnings("InflateParams")  // This is an alert kind of view so "null" is probably ok
+        // Lint: This is an alert kind of view so "null" is probably ok
+        @SuppressLint("InflateParams")
         View v = LayoutInflater.from(mContext).inflate(R.layout.marker_info_window, null);
 
         if (v != null) {

@@ -29,7 +29,7 @@ import zz.aimsicd.lite.utils.OemCommands;
 public class RilExecutor {
 
     public static final String TAG = "AICDL";
-    public static final String mTAG = "XXX";
+    public static final String mTAG = "RilExecutor";
 
     public boolean mMultiRilCompatible;
 
@@ -219,6 +219,7 @@ public class RilExecutor {
                     mCurrentSubtype = msg.arg2;
                     mKeySequence = new ArrayDeque<>(3);
                     if (msg.obj != null) {
+                        // Fixme: unchecked cast
                         mKeySequence.addAll((java.util.Collection<KeyStep>) msg.obj);
                     } else {
                         mKeySequence.add(KeyStep.KEY_START_SERVICE_MODE);

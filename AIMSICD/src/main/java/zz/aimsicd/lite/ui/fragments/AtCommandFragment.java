@@ -5,6 +5,8 @@
  */
 package zz.aimsicd.lite.ui.fragments;
 
+import android.annotation.SuppressLint;
+
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -32,6 +34,7 @@ import java.util.List;
 import io.freefair.android.injection.annotation.InjectView;
 import io.freefair.android.injection.annotation.XmlLayout;
 import io.freefair.android.injection.app.InjectionFragment;
+
 import zz.aimsicd.lite.R;
 import zz.aimsicd.lite.utils.Helpers;
 import zz.aimsicd.lite.utils.atcmd.AtCommandTerminal;
@@ -223,7 +226,7 @@ public class AtCommandFragment extends InjectionFragment {
      */
     private int initSerialDevice() {
 
-        /**
+        /*
          * NOTE:
          *
          *      Because of how RootShell is being used the handler has to be disabled.
@@ -378,6 +381,7 @@ public class AtCommandFragment extends InjectionFragment {
                     @Override
                     public void handleMessage(Message message) {
                         if (message.obj instanceof List) {
+                            // Fixme: unchecked cast
                             List<String> lines = ((List<String>) message.obj);
                             StringBuffer response = new StringBuffer();
                             for (String line : lines) {

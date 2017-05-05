@@ -20,6 +20,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.IBinder;
 
+import android.support.v4.content.res.ResourcesCompat;
 import android.telephony.CellInfo;
 import android.telephony.PhoneStateListener;
 import android.telephony.ServiceState;
@@ -81,9 +82,9 @@ import zz.aimsicd.lite.utils.TinyDB;
  *
  * Notes:
  * a) Latest OSM version can use MaxZoomLevel of 21, please see:
- * https://github.com/osmdroid/osmdroid/issues/49
- * https://github.com/osmdroid/osmdroid/issues/81
- * https://code.google.com/p/osmbonuspack/issues/detail?id=102
+     * https://github.com/osmdroid/osmdroid/issues/49
+     * https://github.com/osmdroid/osmdroid/issues/81
+     * https://code.google.com/p/osmbonuspack/issues/detail?id=102
  */
 @XmlLayout(zz.aimsicd.lite.R.layout.activity_map_viewer)
 @XmlMenu(R.menu.activity_map_viewer)
@@ -293,7 +294,9 @@ public final class MapViewerOsmDroid extends BaseActivity implements OnSharedPre
 
         // Sets cluster pin color
         mCellTowerGridMarkerClusterer = new CellTowerGridMarkerClusterer(MapViewerOsmDroid.this);
-        BitmapDrawable mapPinDrawable = (BitmapDrawable) getResources().getDrawable(R.drawable.ic_map_pin_orange);
+        //BitmapDrawable mapPinDrawable = (BitmapDrawable) getResources().getDrawable(R.drawable.ic_map_pin_orange);
+        BitmapDrawable mapPinDrawable = (BitmapDrawable) ResourcesCompat.getDrawable(getResources(),R.drawable.ic_map_pin_orange, null);
+
         mCellTowerGridMarkerClusterer.setIcon(mapPinDrawable == null ? null : mapPinDrawable.getBitmap());
 
         GpsMyLocationProvider gpsMyLocationProvider = new GpsMyLocationProvider(MapViewerOsmDroid.this.getBaseContext());
@@ -437,7 +440,8 @@ public final class MapViewerOsmDroid extends BaseActivity implements OnSharedPre
                                             "", false)
                             );
                             // The pin of our current position
-                            ovm.setIcon(getResources().getDrawable(zz.aimsicd.lite.R.drawable.ic_map_pin_blue));
+                            //ovm.setIcon(getResources().getDrawable(zz.aimsicd.lite.R.drawable.ic_map_pin_blue));
+                            ovm.setIcon(ResourcesCompat.getDrawable(getResources(), zz.aimsicd.lite.R.drawable.ic_map_pin_blue, null));
 
                             items.add(ovm);
                         }
@@ -499,7 +503,8 @@ public final class MapViewerOsmDroid extends BaseActivity implements OnSharedPre
                                         "", false));
 
                         // The pin of other BTS
-                        ovm.setIcon(getResources().getDrawable(R.drawable.ic_map_pin_orange));
+                        //ovm.setIcon(getResources().getDrawable(R.drawable.ic_map_pin_orange));
+                        ovm.setIcon(ResourcesCompat.getDrawable(getResources(), R.drawable.ic_map_pin_orange, null));
                         items.add(ovm);
                     } catch (Exception e) {
                        Log.e(TAG, mTAG + "Error plotting neighbouring cells", e);
@@ -566,7 +571,8 @@ public final class MapViewerOsmDroid extends BaseActivity implements OnSharedPre
             currentMnc = Integer.parseInt(networkOperator.substring(3));
         }
         // DBe_import tower pins.
-        Drawable cellTowerMarkerIcon = getResources().getDrawable(R.drawable.ic_map_pin_green);
+        //Drawable cellTowerMarkerIcon = getResources().getDrawable(R.drawable.ic_map_pin_green);
+        Drawable cellTowerMarkerIcon = ResourcesCompat.getDrawable(getResources(), R.drawable.ic_map_pin_green, null);
 
         Cursor c = mDbHelper.returnOcidBtsByNetwork(currentMmc, currentMnc);
         if (c.moveToFirst()) {

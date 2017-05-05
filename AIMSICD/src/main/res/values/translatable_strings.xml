@@ -41,34 +41,35 @@
     <string name="get_opencellid">Download BTS Data</string>
 
     <!-- LAYOUT -->
-    <string name="device_info_title">Device Information</string>
-    <string name="sim_info_title">SIM Information</string>
-    <string name="network_info">Network Information</string>
+    <!-- ToDo: These should NOT be translated! -->
+    <string name="button_refresh">Refresh</string>
     <string name="cell_info_title">Current Threat Level</string>
-    <string name="neighbouring_cells_title">Neighbouring Cells</string>
     <string name="ciphering_indicator_title">Ciphering Indicator</string>
-    <string name="neighbouring_cells_num_title">Total:</string>
-    <string name="sim_country">Country:</string>
-    <string name="sim_operator_id">Operator ID:</string>
-    <string name="sim_operator_name">Operator Name:</string>
-    <string name="sim_imsi">IMSI:</string>
-    <string name="sim_serial">Serial:</string>
-    <string name="device_type">Phone Type:</string>
+    <string name="data_activity">Data Activity:</string>
+    <string name="data_status">Data Status:</string>
     <string name="device_imei">IMEI:</string>
+    <string name="device_info_title">Device Information</string>
+    <string name="device_type">Phone Type:</string>
     <string name="device_version">RIL Version:</string>
+    <string name="drawer_close">Close Navigation Drawer</string>
+    <string name="drawer_open">Open Navigation Drawer</string>
+    <string name="neighbouring_cells_num_title">Total:</string>
+    <string name="neighbouring_cells_title">Neighbouring Cells</string>
+    <string name="network_info">Network Information</string>
     <string name="network_name">Provider Name:</string>
     <string name="network_code">Provider Code:</string>
     <string name="network_type">Type:</string>
     <string name="network_lac">LAC:</string>
     <string name="network_cellid">CID:</string>
-    <string name="data_activity">Data Activity:</string>
-    <string name="data_status">Data Status:</string>
-    <string name="network_roaming">Roaming:</string>
-    <string name="network_lte_timing_advance">TA (LTE):</string>
-    <string name="button_refresh">Refresh</string>
-    <string name="drawer_open">Open Navigation Drawer</string>
-    <string name="drawer_close">Close Navigation Drawer</string>
     <string name="network_psc">PSC:</string>
+    <string name="network_lte_timing_advance">TA (LTE):</string>
+    <string name="network_roaming">Roaming:</string>
+    <string name="sim_country">Country:</string>
+    <string name="sim_imsi">IMSI:</string>
+    <string name="sim_info_title">SIM Information</string>
+    <string name="sim_operator_id">Operator ID:</string>
+    <string name="sim_operator_name">Operator Name:</string>
+    <string name="sim_serial">Serial:</string>
 
     <!-- Upload BTS to OpenCellID -->
     <string name="upload_bts">Upload BTS Data</string>
@@ -87,15 +88,17 @@
     <string name="about_changelog">CHANGELOG</string>
     <string name="about_license">LICENSE</string>
     <string name="about_credits">CREDITS</string>
+    <string name="about_desc_icon_title">Press Status Icons below for detailed Information:</string>
+
     <string name="status_idle_about_desc">Idle / Loading.</string>
     <string name="status_high_about_desc">Active tracking close to you!</string>
     <string name="status_ok_about_desc">Everything OK.</string>
     <string name="status_danger_about_desc">You are being tracked down!</string>
     <string name="status_medium_about_desc">Insecure Service Area. Leave it!</string>
     <string name="status_skull_about_desc">RUN! Handset manipulated!</string>
-    <string name="about_desc_icon_title">Press Status Icons below for detailed Information:</string>
 
     <!-- CDMA LAYOUT -->
+    <!-- ToDo: These should NOT be translated! -->
     <string name="network_netid">Network ID:</string>
     <string name="network_sysid">System ID:</string>
     <string name="network_baseid">Base Station ID:</string>
@@ -116,10 +119,6 @@
     <string name="pref_notification_settings">Notification Settings</string>
     <string name="pref_enable_cell_title">Cell Tracking</string>
     <string name="pref_enable_cell_summ">Enable Automatic Cell Tracking</string>
-    <string name="pref_femto_title">Femtocell Detection</string>
-    <string name="pref_femto_summ">(currently CDMA Phones ONLY)</string>
-    <string name="pref_femto_action_title">Femtocell Protection</string>
-    <string name="pref_femto_action_summ">Enforce Airplane Mode when Femtocell detected (re-enable network manually)</string>
     <string name="pref_ui_title">Interface Settings</string>
     <string name="pref_ui_icons_title">Status-Icons</string>
     <string name="pref_ui_icons_summ">Icon Theme Selection</string>
@@ -139,6 +138,7 @@
     <string name="pref_map_type_summ">Display Map in different styles</string>
     
     <!-- MAP INFOWINDOW -->
+    <!-- ToDo: These should NOT be translated! -->
     <string name="cell_id_label">CID: </string>
     <string name="lac_label">LAC: </string>
     <string name="mcc_label">MCC: </string>
@@ -150,6 +150,7 @@
     <string name="lng_label">"Lon: "</string>
 
     <!-- Database Viewer -->
+    <!-- ToDo: These should NOT be translated! -->
     <string name="table_names_prompt">Select Table</string>
     <string-array name="table_names">
         <item>@string/unique_bts_data</item>
@@ -245,21 +246,16 @@
     <string name="only_one_key_per_day">Only one new API key request per 24 hours!\nPlease try again later.</string>
     <string name="cell_id_doesnt_exist_in_db">Cell ID not in OpenCellID Database!</string>
     <string name="hostile_service_area_changing_lac_detected">Hostile Service Area: Changing LAC Detected!</string>
-    <string name="femtocell_detection_active">FemtoCell Detection Active.</string>
     <string name="cell_tracking_active">Cell Tracking Active.</string>
     <string name="cell_monitoring_active">Cell Monitoring Active.</string>
     <string name="phone_type">Phone Type</string>
     <string name="status_idle_description">Status: Idle.</string>
     <string name="status_ok_description">Status: Good. No Threats Detected.</string>
     <string name="alert_threat_detected">ALERT: Some Threat Detected!</string>
-    <string name="alert_femtocell_connection_detected">ALERT: FemtoCell Connection Detected!</string>
     <string name="alert_silent_sms_detected">ALERT: Silent SMS detected!</string>
     <string name="alert_mwi_detected">ALERT: Message Waiting Indicator detected!</string>
     <string name="alert_silent_wap_sms_detected">ALERT: WAP Push SMS detected!</string>
-    <string name="femtocell_only_on_cdma_devices">AIMSICD can only detect FemtoCell connections on CDMA devices.</string>
     <string name="service_state_changed">Service State changed!</string>
-    <string name="stopped_tracking_femtocell">: Stopped tracking FemtoCell connections.</string>
-    <string name="alert_femtocell_tracking_detected">ALERT: FemtoCell Tracking Detected!</string>
     <string name="refreshing_every">Refreshing every</string>
     <string name="refreshing_now">Refreshing now…</string>
     <string name="seconds">seconds.</string>
@@ -288,6 +284,7 @@
     <string name="getting_ocid_api_key">Getting OpenCellID API key…</string>
     <string name="unable_to_create_map">Unable to create map!</string>
     <string name="describe_the_problem_you_had">ATTENTION! Please describe the problem you had, before sending us these logs. NO HELP WITHOUT DESCRIPTIONS!\n</string>
+
     <string name="status">Status:</string>
     <string name="status_idle">Idle</string>
     <string name="status_ok">OK</string>

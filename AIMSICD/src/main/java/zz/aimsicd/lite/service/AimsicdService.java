@@ -24,6 +24,7 @@
 
 package zz.aimsicd.lite.service;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.location.Location;
@@ -254,7 +255,8 @@ public class AimsicdService extends InjectionService {
 
         LayoutInflater dialogInflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
         // https://possiblemobile.com/2013/05/layout-inflation-as-intended/
-        @SuppressWarnings("InflateParams")  // This is an AlertDialog so null is ok
+        // This is an AlertDialog so null is ok:
+        @SuppressLint("InflateParams")
         View dialogView = dialogInflater.inflate(R.layout.dialog_request_gps, null, false);
         CheckBox rememberChoice = (CheckBox) dialogView.findViewById(R.id.check_choice);
         Button notNow = (Button) dialogView.findViewById(R.id.not_now_button);

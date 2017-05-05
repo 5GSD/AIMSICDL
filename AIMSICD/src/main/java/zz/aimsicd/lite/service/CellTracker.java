@@ -14,6 +14,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.os.Vibrator;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 
 import android.telephony.CellInfo;
@@ -704,9 +705,9 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                         */
                         mDevice.setCellInfo(
                                 gsmCellLocation.toString() +                // ??
-                                        mDevice.getDataActivityTypeShort() + "|" +  // No,In,Ou,IO,Do
-                                        mDevice.getDataStateShort() + "|" +         // Di,Ct,Cd,Su
-                                        mDevice.getNetworkTypeName() + "|"          // HSPA,LTE etc
+                                mDevice.getDataActivityTypeShort() + "|" +  // No,In,Ou,IO,Do
+                                mDevice.getDataStateShort() + "|" +         // Di,Ct,Cd,Su
+                                mDevice.getNetworkTypeName() + "|"          // HSPA,LTE etc
                         );
 
                         mDevice.mCell.setLAC(gsmCellLocation.getLac());     // LAC
@@ -729,9 +730,9 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                     if (cdmaCellLocation != null) {
                         mDevice.setCellInfo(
                                 cdmaCellLocation.toString() +                       // ??
-                                        mDevice.getDataActivityTypeShort() + "|" +  // No,In,Ou,IO,Do
-                                        mDevice.getDataStateShort() + "|" +         // Di,Ct,Cd,Su
-                                        mDevice.getNetworkTypeName() + "|"          // HSPA,LTE etc
+                                mDevice.getDataActivityTypeShort() + "|" +  // No,In,Ou,IO,Do
+                                mDevice.getDataStateShort() + "|" +         // Di,Ct,Cd,Su
+                                mDevice.getNetworkTypeName() + "|"          // HSPA,LTE etc
                         );
                         mDevice.mCell.setLAC(cdmaCellLocation.getNetworkId());      // NID
                         mDevice.mCell.setCID(cdmaCellLocation.getBaseStationId());  // BID
@@ -1025,14 +1026,14 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
             notificationIntent.putExtra("silent_sms", mTypeZeroSmsDetected);
             notificationIntent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_FROM_BACKGROUND);
 
-            PendingIntent contentIntent = PendingIntent.getActivity(
-                    context, NOTIFICATION_ID, notificationIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+            PendingIntent contentIntent = PendingIntent.getActivity(context, NOTIFICATION_ID, notificationIntent, PendingIntent.FLAG_CANCEL_CURRENT);
 
             String iconType = prefs.getString(context.getString(R.string.pref_ui_icons_key), "SENSE").toUpperCase(Locale.US);
             int iconResId = Icon.getIcon(Icon.Type.valueOf(iconType), status);
             Bitmap largeIcon = BitmapFactory.decodeResource(context.getResources(), iconResId);
 
-            int color = context.getResources().getColor(status.getColor());
+            //int color = context.getResources().getColor(status.getColor());
+            int color = ContextCompat.getColor(context, status.getColor());
 
             Notification mBuilder = new NotificationCompat.Builder(context)
                     .setSmallIcon(R.drawable.tower48)
