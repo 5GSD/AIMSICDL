@@ -34,7 +34,7 @@ import zz.aimsicd.lite.constants.DBTableColumnIds;
 public class AdvancedUserActivity extends InjectionAppCompatActivity {
 
     public static final String TAG = "AICDL";
-    public static final String mTAG = "XXX";
+    public static final String mTAG = "AdvancedUserActivity";
 
 
 
@@ -75,12 +75,11 @@ public class AdvancedUserActivity extends InjectionAppCompatActivity {
             public boolean onItemLongClick(AdapterView<?> a, View v, int position, long id) {
                 Object o = listViewAdv.getItemAtPosition(position);
                 AdvanceUserItems itemDetails = (AdvanceUserItems) o;
-
                 String itemDetail = itemDetails.getDetection_string();
 
                 if (dbAccess.deleteDetectionString(itemDetails.getDetection_string())) {
-                    Toast.makeText(getApplicationContext(),
-                            getString(zz.aimsicd.lite.R.string.deleted) + ": " + itemDetail, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), getString(zz.aimsicd.lite.R.string.deleted)
+                            + ": " + itemDetail, Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(getApplicationContext(), getString(R.string.failed_to_delete)
                             + " " + itemDetail, Toast.LENGTH_SHORT).show();
@@ -89,7 +88,7 @@ public class AdvancedUserActivity extends InjectionAppCompatActivity {
                 try {
                     loadDbString();
                 } catch (Exception ee) {
-                   Log.d(TAG, mTAG + "Error loading db string", ee);
+                   Log.d(TAG, mTAG + "Error loading db string: " + ee);
                 }
                 return false;
             }
@@ -122,7 +121,7 @@ public class AdvancedUserActivity extends InjectionAppCompatActivity {
                     try {
                         loadDbString();
                     } catch (Exception ee) {
-                       Log.e(TAG, mTAG + ee.getMessage(), ee);
+                       Log.e(TAG, mTAG +"Error loading: " + ee.getMessage() + "\n" + ee);
                     }
                 }
             }

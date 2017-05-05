@@ -93,7 +93,6 @@ public final class MapViewerOsmDroid extends BaseActivity implements OnSharedPre
     public static final String TAG = "AICDL";
     public static final String mTAG = "MapViewerOsmDroid: ";
 
-
     public static final String updateOpenCellIDMarkers = "update_open_cell_markers";
 
     @InjectView(R.id.mapview)

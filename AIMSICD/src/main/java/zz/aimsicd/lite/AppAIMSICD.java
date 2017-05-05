@@ -29,7 +29,7 @@ import zz.aimsicd.lite.utils.TinyDB;
 public class AppAIMSICD extends InjectionApplication {
 
     public static final String TAG = "AICDL";
-    public static final String mTAG = "XXX";
+    public static final String mTAG = "AppAIMSICD";
 
     private static WeakReference<AppAIMSICD> instance;
 

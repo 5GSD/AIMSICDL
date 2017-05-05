@@ -32,7 +32,7 @@ import zz.aimsicd.lite.constants.DBTableColumnIds;
 public class AdvancedUserSmsActivity extends InjectionAppCompatActivity {
 
     public static final String TAG = "AICDL";
-    public static final String mTAG = "XXX";
+    public static final String mTAG = "AdvancedUserSmsActivity";
 
 
     @InjectView(R.id.listView_Adv_Sms_Activity)

@@ -3,7 +3,9 @@
 <resources
     xmlns:tools="http://schemas.android.com/tools"
     tools:override="true"
-    tools:ignore="UnusedResources">
+    tools:ignore="UnusedResources,PrivateResource">
+
+    <!--     tools:ignore="PrivateResource" -->
 
     <color name="white">#ffffffff</color>
     <color name="transparent_white">#50ffffff</color>
@@ -16,19 +18,25 @@
     <color name="red_text">#a00000</color>                 <!-- deep red -->
     <color name="bright_red_text">#ffff0000</color>        <!-- bright red -->
 
-    <!-- ====================================================================== -->
-    <!-- NOTE:
+    <!--
+    ===========================================================================
+    NOTE:
 
         The following was taken from:
             https://github.com/freefair/android-colors/blob/master/material/src/main/res/values/colors.xml
         These are marked as private in com.android.support:appcompat-v7,
         thus we need to use:
-            tools:override="true".
-        But most items are unused, so to ignore all lint warnings, we also
-        need to add: tools:
-            tools:ignore="UnusedResources".
+
+            xmlns:tools="http://schemas.android.com/tools"
+            tools:override="true"
+
+        But most items are unused, so to ignore all lint warnings, we also need to add:
+
+            xmlns:tools="http://com.android.support:appcompat-v7"
+            tools:ignore="UnusedResources"
+
+    ===========================================================================
     -->
-    <!-- ====================================================================== -->
 
     <!-- Material Red -->
     <color name="material_red_50">#ffebee</color>

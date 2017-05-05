@@ -1,6 +1,9 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="16dp"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="16dp"
     android:paddingRight="16dp"
     android:paddingTop="16dp"
     android:paddingBottom="16dp"
@@ -27,8 +30,9 @@
         android:layout_alignParentStart="true"
         android:entries="@array/detection_spinner_values" />
 
-    <!-- todo: add  android:labelFor="XXX" -->
+    <!-- Fixme:  android:labelFor="@+id/edit_adv_user_string" -->
     <EditText
+        android:labelFor="@+id/edit_adv_user_string"
         android:inputType="text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
