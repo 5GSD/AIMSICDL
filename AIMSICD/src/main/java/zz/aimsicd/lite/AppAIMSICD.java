@@ -18,8 +18,8 @@ import java.util.List;
 
 import io.freefair.android.injection.app.InjectionAppCompatActivity;
 import io.freefair.android.injection.app.InjectionApplication;
-import io.freefair.android.injection.modules.AndroidLoggerModule;
-import io.freefair.android.injection.modules.OkHttpModule;
+//import io.freefair.android.injection.modules.AndroidLoggerModule;
+//import io.freefair.android.injection.modules.OkHttpModule;
 
 import zz.aimsicd.lite.constants.TinyDbKeys;
 import zz.aimsicd.lite.enums.Status;
@@ -53,8 +53,8 @@ public class AppAIMSICD extends InjectionApplication {
     @Override
     public void onCreate() {
         instance = new WeakReference<>(this);
-        addModule(new AndroidLoggerModule());
-        addModule(OkHttpModule.withCache(this));
+        //addModule(new AndroidLoggerModule());
+        //addModule(OkHttpModule.withCache(this));
         super.onCreate();
         TinyDB.getInstance().init(getApplicationContext());
         TinyDB.getInstance().putBoolean(TinyDbKeys.FINISHED_LOAD_IN_MAP, true);

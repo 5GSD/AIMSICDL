@@ -61,7 +61,13 @@ android {
 
     lintOptions {
         //--- lint (self) ---------------------------------------------------------------
-//        warning 'MissingTranslation', 'InvalidPackage', 'MissingRegistered'
+        warning 'InvalidPackage'        // Default:  ?
+        warning 'MissingRegistered'     // Default:  ?
+        warning 'Registered'            // Default:  disabled
+        warning 'NewerVersionAvailable' // Default:  disabled
+        warning 'StopShip'              // Default:  disabled  -- "// STOPSHIP" can be used to flag code that should not be shipped until the issue is fixed
+        warning 'UnpackedNativeCode'    // Default:  disabled  -- app loads native libraries using System.loadLibrary()/ android:extractNativeLibs="false"
+
         abortOnError false              // true by default
         htmlReport true                 // !isCi    // We do want the lint report in HTML
         textReport false                // isCi     // We don't want text reports on CLI
@@ -134,7 +140,7 @@ android {
         //disable 'NewApi'                                  // If there are new API calls used on older minSdkVersion
 //        disable 'LabelFor'                                // API 17+ : Text fields should be labelled with a "labelFor" attribute
 //        disable 'SSLCertificateSocketFactoryCreateSocket' //
-          disable 'UnsafeProtectedBroadcastReceiver'        // check origin of Broadcast recvivers to avoid spoofing
+          disable 'UnsafeProtectedBroadcastReceiver'        // check origin of Broadcast receivers to avoid spoofing
         //disable ''                                        //
     }
 
@@ -169,14 +175,14 @@ dependencies {
 //    compile 'io.freefair.android-injection:logging:2.0.0-beta1'
 //    compile 'io.freefair.android-injection:okhttp:2.0.0-beta1'
     compile 'io.freefair.android-injection:injection:2.0.0-beta1'   // any updates?
-    compile 'io.freefair.android-injection:logging:2.0.0-beta1'     // any updates?
-    compile 'io.freefair.android-injection:okhttp:2.0.0-beta1'      // any updates?
+    //compile 'io.freefair.android-injection:logging:2.0.0-beta1'     // any updates?
+    //compile 'io.freefair.android-injection:okhttp:2.0.0-beta1'      // any updates?
     compile 'com.squareup.okhttp3:okhttp:3.7.0'
 
 
     //compile 'io.freefair.android-util:function:3.0.0'             // new
     //compile 'io.freefair:slf4j-android:1.7.21'                    // new
-    compile 'io.freefair.android-colors:material:1.2.0'
+    //compile 'io.freefair.android-colors:material:1.2.0'             // Used in Status.java ..
 
     // IF you want to enable lombok:
     //  1) Enable plugin: "Settings > Build > Compiler > Annotation Processors"
