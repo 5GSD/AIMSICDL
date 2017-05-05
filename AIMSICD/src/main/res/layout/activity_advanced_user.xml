@@ -4,7 +4,7 @@
     android:paddingRight="16dp"
     android:paddingTop="16dp"
     android:paddingBottom="16dp"
-    tools:context="com.secupwn.aimsicd.zz.secupwn.aimsicd.smsdetection.AdvancedUserActivity">
+    tools:context="zz.aimsicd.lite.smsdetection.AdvancedUserActivity">
 
     <TextView
         android:layout_width="wrap_content"
@@ -27,7 +27,9 @@
         android:layout_alignParentStart="true"
         android:entries="@array/detection_spinner_values" />
 
+    <!-- todo: add  android:labelFor="XXX" -->
     <EditText
+        android:inputType="text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/edit_adv_user_string"

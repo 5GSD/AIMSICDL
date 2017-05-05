@@ -1,9 +1,12 @@
 package zz.aimsicd.lite.ui.widget;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.TextView;
+
+import android.support.v7.widget.AppCompatTextView;
 
 import com.kaichunlin.transition.ViewTransitionBuilder;
 import com.kaichunlin.transition.animation.AnimationManager;
@@ -12,10 +15,8 @@ import com.nineoldandroids.animation.ArgbEvaluator;
 
 import zz.aimsicd.lite.R;
 
-/**
- * Highlight the updated text
- */
-public class HighlightTextView extends TextView {
+//  Highlight the updated text
+public class HighlightTextView extends AppCompatTextView {
     private static final int DURATION = 3000;
 
     public HighlightTextView(Context context) {
@@ -47,7 +48,8 @@ public class HighlightTextView extends TextView {
 
                 @Override
                 protected void onUpdateScaledProgress(TransitionController transitionController, View view, float modifiedProgress) {
-                    setTextColor((Integer) argbEvaluator.evaluate(modifiedProgress, currentColor, getResources().getColor(R.color.red_text)));
+                    //setTextColor((Integer) argbEvaluator.evaluate(modifiedProgress, currentColor, getResources().getColor(R.color.red_text)));
+                    setTextColor((Integer) argbEvaluator.evaluate(modifiedProgress, currentColor, ContextCompat.getColor(getContext(), R.color.red_text)));
                 }
             }).range(0f, 0.2f).buildAnimationFor(animationManager);
             ViewTransitionBuilder.transit(this).addTransitionHandler(new ScaledTransitionHandler() {
@@ -55,7 +57,7 @@ public class HighlightTextView extends TextView {
 
                 @Override
                 protected void onUpdateScaledProgress(TransitionController transitionController, View view, float modifiedProgress) {
-                    setTextColor((Integer) argbEvaluator.evaluate(modifiedProgress, getResources().getColor(R.color.red_text), getResources().getColor(R.color.medium_blue)));
+                    setTextColor((Integer) argbEvaluator.evaluate(modifiedProgress,  ContextCompat.getColor(getContext(),R.color.red_text),  ContextCompat.getColor(getContext(),R.color.medium_blue)));
                 }
             }).range(0.2f, 1f).buildAnimationFor(animationManager);
         }

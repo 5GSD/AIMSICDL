@@ -47,6 +47,7 @@ import io.freefair.android.injection.annotation.InjectView;
 import io.freefair.android.injection.annotation.XmlLayout;
 import io.freefair.android.injection.app.InjectionAppCompatActivity;
 import io.freefair.android.injection.app.InjectionFragment;
+
 import zz.aimsicd.lite.AppAIMSICD;
 import zz.aimsicd.lite.BuildConfig;
 import zz.aimsicd.lite.R;
@@ -79,13 +80,20 @@ import zz.aimsicd.lite.utils.TinyDB;
  *          due to over sized icons, or too low zoom level.
  *      [x] pin icons are too big. We need to reduce pin dot diameter by ~50%
  *      [ ] Need a manual way to add GPS coordinates of current location (see code comments below)
- *      [ ]
+ *
+ *      New 2017-05-05:
+ *      [ ] ToDo: Remove all freefair shit!
+ *
  *
  * Notes:
  *  a) Latest OSM version can use MaxZoomLevel of 21, please see:
  *      https://github.com/osmdroid/osmdroid/issues/49
  *      https://github.com/osmdroid/osmdroid/issues/81
  *      https://code.google.com/p/osmbonuspack/issues/detail?id=102
+ *
+ *  (b) This file was originally called:  MapViewerOsmDroid.java
+ *      See: https://github.com/E3V3A/Android-IMSI-Catcher-Detector/blob/development/app/src/main/java/com/SecUpwN/AIMSICD/activities/MapViewerOsmDroid.java
+ *
  */
 @XmlLayout(R.layout.activity_map_viewer)
 public final class MapFragment extends InjectionFragment implements OnSharedPreferenceChangeListener {
@@ -275,11 +283,11 @@ public final class MapFragment extends InjectionFragment implements OnSharedPref
 
     /**
      * Description:     Initialises the Map and sets initial options such as:
-     * Zoom levels and controls
-     * Compass
-     * ScaleBar
-     * Cluster Pin colors
-     * Location update settings
+     *                      Zoom levels and controls
+     *                      Compass
+     *                      ScaleBar
+     *                      Cluster Pin colors
+     *                      Location update settings
      */
     private void setUpMapIfNeeded() {
 

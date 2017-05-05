@@ -41,8 +41,7 @@
             android:extractNativeLibs  - API >22  [true]
          to disable lint, use:  "disable 'UnusedAttribute'" in build.gradle
 
-         tools:replace="allowBackup"    TODO: 2017-05-03 WTF is this?
-                                        see: https://developer.android.com/studio/build/manifest-merge.html#attribute_markers
+         tools:replace="allowBackup"    see: https://developer.android.com/studio/build/manifest-merge.html#attribute_markers
          -->
 
     <application
@@ -71,6 +70,12 @@
             </intent-filter>
         </activity>
 
+
+        <!--
+        ========================================================
+          UI Activities
+        ========================================================
+        -->
         <activity
                 android:name=".ui.activities.SettingsActivity"
                 android:exported="true"
@@ -119,6 +124,8 @@
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
+
+        <!-- =================================================== -->
 
         <service
             android:name="zz.aimsicd.lite.service.AimsicdService"

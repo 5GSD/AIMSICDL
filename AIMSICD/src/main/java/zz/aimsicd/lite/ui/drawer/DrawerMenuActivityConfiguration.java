@@ -108,7 +108,7 @@ public class DrawerMenuActivityConfiguration {
             menu.add(DrawerMenuItem.create(DrawerMenu.ID.MAIN.CURRENT_TREAT_LEVEL, mContext.getString(R.string.cell_info_title), R.drawable.cell_tower, true));            // Cell Information (Neighboring cells etc)
             menu.add(DrawerMenuItem.create(DrawerMenu.ID.MAIN.DB_VIEWER, mContext.getString(R.string.db_viewer), R.drawable.ic_action_storage, true));           // Database Viewer
             menu.add(DrawerMenuItem.create(DrawerMenu.ID.MAIN.ANTENNA_MAP_VIEW, mContext.getString(R.string.map_view), R.drawable.ic_action_map, false));               // Antenna Map Viewer
-            menu.add(DrawerMenuItem.create(DrawerMenu.ID.MAIN.AT_COMMAND_INTERFACE, mContext.getString(R.string.at_command_title), R.drawable.ic_action_computer, true));   // AT Command Interface
+            //menu.add(DrawerMenuItem.create(DrawerMenu.ID.MAIN.AT_COMMAND_INTERFACE, mContext.getString(R.string.at_command_title), R.drawable.ic_action_computer, true));   // AT Command Interface
 
             //Section Settings
             menu.add(DrawerMenuSection.create(DrawerMenu.ID.SECTION_DATABASE_SETTINGS, mContext.getString(R.string.database_settings)));
@@ -119,7 +119,7 @@ public class DrawerMenuActivityConfiguration {
             //Section Application
             menu.add(DrawerMenuSection.create(DrawerMenu.ID.SECTION_APPLICATION, mContext.getString(R.string.application)));
             menu.add(DrawerMenuItem.create(DrawerMenu.ID.APPLICATION.DOWNLOAD_LOCAL_BTS_DATA, mContext.getString(R.string.get_opencellid), R.drawable.stat_sys_download_anim0, false));   // "Download Local BTS data"
-            menu.add(DrawerMenuItem.create(DrawerMenu.ID.APPLICATION.UPLOAD_LOCAL_BTS_DATA, mContext.getString(R.string.upload_bts), R.drawable.stat_sys_upload_anim0, false));      // "Upload Local BTS data"
+            //menu.add(DrawerMenuItem.create(DrawerMenu.ID.APPLICATION.UPLOAD_LOCAL_BTS_DATA, mContext.getString(R.string.upload_bts), R.drawable.stat_sys_upload_anim0, false));      // "Upload Local BTS data"
             menu.add(DrawerMenuItem.create(DrawerMenu.ID.APPLICATION.QUIT, mContext.getString(R.string.quit), R.drawable.ic_action_remove, false));                // Quit
             mNavItems = menu;
 

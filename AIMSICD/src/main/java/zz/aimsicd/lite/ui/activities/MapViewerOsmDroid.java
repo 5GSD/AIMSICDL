@@ -19,7 +19,7 @@ import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.support.v4.content.LocalBroadcastManager;
+
 import android.telephony.CellInfo;
 import android.telephony.PhoneStateListener;
 import android.telephony.ServiceState;
@@ -27,6 +27,8 @@ import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import android.support.v4.content.LocalBroadcastManager;
 
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.util.GeoPoint;
@@ -43,8 +45,9 @@ import java.util.List;
 import io.freefair.android.injection.annotation.InjectView;
 import io.freefair.android.injection.annotation.XmlLayout;
 import io.freefair.android.injection.annotation.XmlMenu;
+
 import zz.aimsicd.lite.AppAIMSICD;
-import zz.aimsicd.lite.BuildConfig;
+
 import zz.aimsicd.lite.R;
 import zz.aimsicd.lite.adapters.AIMSICDDbAdapter;
 import zz.aimsicd.lite.constants.DBTableColumnIds;
@@ -87,7 +90,7 @@ import zz.aimsicd.lite.utils.TinyDB;
 public final class MapViewerOsmDroid extends BaseActivity implements OnSharedPreferenceChangeListener {
 
     public static final String TAG = "AICDL";
-    public static final String mTAG = "XXX";
+    public static final String mTAG = "MapViewerOsmDroid: ";
 
 
     public static final String updateOpenCellIDMarkers = "update_open_cell_markers";
@@ -137,8 +140,7 @@ public final class MapViewerOsmDroid extends BaseActivity implements OnSharedPre
         bindService(intent, mConnection, BIND_AUTO_CREATE);
 
         TelephonyManager tm = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
-        tm.listen(mPhoneStateListener, PhoneStateListener.LISTEN_CELL_LOCATION |
-                PhoneStateListener.LISTEN_DATA_CONNECTION_STATE);
+        tm.listen(mPhoneStateListener,  PhoneStateListener.LISTEN_CELL_LOCATION | PhoneStateListener.LISTEN_DATA_CONNECTION_STATE);
     }
 
     @Override
@@ -146,12 +148,10 @@ public final class MapViewerOsmDroid extends BaseActivity implements OnSharedPre
         super.onResume();
         setUpMapIfNeeded();
 
-        prefs = this.getSharedPreferences(
-                AimsicdService.SHARED_PREFERENCES_BASENAME, 0);
+        prefs = this.getSharedPreferences(AimsicdService.SHARED_PREFERENCES_BASENAME, 0);
         prefs.registerOnSharedPreferenceChangeListener(this);
 
-        LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver,
-                new IntentFilter(updateOpenCellIDMarkers));
+        LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver, new IntentFilter(updateOpenCellIDMarkers));
 
         if (!mBound) {
             // Bind to LocalService
@@ -183,7 +183,6 @@ public final class MapViewerOsmDroid extends BaseActivity implements OnSharedPre
 
         TelephonyManager tm = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
         tm.listen(mPhoneStateListener, PhoneStateListener.LISTEN_NONE);
-
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mMessageReceiver);
     }
 
@@ -205,7 +204,7 @@ public final class MapViewerOsmDroid extends BaseActivity implements OnSharedPre
         @Override
         public void onReceive(Context context, Intent intent) {
             loadEntries();
-            if (BuildConfig.DEBUG && mCellTowerGridMarkerClusterer != null && mCellTowerGridMarkerClusterer.getItems() != null) {
+            if (mCellTowerGridMarkerClusterer != null && mCellTowerGridMarkerClusterer.getItems() != null) {
                 Log.i(TAG, mTAG + "mMessageReceiver CellTowerMarkers.invalidate() markers.size():" + mCellTowerGridMarkerClusterer.getItems().size());
             }
 
@@ -228,7 +227,7 @@ public final class MapViewerOsmDroid extends BaseActivity implements OnSharedPre
             // setup map
             GeoLocation lastKnown = mAimsicdService.lastKnownLocation();
             if (lastKnown != null) {
-                mMap.getController().setZoom(16); // Initial Zoom level
+                mMap.getController().setZoom(16);               // Initial Zoom level
                 mMap.getController().animateTo(new GeoPoint(
                         lastKnown.getLatitudeInDegrees(),
                         lastKnown.getLongitudeInDegrees()));
@@ -546,7 +545,7 @@ public final class MapViewerOsmDroid extends BaseActivity implements OnSharedPre
                     }
                 }
                 if (mCellTowerGridMarkerClusterer != null) {
-                    if (BuildConfig.DEBUG && mCellTowerGridMarkerClusterer.getItems() != null) {
+                    if (mCellTowerGridMarkerClusterer.getItems() != null) {
                         Log.i(TAG, mTAG + "CellTowerMarkers.invalidate() markers.size():" + mCellTowerGridMarkerClusterer.getItems().size());
                     }
                     //Drawing markers of cell tower immediately as possible
@@ -584,10 +583,9 @@ public final class MapViewerOsmDroid extends BaseActivity implements OnSharedPre
                 final GeoPoint location = new GeoPoint(dLat, dLng);
                 //where is c.getString(6)AvgSigStr
                 final int samples = c.getInt(c.getColumnIndex(DBTableColumnIds.DBE_IMPORT_SAMPLES));
+
                 // Add map marker for CellID
-                CellTowerMarker ovm = new CellTowerMarker(this, mMap,
-                        "Cell ID: " + cellID,
-                        "", location,
+                CellTowerMarker ovm = new CellTowerMarker(this, mMap, "Cell ID: " + cellID, "", location,
                         new MarkerData(
                                 getApplicationContext(),
                                 String.valueOf(cellID),

@@ -36,13 +36,13 @@ import java.util.Collections;
 import java.util.List;
 
 import io.freefair.android.injection.app.InjectionAppCompatActivity;
+
 import zz.aimsicd.lite.R;
 import zz.aimsicd.lite.adapters.AIMSICDDbAdapter;
 import zz.aimsicd.lite.constants.DrawerMenu;
 import zz.aimsicd.lite.service.AimsicdService;
 import zz.aimsicd.lite.service.CellTracker;
 import zz.aimsicd.lite.ui.fragments.MapFragment;
-
 
 
 /**
@@ -63,48 +63,28 @@ import zz.aimsicd.lite.ui.fragments.MapFragment;
  public class Helpers {
 
     public static final String TAG = "AICDL";
-    public static final String mTAG = "XXX";
+    public static final String mTAG = "Helpers: ";
 
     private static final int CHARS_PER_LINE = 34;
 
-   /**
-    * Description:      Long toast message
-    *
-    * Notes:
-    *
-    *       This is only a proxy method to the Toaster class.
-    *       It also takes care of using the Toaster's Singleton.
-    *
-    * @param context Application Context
-    * @param msg     Message to send
-    */
+    /**
+     * Description:      Long toast message
+     * Notes:            A proxy method to the Toaster class. This also takes care of using the Toaster's Singleton.
+     */
     public static void msgLong(Context context, String msg) {
         Toaster.msgLong(context, msg);
     }
-   /**
+
+    /**
     * Description:      Short toast message
-    *
-    * Notes:
-    *
-    *       This is only a proxy method to the Toaster class.
-    *       It also takes care of using the Toaster's Singleton.
-    *
-    * @param context Application Context
-    * @param msg     Message to send
+    * Notes:            A proxy method to the Toaster class. This also takes care of using the Toaster's Singleton.
     */
     public static void msgShort(Context context, String msg) {
         Toaster.msgShort(context, msg);
     }
-   /**
-    * Description:      Long toast message
-    *
-    * Notes:
-    *
-    *       This is only a proxy method to the Toaster class.
-    *       It also takes care of using the Toaster's Singleton.
-    *
-    * @param context Application Context
-    * @param msg     Message to send
+
+    /**
+    * Description:
     */
     public static void sendMsg(Context context, String msg) {
         Toaster.msgLong(context, msg);
@@ -196,8 +176,8 @@ import zz.aimsicd.lite.ui.fragments.MapFragment;
     public static void getOpenCellData(InjectionAppCompatActivity injectionActivity, Cell cell, char type, final AimsicdService service) {
         if (Helpers.isNetAvailable(injectionActivity)) {
             if (!"NA".equals(CellTracker.OCID_API_KEY)) {
-                double earthRadius = 6371.01; // [Km]
-                int radius = 2; // Use a 2 Km radius with center at GPS location.
+                double earthRadius = 6371.01;   // [Km]
+                int radius = 2;                 // [Km]     // Use a 2 Km radius with center at GPS location.
 
                 if (Double.doubleToRawLongBits(cell.getLat()) != 0 &&
                         Double.doubleToRawLongBits(cell.getLon()) != 0) {

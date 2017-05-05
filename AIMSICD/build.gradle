@@ -87,7 +87,7 @@ android {
 //        disable 'SetJavaScriptEnabled'  // Used in:
 //        disable 'Wakelock'            // lint wakelock check is buggy, we're probably doing it right.
 //        disable 'Overdraw'            // @color/common_sectionBackground
-        disable 'UnusedAttribute'     // New attributes in AndroidManifest, not supported in lower API's
+        disable 'UnusedAttribute'       // New attributes in AndroidManifest, not supported in lower API's
 //        disable 'UnusedResources'     // Many unused strings and images: <placeholders?>
         //disable 'UselessParent'       //
         //disable 'TooManyViews'        //
@@ -110,7 +110,7 @@ android {
         //--- UI: Text & Typography -----------------------------------------------------
         disable 'TypographyEllipsis'            //
         disable 'SmallSp'                       // "Avoid using sizes smaller than 12sp: 10sp"
-//        disable 'SetTextI18n'                 // We don't translate button strings
+        //disable 'SetTextI18n'                 // We don't translate button strings
         disable 'HardcodedText'                 // We don't care about hardcoded text for numbers...
 
         //--- UI: RTL -------------------------------------------------------------------
@@ -119,8 +119,8 @@ android {
         //       [2] To enable RTL support, when running on API 17 and higher, you must
         //           set the android:supportsRtl attribute in the Android manifest
         //-------------------------------------------------------------------------------
-//        disable 'RtlSymmetry'                 // ToDo: Do we need to check all "Padding and margin symmetry"?
-//        disable 'RtlHardcoded'                // We (currently) don't care about RTL layouts (L/R vs Start/End)
+        //disable 'RtlSymmetry'                 // ToDo: Do we need to check all "Padding and margin symmetry"?
+        //disable 'RtlHardcoded'                // We (currently) don't care about RTL layouts (L/R vs Start/End)
         //disable 'RtlEnabled'                  // See [2].
 
         //--- UI: Buttons ---------------------------------------------------------------
@@ -130,10 +130,11 @@ android {
 //        disable 'BackButton'                              // Should we have a more clearly defined "back" button?
         disable 'ButtonStyle'                               // We don't want ugly borderless buttons: "Button should be borderless"
 
-//        disable 'TrulyRandom'                             // If this lint only appears in Utils.java then it's ok
+//        disable 'TrulyRandom'                             //
         //disable 'NewApi'                                  // If there are new API calls used on older minSdkVersion
 //        disable 'LabelFor'                                // API 17+ : Text fields should be labelled with a "labelFor" attribute
 //        disable 'SSLCertificateSocketFactoryCreateSocket' //
+          disable 'UnsafeProtectedBroadcastReceiver'        // check origin of Broadcast recvivers to avoid spoofing
         //disable ''                                        //
     }
 
@@ -164,9 +165,15 @@ dependencies {
     //compile 'com.github.amlcurran.showcaseview:library:5.3.0'     // ShowcaseView library to highlight specific app elements
 
     // Dependency Injection for Android
-    compile 'io.freefair.android-injection:injection:2.0.0-beta1'
-    compile 'io.freefair.android-injection:logging:2.0.0-beta1'
-    compile 'io.freefair.android-injection:okhttp:2.0.0-beta1'
+//    compile 'io.freefair.android-injection:injection:2.0.0-beta1'
+//    compile 'io.freefair.android-injection:logging:2.0.0-beta1'
+//    compile 'io.freefair.android-injection:okhttp:2.0.0-beta1'
+    compile 'io.freefair.android-injection:injection:2.0.0-beta1'   // any updates?
+    compile 'io.freefair.android-injection:logging:2.0.0-beta1'     // any updates?
+    compile 'io.freefair.android-injection:okhttp:2.0.0-beta1'      // any updates?
+    compile 'com.squareup.okhttp3:okhttp:3.7.0'
+
+
     //compile 'io.freefair.android-util:function:3.0.0'             // new
     //compile 'io.freefair:slf4j-android:1.7.21'                    // new
     compile 'io.freefair.android-colors:material:1.2.0'

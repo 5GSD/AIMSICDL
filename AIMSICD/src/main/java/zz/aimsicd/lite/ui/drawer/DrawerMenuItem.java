@@ -133,8 +133,8 @@ public class DrawerMenuItem implements NavDrawerItem {
             case APPLICATION.ADD_GET_OCID_API_KEY:
                 return R.string.help_app_add_get_ocid_api_key;
 
-            case APPLICATION.UPLOAD_LOCAL_BTS_DATA:
-                return R.string.help_app_upload_local_bts;
+            //case APPLICATION.UPLOAD_LOCAL_BTS_DATA:
+            //    return R.string.help_app_upload_local_bts;
 
             case APPLICATION.QUIT:
                 return R.string.help_app_quit;
