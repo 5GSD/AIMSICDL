@@ -199,7 +199,10 @@ public final class MapFragment extends InjectionFragment implements OnSharedPref
             mMyLocationOverlay.disableMyLocation();
         }
 
-        prefs.unregisterOnSharedPreferenceChangeListener(this);
+        if(prefs != null) {
+            prefs.unregisterOnSharedPreferenceChangeListener(this);
+        }
+
         // Unbind from the service
         if (mBound) {
             getActivity().unbindService(mConnection);

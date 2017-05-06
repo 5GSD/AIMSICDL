@@ -447,8 +447,8 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
             dbHelper.toEventLog(4, "No neighboring cells detected"); // (DF_id, DF_desc)
         } else  {
             // Todo: remove cid string when working.
-           Log.d(TAG, mTAG + "NC list not supported by AOS on this device. Nothing to do.");
-           Log.d(TAG, mTAG + ": Setting nc_list_present to: false");
+            Log.d(TAG, mTAG + "NC list not supported by AOS on this device. Nothing to do.");
+            Log.d(TAG, mTAG + ": Setting nc_list_present to: false");
             tinydb.putBoolean("nc_list_present", false);
         }
     }

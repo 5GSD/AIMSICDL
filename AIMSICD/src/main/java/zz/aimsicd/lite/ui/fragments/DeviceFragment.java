@@ -31,10 +31,13 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 
+
 import io.freefair.android.injection.annotation.Inject;
 import io.freefair.android.injection.annotation.InjectView;
 import io.freefair.android.injection.annotation.XmlLayout;
 import io.freefair.android.injection.app.InjectionFragment;
+
+
 import zz.aimsicd.lite.R;
 import zz.aimsicd.lite.service.AimsicdService;
 import zz.aimsicd.lite.service.CellTracker;
@@ -48,7 +51,7 @@ import zz.aimsicd.lite.utils.Helpers;
 public class DeviceFragment extends InjectionFragment implements SwipeRefreshLayout.OnRefreshListener {
 
     public static final String TAG = "AICDL";
-    public static final String mTAG = "XXX";
+    public static final String mTAG = "DeviceFragment";
 
 
 
@@ -156,6 +159,8 @@ public class DeviceFragment extends InjectionFragment implements SwipeRefreshLay
                     content.updateText(String.valueOf(mAimsicdService.getCell().getCID()), ani);
                     break;
                 }
+                default:
+                    Log.e(TAG, mTAG + ": unknown phone type: " + mDevice.getPhoneID());
             }
 
             if (mAimsicdService.getCell().getTimingAdvance() != Integer.MAX_VALUE) {
@@ -194,6 +199,7 @@ public class DeviceFragment extends InjectionFragment implements SwipeRefreshLay
             content.updateText(mDevice.getIMEI(), ani);
             content = (HighlightTextView)  getView().findViewById(R.id.device_version);
             content.updateText(mDevice.getIMEIv(), ani);
+
             content = (HighlightTextView)  getView().findViewById(R.id.network_name);
             content.updateText(mDevice.getNetworkName(), ani);
             content = (HighlightTextView)  getView().findViewById(zz.aimsicd.lite.R.id.network_code);

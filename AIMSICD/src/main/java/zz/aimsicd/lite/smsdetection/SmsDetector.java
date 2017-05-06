@@ -63,7 +63,7 @@ import zz.aimsicd.lite.utils.MiscUtils;
 public final class SmsDetector extends Thread {
 
     public static final String TAG = "AICDL";
-    public static final String mTAG = "XXX";
+    public static final String mTAG = "SmsDetector";
 
     private AimsicdService mAIMSICDService;
     private boolean mBound;
