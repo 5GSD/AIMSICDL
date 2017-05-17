@@ -22,8 +22,6 @@ import zz.aimsicd.lite.utils.GeoLocation;
 import zz.aimsicd.lite.utils.TruncatedLocation;
 
 
-
-
 /**
  * Class to handle GPS location tracking
  */
@@ -34,7 +32,7 @@ public final class LocationTracker {
 
 
     // how long with no movement detected, before we assume we are not moving
-    public static final long MOVEMENT_THRESHOLD_MS = 20 * 1000;
+    public static final long MOVEMENT_THRESHOLD_MS = 10 * 1000; // [ms] // 10 seconds
 
     private AimsicdService context;
     private SharedPreferences prefs;

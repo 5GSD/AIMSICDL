@@ -12,9 +12,6 @@ import java.util.HashMap;
 
 import zz.aimsicd.lite.adapters.AIMSICDDbAdapter;
 
-
-
-
 /**
  *  Description:    Class that calculates cell signal strength averages and decides if a
  *                  given cell + strength appears to be mysteriously (low or high).

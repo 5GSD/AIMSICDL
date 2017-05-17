@@ -30,7 +30,7 @@
                     android:id="@+id/wtf1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="bts_id/CID!:"
+                    android:text="CID:"
                     android:textColor="@color/green_text"
                     android:textSize="12sp" />
 

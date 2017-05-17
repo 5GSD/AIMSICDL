@@ -120,7 +120,7 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
     public static final int DATABASE_VERSION = 1; // Is this "pragma user_version;" ?
 
     public static final String TAG = "AICDL";
-    public static final String mTAG = "AIMSICDDbAdapter";
+    public static final String mTAG = "DB: ";
 
     // TODO: This should be implemented as a SharedPreference...
     private static final Boolean MONO_DB_DUMP = true; // Also back-up DB with one monolithic dump file?
@@ -190,7 +190,7 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
                 Log.i(TAG, mTAG + "Database created");
                 return true;
             } catch (IOException e) {
-                Log.i(TAG, mTAG + "Error creating database", e);
+                Log.i(TAG, mTAG + "Error creating database: " + e);
                 throw new Error("Error copying database", e);
             }
 
@@ -201,23 +201,28 @@ public final class AIMSICDDbAdapter extends SQLiteOpenHelper {
     /**
      * Check if the database already exist to avoid re-copying the file each time you open the application.
      *
+     * ToDo: NOTE:  This is a dumb check, as it currently only tries to open it.
+     *              It may be other reasons why it can't be opened even if it already exists.
+     *
      * @return true if it exists, false if it doesn't
      */
     private boolean checkDataBase() {
 
         SQLiteDatabase checkDB = null;
-
         try {
-            Log.i(TAG, mTAG + "Checking for db first install this will throw an error on install and is normal");
+            Log.i(TAG, mTAG + "Checking if DB exists...");
             checkDB = SQLiteDatabase.openDatabase(mDatabasePath, null, SQLiteDatabase.OPEN_READONLY);
         } catch (SQLiteException e) {
-            Log.i(TAG, mTAG + "Exception: Database not yet created: " + e);
+            Log.i(TAG, mTAG + "SQL Exception! Database can\'t be opened: " + e);
+            //Log.i(TAG, mTAG + "Database not yet created: " + e);
         }
 
         if (checkDB != null) {
             checkDB.close();
+            Log.i(TAG, mTAG + "OK (found)");
             return true;
         }
+        Log.i(TAG, mTAG + "Database probably not yet created.");
         return false;
     }
 

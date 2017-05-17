@@ -25,21 +25,16 @@ import java.lang.reflect.Method;
 
 import dalvik.system.DexFile;
 
-
-
 /**
- * Class using reflection to grant access to the private hidden
- * android.os.SystemProperties class
+ * Class using reflection to grant access to the private hidden:   android.os.SystemProperties class
  */
 public class SystemPropertiesReflection {
 
     public static final String TAG = "AICDL";
-    public static final String mTAG = "SPReflection";
+    public static final String mTAG = "SPR: ";
 
 
-    /**
-     * This class cannot be instantiated
-     */
+    // This class cannot be instantiated
     private SystemPropertiesReflection() {
 
     }

@@ -16,8 +16,8 @@ import android.hardware.SensorManager;
  */
 public class AccelerometerMonitor {
     // How long with no movement detected, before we assume we are not moving
-    static final long MOVEMENT_THRESHOLD_MS = 20 * 1000;
-    static final float ACCELEROMETER_NOISE = 2.0f; // amount of sensor noise to ignore
+    static final long MOVEMENT_THRESHOLD_MS = 10 * 1000;    // [ms] // 10 seconds (also in LocationTracker.java)
+    static final float ACCELEROMETER_NOISE = 2.0f;          // amount of sensor noise to ignore
 
     private long lastMovementTime = 0;
     private float mLastX, mLastY, mLastZ;
