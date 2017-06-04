@@ -1,42 +1,36 @@
-## @devs This Need to be Updated !! 
+# Android IMSI-Catcher Detector Lite (AIMSICDL)
 
+**Note:** *AIMSICDL is a reboot of the [original AIMSICD project](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/) but focusing on a core, simple set of features that actually work. [See this issue](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/issues/926) for the rationale behind the movement.*
 
-# Android IMSI-Catcher Detector
+[![DevelopmentStatus](https://img.shields.io/badge/Development-ALPHA-brightgreen.svg)](https://github.com/5GSD/AIMSICDL/wiki/Development-Status)
 
-[![DevelopmentStatus](https://img.shields.io/badge/Development-ALPHA-brightgreen.svg)](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/wiki/Development-Status) 
 
 ---
 
-AIMSICD is an app to detect [IMSI-Catchers](https://en.wikipedia.org/wiki/IMSI-catcher). IMSI-Catchers are false mobile towers (base stations) acting between the target mobile phone(s) and the real towers of service providers. As such they are considered a Man-In-The-Middle (MITM) attack. In the USA the IMSI-Catcher technology is known under the name "[StingRay](https://en.wikipedia.org/wiki/Stingray_phone_tracker)". Find out more in our [WIKI](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/wiki).
+AIMSCIDL detects [IMSI-Catchers](https://en.wikipedia.org/wiki/IMSI-catcher). IMSI-Catchers are false mobile towers (base stations) acting between the target mobile phone(s) and the real towers of service providers. As such they are considered a Man-In-The-Middle (MITM) attack. In the USA the IMSI-Catcher technology is known under the name "[StingRay](https://en.wikipedia.org/wiki/Stingray_phone_tracker)". Find out more in our [WIKI](https://github.com/5GSD/AIMSICDL/wiki).
+
+The app aims to provide two main features with respect to IMSI-Catchers:
+
+* Primarily offer live & active detection of IMSI-Catchers being deployed nearby
+* Secondarily collect data for later analysis and inspection
 
 ---
 
-[![AIMSICD-Banner](https://spideroak.com/share/IFEU2U2JINCA/GitHub/home/SecUpwN/SpiderOak/PROMOTION/AIMSICD-Banner_Large.png)](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Status-Icons)
-
----
-
-[![AIMSICD-Teaser](https://spideroak.com/share/IFEU2U2JINCA/GitHub/home/SecUpwN/SpiderOak/PROMOTION/AIMSICD-Teaser.png)](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki)
-
----
-
-[![Aptoide](https://spideroak.com/share/IFEU2U2JINCA/GitHub/home/SecUpwN/SpiderOak/MISC/external/Aptoide.png)](http://aimsicd.store.aptoide.com/ "NOTE: Installs Aptoide-App first!")  [![GitHub](https://spideroak.com/share/IFEU2U2JINCA/GitHub/home/SecUpwN/SpiderOak/MISC/external/GitHub.png)](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/releases "GitHub Releases") [![F-Droid](https://spideroak.com/share/IFEU2U2JINCA/GitHub/home/SecUpwN/SpiderOak/MISC/external/F-Droid.png)](https://f-droid.org/repository/browse/?fdid=com.SecUpwN.AIMSICD "F-Droid Store")
-[![NoGooglePlay](https://spideroak.com/share/IFEU2U2JINCA/GitHub/home/SecUpwN/SpiderOak/MISC/external/NoGooglePlay.png)](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/FAQ#q-why-wont-you-upload-your-app-to-the-google-play-store "Statement against GooglePlay")
-[![Twitter](https://spideroak.com/share/IFEU2U2JINCA/GitHub/home/SecUpwN/SpiderOak/MISC/external/Twitter.png)](https://twitter.com/AIMSICD "Official Twitter-Account")
+[![AIMSICD-Banner](https://spideroak.com/share/IFEU2U2JINCA/GitHub/home/SecUpwN/SpiderOak/PROMOTION/AIMSICD-Banner_Large.png)](https://github.com/5GSD/AIMSICDL/wiki/Status-Icons)
 
 ---
 
 ### Index
 
-* [What it does](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector#what-it-does)
-* [Why use it](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector#why-use-it)
+* [What it does](https://github.com/5GSD/AIMSICDL#what-it-does)
+* [Why use it](https://github.com/5GSD/AIMSICDL#why-use-it)
 * [**Contributing**](.github/CONTRIBUTING.md)
 * [Bug Tracker](.github/CONTRIBUTING.md#debugging)
-* [Warnings](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector#warnings)
+* [Warnings](https://github.com/5GSD/AIMSICDL#warnings)
 * [Research](https://spideroak.com/browse/share/AIMSICD/GitHub)
-* [Support](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector#support)
-* [Contact](https://github.com/orgs/CellularPrivacy/people)
-* [WIKI](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/wiki)
-* [FAQ](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/wiki/FAQ)
+* [Support](https://github.com/5GSD/AIMSICDL#support)
+* [WIKI](https://github.com/5GSD/AIMSICDL/wiki)
+* [FAQ](https://github.com/5GSD/AIMSICDL/wiki/FAQ)
 
 ---
 
@@ -44,17 +38,9 @@ AIMSICD is an app to detect [IMSI-Catchers](https://en.wikipedia.org/wiki/IMSI-c
 
 ### What it does
 
-AIMSICD attempts to detect IMSI-Catchers through [detection methods](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/issues/230) such as these:
+AIMSICDL attempts to detect IMSI-Catchers through  such as these:
     
-* Check [Tower Information Consistency](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/issues/253)
-* Check [LAC/Cell ID Consistency](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/issues/91)
-* Check [Neighbouring Cell Info](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/issues/264)
-* Prevent [silent app installations](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/issues/151)
-* Monitor [Signal Strength](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/issues/97)
-* Detect [silent SMS](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/wiki/glossary-of-terms#silent-sms)
-* ~~Detect [FemtoCells](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/issues/6)~~
-
-See our [app goals](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/wiki/Development-Status#application-goals) and [development status](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/wiki/Development-Status)!
+* TODO
 
 ---
 
@@ -68,58 +54,38 @@ The reason IMSI-Catchers are so commonly used is that it is very easy to get awa
 
 ### Warnings
 
-[![Warning](https://spideroak.com/share/IFEU2U2JINCA/GitHub/home/SecUpwN/SpiderOak/DOCUMENTATION/Warning.png)](https://github.com/SecUpwN/Android-IMSI-Catcher-Detector/wiki/Development-Status)
+[![Warning](https://spideroak.com/share/IFEU2U2JINCA/GitHub/home/SecUpwN/SpiderOak/DOCUMENTATION/Warning.png)](https://github.com/5GSD/AIMSICDL/wiki/Development-Status)
 
-Please read our [Disclaimer](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/blob/master/DISCLAIMER)! This app does **not**:
+**Do not rely on AIMSICDL for real life scenarios that involve serious risk! Leave your cell at home.**
+
+Please read our [Disclaimer](https://github.com/5GSD/AIMSICDL/blob/master/DISCLAIMER)! This app does **not**:
 
 * Provide secure phone calls
 * Provide secure data transmission
 * Provide app permission control
 * Provide secure application sand-boxing
-* Provide [ROOT](http://www.xda-developers.com/root) and remove bloatware
+* Provide [Android root](http://www.xda-developers.com/root) and remove bloatware
 * Provide secure SMS
 * Provide firewalls
 * Provide full device encryption
 * Prevent already installed rogue apps from full access and spying
 
-Solutions for the above may be found in our [Recommendations](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/wiki/Recommendations).
-
----
-
-### Bug Tracker
-
-Please follow our [Bug Submission Guide](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/blob/development/CONTRIBUTING.md#debugging).
+Solutions for the above may be found in our [Recommendations](https://github.com/5GSD/AIMSICDL/wiki/Recommendations).
 
 ---
 
 ### Support
 
-Although this project is fully Open Source, developing AIMSICD is a lot of work and done by enthusiastic people during their free time. If you're a developer yourself, we welcome you with open arms! ~~To keep developers in a great mood and support development, please consider making a [donation](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/wiki/Donations). It will be split into appropriate pieces and directly sent to developers who solved the backed Issue.~~
+Although this project is fully Open Source, developing AIMSICDL is a lot of work and done by enthusiastic people during their free time. If you're a developer yourself, we welcome you with open arms!
 
 ---
 
 ### License
 
-[![GPLv3+](http://gplv3.fsf.org/gplv3-127x51.png)](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/blob/master/LICENSE)
+[![GPLv3+](http://gplv3.fsf.org/gplv3-127x51.png)](https://github.com/5GSD/AIMSICDL/blob/master/LICENSE)
 
 ---
 
 ### Credits & Greetings
 
-Our project would not have been possible without [these awesome people](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/blob/master/app/src/main/assets/CREDITS). THANK YOU!
-
----
-
-### Sponsors
-
-Our gratitude flies out to our great Sponsors:
-
-[![AquaFold](https://spideroak.com/share/IFEU2U2JINCA/GitHub/home/SecUpwN/SpiderOak/MISC/external/AquaFold.png)](http://www.aquafold.com) [![Navicat](https://spideroak.com/share/IFEU2U2JINCA/GitHub/home/SecUpwN/SpiderOak/MISC/external/Navicat.png)](http://www.navicat.com/) [![Scanova](https://spideroak.com/share/IFEU2U2JINCA/GitHub/home/SecUpwN/SpiderOak/MISC/external/Scanova.png)](http://scnv.io/r/25e7713950)
-
----
-
-### Get in touch with the core team!
-
-Core team members are ~~listed [here](https://github.com/orgs/CellularPrivacy/people).~~
-
----
+Our project would not have been possible without [these awesome people](https://github.com/5GSD/AIMSICDL/graphs/contributors). Thanks to the original AIMSICD project.
