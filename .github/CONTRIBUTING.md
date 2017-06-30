@@ -4,7 +4,7 @@
 Thank you for contributing! Please select:
 
 * [Developing](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/blob/development/.github/CONTRIBUTING.md#developing)
-* [Translating](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/blob/development/.github/CONTRIBUTING.md#translating)
+* ~~[Translating](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/blob/development/.github/CONTRIBUTING.md#translating)~~
 * [Testing](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/blob/development/.github/CONTRIBUTING.md#testing)
 * [Formatting](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/blob/development/.github/CONTRIBUTING.md#formatting)
 * [Debugging](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/blob/development/.github/CONTRIBUTING.md#debugging)
@@ -25,17 +25,6 @@ Feel invited to develop with us using these steps:
 5. Follow our [Style Guide](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/wiki/Style-Guide) for higher code quality and corporate design.
 6. Test your changes and submit a [pull request](https://help.github.com/articles/using-pull-requests/) when we shall add it.
 7. Don't be shy to ask for help in an Issue and feel invited to [contact us](https://github.com/CellularPrivacy/Android-IMSI-Catcher-Detector/wiki/Contact).
-
----
-
-#### TRANSLATING
-
-Let our app start up in your native language!
-
-* See [our translations](https://hosted.weblate.org/projects/aimsicd/strings/) and [login via GitHub](https://hosted.weblate.org/accounts/login/github/?next=/projects/aimsicd/strings/) or [others](https://hosted.weblate.org/accounts/login/?next=/projects/aimsicd/strings/) to add yours.
-* When translating, keep small device screens in mind. Shorten it.
-* Please make sure to *finish* your translation, if you start a new one!
-* Translations will be pulled into our GitHub automatically. Enjoy!
 
 ---
 
